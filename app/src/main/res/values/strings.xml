@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">IIITB-Connects</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="MasterKeyInfo">This feature requires master key authentication provided to authorized users, i.e. clubs and developers. We are working in making this a common feature.\nBear with us..</string>
+
+</resources>
