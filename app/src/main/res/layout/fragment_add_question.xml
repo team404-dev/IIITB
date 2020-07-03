@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Search"
+                android:textColor="#fff"
+                android:textSize="28sp" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="20sp"
+        android:padding="20dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/AskAQuestionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/AskAQuestion"
+                android:hint="Ask a Relevant Question..."
+                android:gravity="start"
+                android:layout_gravity="start"
+                android:background="@drawable/view_shape"
+                android:inputType="text"
+                android:textColorHint="@color/colorPrimary" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/submitQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/AskAQuestionLayout"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:text="Submit Your Question"
+            android:background="@drawable/my_button"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

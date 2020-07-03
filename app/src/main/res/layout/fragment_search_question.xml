@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchQuestion">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20sp"
+            android:paddingRight="20sp">
+
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchViewQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/view_shape" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="550dp"
+            android:layout_above="@+id/addANewQuestion"
+            android:layout_below="@+id/searchViewQuestion"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/questionsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/view_shape"
+                android:padding="7dp" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <Button
+            android:id="@+id/addANewQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/my_button"
+            android:text="Add a new question"
+            android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>
