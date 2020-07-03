@@ -8,4 +8,10 @@
     <color name="LightGreenColor">#DCF8D5</color>
     <color name="LightBlueColor">#E8F3F8</color>
     <color name="LightRedColor">#F8DADA</color>
+
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBackgroundWindow">?android:attr/windowBackground</color>
+    <color name="colorLightestBlue">#e8f3f8</color>
+    <color name="colorSkyBlue">#2196f3</color>
 </resources>
