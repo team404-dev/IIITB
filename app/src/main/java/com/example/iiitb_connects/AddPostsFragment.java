@@ -43,7 +43,7 @@ public class AddPostsFragment extends Fragment {
         choosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
             }
@@ -51,7 +51,9 @@ public class AddPostsFragment extends Fragment {
         acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), SetupPost.class);
+                intent.putExtra("postImgUri", previewImgUri.toString());
+                startActivity(intent);
             }
         });
         return view;

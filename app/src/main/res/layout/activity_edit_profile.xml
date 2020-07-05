@@ -81,7 +81,7 @@
                 android:layout_marginVertical="20dp"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/profile_logo"
-                android:scaleType="centerCrop"/>
+                android:scaleType="fitCenter"/>
 
             <Button
                 android:id="@+id/changeProfilePhoto"

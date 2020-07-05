@@ -1,15 +1,22 @@
 package com.example.iiitb_connects;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class HomeFeedItemAdapter
@@ -22,6 +29,7 @@ public class HomeFeedItemAdapter
         private TextView description;
         private ImageView likeButton, unlikedButton, commentButton, infoButton;
         private RelativeLayout descriptionLayout;
+        private ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -34,6 +42,7 @@ public class HomeFeedItemAdapter
             commentButton = itemView.findViewById(R.id.commentButton);
             infoButton = itemView.findViewById(R.id.infoButton);
             descriptionLayout = itemView.findViewById(R.id.descriptionLayout);
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
     }
 
@@ -57,9 +66,9 @@ public class HomeFeedItemAdapter
         HomeFeedItems homeFeedItems = this.homeFeedItems.get(position);
 
         //Setting up item views
-        holder.userDP.setImageResource(homeFeedItems.getUserDP());
+        new ImgLoader(holder.userDP).execute(homeFeedItems.getUserDP());
         holder.clubName.setText(homeFeedItems.getClubName());
-        holder.postMedia.setImageResource(homeFeedItems.getPostMedia());
+        new ImgLoader(holder.postMedia, holder.progressBar).execute(homeFeedItems.getPostMedia());
         holder.description.setText(homeFeedItems.getDescription());
         //onClick for item buttons
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
@@ -96,5 +105,47 @@ public class HomeFeedItemAdapter
     @Override
     public int getItemCount() {
         return homeFeedItems.size();
+    }
+
+    public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
+
+        ImageView iv;
+        ProgressBar pb;
+        Bitmap bmp;
+
+        public ImgLoader(ImageView iv) {
+            this.iv = iv;
+        }
+        public ImgLoader(ImageView iv, ProgressBar pb) {
+            this.iv = iv;
+            this.pb = pb;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            if(pb!=null)
+                pb.setVisibility(View.VISIBLE);
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... ImgUrl) {
+            try {
+                URL url = new URL(ImgUrl[0]);
+                InputStream is = url.openStream();
+                bmp = BitmapFactory.decodeStream(is);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            iv.setImageBitmap(bitmap);
+            if(pb !=null)
+                pb.setVisibility(View.GONE);
+            super.onPostExecute(bitmap);
+        }
     }
 }

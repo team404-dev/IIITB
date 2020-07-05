@@ -2,28 +2,28 @@ package com.example.iiitb_connects;
 
 public class HomeFeedItems {
 
-    private int userDP;
-    private String clubName;
-    private int postMedia;
+    private String userDP;
+    private String username;
+    private String Img;
     private String description;
 
-    public HomeFeedItems(int userDP, String clubName, int postMedia, String description) {
+    public HomeFeedItems(String userDP, String username, String Img, String description) {
         this.userDP = userDP;
-        this.clubName = clubName;
-        this.postMedia = postMedia;
+        this.username = username;
+        this.Img = Img;
         this.description = description;
     }
 
-    public int getUserDP() {
+    public String getUserDP() {
         return userDP;
     }
 
-    public int getPostMedia() {
-        return postMedia;
+    public String getPostMedia() {
+        return Img;
     }
 
     public String getClubName() {
-        return clubName;
+        return username;
     }
 
     public String getDescription() {

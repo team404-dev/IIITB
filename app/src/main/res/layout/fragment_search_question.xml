@@ -27,8 +27,6 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="550dp"
-            android:layout_above="@+id/addANewQuestion"
-            android:layout_below="@+id/searchViewQuestion"
             android:layout_marginTop="20sp"
             android:layout_marginBottom="20sp">
 
@@ -45,8 +43,6 @@
             android:id="@+id/addANewQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="bottom"
             android:layout_marginBottom="21dp"
             android:background="@drawable/my_button"

@@ -4,6 +4,37 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <RelativeLayout
+        android:id="@+id/darkLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#dadada"
+        android:alpha="0.4"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/progressBarLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:elevation="20dp"
+        android:background="#fff"
+        android:visibility="gone">
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            style="@style/Widget.AppCompat.ProgressBar"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uploading..."
+            android:paddingHorizontal="5dp"
+            style="@style/TextAppearance.MaterialComponents.Body1"/>
+    </LinearLayout>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -13,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/closeBtn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/close_logo"
@@ -22,20 +54,32 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageView
-        android:id="@+id/postImg"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postImgLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="30dp"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/default_img"/>
+        android:background="#fff">
+        <ImageView
+            android:id="@+id/postImg"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/default_img"
+            android:scaleType="fitCenter"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/descriptionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/postImg"
+        android:layout_below="@id/postImgLayout"
         android:layout_above="@id/uploadBtn"
         android:layout_margin="10dp"
         android:hint="Description"
@@ -43,7 +87,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/description"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text=" "/>
     </com.google.android.material.textfield.TextInputLayout>
 

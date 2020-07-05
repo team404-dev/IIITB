@@ -160,6 +160,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         }
                     }
                     else {
+                        mDatabaseRef.child("profilePhoto").setValue(null);
                         Toast.makeText(EditProfileActivity.this, "Changes applied!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -63,7 +63,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/default_img"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitCenter"/>
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/Widget.AppCompat.ProgressBar"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout

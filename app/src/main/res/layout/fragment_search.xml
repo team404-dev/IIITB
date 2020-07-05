@@ -44,8 +44,8 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/view_shape"
-                app:queryHint="Search" />
+                app:queryHint="Search"
+                android:background="@color/LightBlueColor"/>
 
             <Space
                 android:id="@+id/space1"

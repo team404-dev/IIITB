@@ -13,7 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -25,6 +32,10 @@ public class HomeFragment extends Fragment {
 
     //list of recycler view items
     private List<HomeFeedItems> homeFeedItemsList;
+    HomeFeedItemAdapter adapter;
+
+    //Firebase
+    DatabaseReference posts = FirebaseDatabase.getInstance().getReference("posts");
 
     @Nullable
     @Override
@@ -36,6 +47,8 @@ public class HomeFragment extends Fragment {
         refreshLayout = view.findViewById(R.id.refreshLayout);
         homeFeedRCV = view.findViewById(R.id.homeFeedRCV);
 
+        homeFeedItemsList = new ArrayList<>();
+
         //onClick func of shoutout button only visible when shoutouts available
         //show shoutouts as alert dialog
 
@@ -44,18 +57,17 @@ public class HomeFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         homeFeedRCV.setLayoutManager(layoutManager);
 
+        adapter = new HomeFeedItemAdapter(homeFeedItemsList);
+        homeFeedRCV.setAdapter(adapter);
+
         //post feed lists
         loadData();
-        HomeFeedItemAdapter adapter = new HomeFeedItemAdapter(homeFeedItemsList);
-        homeFeedRCV.setAdapter(adapter);
 
         //refresh layout
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 loadData();
-                HomeFeedItemAdapter adapter = new HomeFeedItemAdapter(homeFeedItemsList);
-                homeFeedRCV.setAdapter(adapter);
             }
         });
 
@@ -63,16 +75,35 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadData() {
-        homeFeedItemsList = new ArrayList<>();
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img2, "team404dev", R.drawable.img1, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img1, "codame_codingClub", R.drawable.img3, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img3, "mridangam_culturalClub", R.drawable.img2, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img2, "team404dev", R.drawable.img1, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img1, "codame_codingClub", R.drawable.img3, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img3, "mridangam_culturalClub", R.drawable.img2, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img2, "team404dev", R.drawable.img1, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img1, "codame_codingClub", R.drawable.img3, "First post, from the developer's side. Enjoy!"));
-        homeFeedItemsList.add(new HomeFeedItems(R.drawable.img3, "mridangam_culturalClub", R.drawable.img2, "First post, from the developer's side. Enjoy!"));
+        posts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userDP, username, Img, description;
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    userDP=null;username=null;Img=null;description=null;
+                    if(ds.hasChild("postsInfo")) {
+                        if(ds.child("postsInfo").hasChild("Img") && ds.child("postsInfo").child("Img").getValue()!=null)
+                            Img = ds.child("postsInfo").child("Img").getValue().toString();
+                        if(ds.child("postsInfo").hasChild("description") && ds.child("postsInfo").child("description").getValue()!=null)
+                            description = ds.child("postsInfo").child("description").getValue().toString();
+                    }
+                    if(ds.hasChild("userInfo")) {
+                        if(ds.child("userInfo").hasChild("userDp") && ds.child("userInfo").child("userDp").getValue()!=null)
+                            userDP = ds.child("userInfo").child("userDp").getValue().toString();
+                        if(ds.child("userInfo").hasChild("username") && ds.child("userInfo").child("username").getValue()!=null)
+                            username = ds.child("userInfo").child("username").getValue().toString();
+                    }
+                    homeFeedItemsList.add(new HomeFeedItems(userDP, username, Img, description));
+                    Collections.reverse(homeFeedItemsList);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         refreshLayout.setRefreshing(false);
     }
 }
