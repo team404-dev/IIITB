@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SearchFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarInSearch"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:elevation="20dp">
+        app:menu="@menu/add_question_menu">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -20,106 +21,43 @@
                 android:layout_centerVertical="true"
                 android:text="Search"
                 android:textColor="#fff"
-                android:textSize="28sp" />
+                android:layout_marginStart="10dp"
+                android:textSize="20sp" />
+
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbarInSearch"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp">
 
-        <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="#fff"
+        android:id="@+id/appBar">
+
+        <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/LightBlueColor"
+            android:id="@+id/searchTabLayout"/>
 
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:queryHint="Search"
-                android:background="@color/LightBlueColor"/>
-
-            <Space
-                android:id="@+id/space1"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_below="@+id/searchView"/>
-
-            <TextView
-                android:id="@+id/recentSearchesTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="100dp"
-                android:text="Recent Searches :"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
-
-            <Space
-                android:id="@+id/space2"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_below="@+id/recentSearchesTextView"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recentSearchesRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@id/space2"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/view_shape"/>
-
-            <Space
-                android:id="@+id/space3"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_below="@+id/recentSearchesRecyclerView"/>
-
-            <TextView
-                android:id="@+id/challengesTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/space3"
-                android:text="Challenges :"
-                android:textSize="20sp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"/>
-
-            <Space
-                android:id="@+id/space4"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_below="@+id/challengesTextView"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/challangesRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/space4"
-                android:background="@drawable/view_shape"/>
-
-        </RelativeLayout>
-
-    </ScrollView>
+    </com.google.android.material.appbar.AppBarLayout>
 
 
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appBar"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"/>
+
+    </RelativeLayout>
 </RelativeLayout>

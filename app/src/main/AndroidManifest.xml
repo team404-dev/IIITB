@@ -13,8 +13,12 @@
         android:roundIcon="@drawable/iiit_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SetupPost"></activity>
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".AddQuestionActivity"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".SetupPost"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".EditProfileActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
         <activity

@@ -3,56 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchQuestion">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SearchQuestionFragment">
 
-    <ScrollView
+    <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:id="@+id/searchViewAnant"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search"/>
 
-        <LinearLayout
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchViewAnant"
+        android:id="@+id/refreshLayout1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/searchViewAnant"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20sp"
-            android:paddingRight="20sp">
+            android:id="@+id/searchQuestionRecyclerview" />
 
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchViewQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/view_shape" />
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="550dp"
-            android:layout_marginTop="20sp"
-            android:layout_marginBottom="20sp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/questionsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/view_shape"
-                android:padding="7dp" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <Button
-            android:id="@+id/addANewQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="21dp"
-            android:background="@drawable/my_button"
-            android:text="Add a new question"
-            android:textColor="@color/colorWhite" />
-
-        </LinearLayout>
-
-
-    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

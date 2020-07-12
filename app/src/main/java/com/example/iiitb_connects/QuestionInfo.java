@@ -1,31 +1,37 @@
 package com.example.iiitb_connects;
 
+import android.widget.TextView;
+
 public class QuestionInfo {
+    //private int mImageRes;
+    private String mQuestion;
+    private int mNoOfAnswers;
 
-    public String questionString;
-    public int numberOfAnswers;
+    //View
+    TextView questionTextView;
 
-    //Constructor
-    public QuestionInfo(String questionString, int numberOfAnswers) {
-        this.questionString = questionString;
-        this.numberOfAnswers = numberOfAnswers;
+    public QuestionInfo() {
+    }
+
+    public QuestionInfo(String mQuestion, int mNoOfAnswers) {
+        this.mQuestion = mQuestion;
+        this.mNoOfAnswers = mNoOfAnswers;
     }
 
 
-    //Getter and Setter methods
-    public String getQuestionString() {
-        return questionString;
+    public String getmQuestion() {
+        return mQuestion;
     }
 
-    public void setQuestionString(String questionString) {
-        this.questionString = questionString;
+    public void setmQuestion(String mQuestion) {
+        this.mQuestion = mQuestion;
     }
 
-    public int getNumberOfAnswers() {
-        return numberOfAnswers;
+    public int getmNoOfAnswers() {
+        return mNoOfAnswers;
     }
 
-    public void setNumberOfAnswers(int numberOfAnswers) {
-        this.numberOfAnswers = numberOfAnswers;
+    public void setmNoOfAnswers(int mNoOfAnswers) {
+        this.mNoOfAnswers = mNoOfAnswers;
     }
 }

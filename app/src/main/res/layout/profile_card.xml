@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="7dp"
-    android:layout_marginBottom="2dp">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -18,8 +16,7 @@
             android:layout_width="40sp"
             android:layout_height="40dp"
             android:layout_gravity="start"
-            android:src="@drawable/question_vector_asset"
-            android:id="@+id/questionLogoImageView"/>
+            android:src="@drawable/question_vector_asset"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
