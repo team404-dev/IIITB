@@ -103,9 +103,8 @@ public class SetupPost extends AppCompatActivity {
         mDatabaseRef.child(mUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild("profilePhoto") && snapshot.child("profilePhoto").getValue()!=null)
-                    mUserDp = snapshot.child("profilePhoto").getValue().toString();
                 mUsername = snapshot.child("username").getValue().toString();
+                mUserDp = snapshot.child("templateProfilePhoto").getValue().toString();
             }
 
             @Override
@@ -113,7 +112,6 @@ public class SetupPost extends AppCompatActivity {
 
             }
         });
-
 
         try {
 

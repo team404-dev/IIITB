@@ -1,10 +1,14 @@
 package com.example.iiitb_connects;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,13 +33,14 @@ public class HomeFragment extends Fragment {
     private Button shoutoutButton;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView homeFeedRCV;
+    private RelativeLayout loadScreen;
 
     //list of recycler view items
     private List<HomeFeedItems> homeFeedItemsList;
-    HomeFeedItemAdapter adapter;
+    private HomeFeedItemAdapter adapter;
 
     //Firebase
-    DatabaseReference posts = FirebaseDatabase.getInstance().getReference("posts");
+    private DatabaseReference posts = FirebaseDatabase.getInstance().getReference("posts");
 
     @Nullable
     @Override
@@ -46,6 +51,7 @@ public class HomeFragment extends Fragment {
         shoutoutButton = view.findViewById(R.id.shoutoutButton);
         refreshLayout = view.findViewById(R.id.refreshLayout);
         homeFeedRCV = view.findViewById(R.id.homeFeedRCV);
+        loadScreen = view.findViewById(R.id.loadScreen);
 
         homeFeedItemsList = new ArrayList<>();
 
@@ -57,16 +63,20 @@ public class HomeFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         homeFeedRCV.setLayoutManager(layoutManager);
 
-        adapter = new HomeFeedItemAdapter(homeFeedItemsList);
+        adapter = new HomeFeedItemAdapter(homeFeedItemsList, getContext());
         homeFeedRCV.setAdapter(adapter);
 
         //post feed lists
-        loadData();
+        if(savedInstanceState==null) {
+            loadScreen.setVisibility(View.VISIBLE);
+            loadData();
+        }
 
         //refresh layout
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                homeFeedItemsList.clear();
                 loadData();
             }
         });
@@ -74,11 +84,12 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+
+    String userDP, username, Img, description;
     private void loadData() {
         posts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String userDP, username, Img, description;
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     userDP=null;username=null;Img=null;description=null;
                     if(ds.hasChild("postsInfo")) {
@@ -88,14 +99,15 @@ public class HomeFragment extends Fragment {
                             description = ds.child("postsInfo").child("description").getValue().toString();
                     }
                     if(ds.hasChild("userInfo")) {
-                        if(ds.child("userInfo").hasChild("userDp") && ds.child("userInfo").child("userDp").getValue()!=null)
-                            userDP = ds.child("userInfo").child("userDp").getValue().toString();
                         if(ds.child("userInfo").hasChild("username") && ds.child("userInfo").child("username").getValue()!=null)
                             username = ds.child("userInfo").child("username").getValue().toString();
+                        if(ds.child("userInfo").hasChild("userDp") && ds.child("userInfo").child("userDp").getValue()!=null)
+                            userDP = ds.child("userInfo").child("userDp").getValue().toString();
                     }
-                    homeFeedItemsList.add(new HomeFeedItems(userDP, username, Img, description));
+                    homeFeedItemsList.add(new HomeFeedItems(userDP, username, Img, description, ds.getKey()));
                     Collections.reverse(homeFeedItemsList);
                     adapter.notifyDataSetChanged();
+                    loadScreen.setVisibility(View.GONE);
                 }
             }
 

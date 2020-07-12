@@ -2,6 +2,11 @@ package com.example.iiitb_connects;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -9,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,6 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +48,7 @@ public class ProfileFragment extends Fragment {
     private Button editProfileButton;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ProgressBar PPProgressBar;
     private androidx.appcompat.widget.Toolbar toolbar;
 
     //Init tab items
@@ -65,6 +75,7 @@ public class ProfileFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPagerProfile);
         toolbar = view.findViewById(R.id.toolbar);
+        PPProgressBar = view.findViewById(R.id.PPProgressBar);
 
         //edit profile onClick method
         editProfileButton = view.findViewById(R.id.editProfileButton);
@@ -87,7 +98,7 @@ public class ProfileFragment extends Fragment {
                 ImageView imagePopupIv = imgPopupView.findViewById(R.id.imagePopupIv);
                 TextView imgPopupBio = imgPopupView.findViewById(R.id.imgPopupBio);
                 if(profilePhotoUrl != null) {
-                    Picasso.with(getActivity()).load(profilePhotoUrl).into(imagePopupIv);
+                    Picasso.with(getContext()).load(profilePhotoUrl).into(imagePopupIv);
                 }
                 if(mBio!=null)
                     imgPopupBio.setText(mBio);
@@ -126,9 +137,9 @@ public class ProfileFragment extends Fragment {
                 if(dataSnapshot.hasChild("bio") && dataSnapshot.child("bio").getValue()!=null) {
                     mBio = dataSnapshot.child("bio").getValue().toString();
                 }
-                if(dataSnapshot.hasChild("profilePhoto") && dataSnapshot.child("profilePhoto").getValue()!=null) {
-                    profilePhotoUrl = dataSnapshot.child("profilePhoto").getValue().toString();
-                    Picasso.with(getActivity()).load(dataSnapshot.child("profilePhoto").getValue().toString()).into(profilePhoto);
+                if(dataSnapshot.hasChild("realProfilePhoto") && dataSnapshot.child("realProfilePhoto").getValue()!=null) {
+                    profilePhotoUrl = dataSnapshot.child("realProfilePhoto").getValue().toString();
+                    new ImgLoader(profilePhoto, PPProgressBar).execute(dataSnapshot.child("realProfilePhoto").getValue().toString());
                 }
             }
 
@@ -163,4 +174,47 @@ public class ProfileFragment extends Fragment {
                 }
             };
 
+    public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
+
+        ImageView iv;
+        ProgressBar pb;
+        Bitmap bmp;
+
+        public ImgLoader(ImageView iv) {
+            this.iv = iv;
+        }
+        public ImgLoader(ImageView iv, ProgressBar pb) {
+            this.iv = iv;
+            this.pb = pb;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if(pb != null) {
+                pb.setVisibility(View.VISIBLE);
+                iv.setImageBitmap(null);
+            }
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... ImgUrl) {
+            try {
+                URL url = new URL(ImgUrl[0]);
+                InputStream is = url.openStream();
+                bmp = BitmapFactory.decodeStream(is);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            iv.setImageBitmap(bitmap);
+            if(pb !=null)
+                pb.setVisibility(View.GONE);
+            super.onPostExecute(bitmap);
+        }
+    }
 }

@@ -123,8 +123,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="5dp"
-                    android:paddingVertical="10dp"
-                    android:autoLink="all"/>
+                    android:paddingVertical="5dp"
+                    android:autoLink="all"
+                    android:textColor="#000"/>
             </RelativeLayout>
 
         </RelativeLayout>

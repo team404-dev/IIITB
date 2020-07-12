@@ -136,16 +136,15 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="Signup"
-                android:fontFamily="@font/antic_slab"
-                android:textColor="#fff"/>
+                android:textColor="#fff"
+                style="@style/Widget.MaterialComponents.Button"/>
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signupButton"
                 android:text="Signed up? Login"
-                android:fontFamily="@font/antic_slab"
-                android:textColor="@color/TitleColor"
+                android:textColor="@color/colorPrimary"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
         </RelativeLayout>
 

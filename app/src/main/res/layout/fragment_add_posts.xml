@@ -9,9 +9,8 @@
         android:id="@+id/previewImgLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp">
+        android:layout_margin="10dp"
+        android:layout_centerInParent="true">
         <ImageView
             android:id="@+id/previewImg"
             android:layout_width="0dp"
@@ -25,26 +24,33 @@
             android:scaleType="fitCenter"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/choosePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/previewImgLayout"
-        android:layout_centerHorizontal="true"
-        android:paddingHorizontal="40dp"
-        android:text="Choose photo"
-        android:fontFamily="@font/antic_slab"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-
-    <Button
-        android:id="@+id/acceptButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:visibility="gone"
-        android:text="Next"
-        style="@style/Widget.MaterialComponents.Button"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="-10dp"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/choosePhoto"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Choose photo"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="@color/colorAccent"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+        <Button
+            android:id="@+id/acceptButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="@color/colorAccent"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+    </LinearLayout>
 
 </RelativeLayout>

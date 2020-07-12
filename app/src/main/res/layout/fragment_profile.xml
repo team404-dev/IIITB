@@ -22,10 +22,11 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:text="Some error occurred!!"
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:paddingHorizontal="10dp"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:includeFontPadding="false"/>
             <TextView
                 android:id="@+id/fullName"
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/username"
                 android:layout_marginTop="7dp"
-                android:textSize="20sp"
+                android:text="Cannot load!"
                 android:textColor="#fff"
                 android:paddingHorizontal="10dp"
                 android:includeFontPadding="false"/>
@@ -43,7 +44,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#2196F3"
+        android:background="@color/colorAccent"
         android:layout_marginTop="-2dp"
         android:layout_below="@id/toolbar"/>
 
@@ -56,18 +57,24 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="-75dp"
         app:cardCornerRadius="250dp"
-        app:cardBackgroundColor="#2196F3">
+        app:cardBackgroundColor="@color/colorAccent">
         <androidx.cardview.widget.CardView
             android:layout_width="145dp"
             android:layout_height="145dp"
             app:cardCornerRadius="250dp"
             android:layout_gravity="center">
+            <ProgressBar
+                android:id="@+id/PPProgressBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
             <ImageView
                 android:id="@+id/profilePicture"
                 android:layout_width="145dp"
                 android:layout_height="145dp"
-                android:src="@drawable/profile_logo"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_logo"/>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
@@ -92,21 +99,13 @@
         <Button
             android:id="@+id/editProfileButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:textAlignment="textStart"
+            android:layout_height="match_parent"
+            android:text="Edit profile"
+            android:textAllCaps="false"
             android:paddingHorizontal="10dp"
-            android:fontFamily="@font/antic_slab"
             android:textColor="@color/colorPrimary"
+            android:drawableEnd="@drawable/edit_logo"
             style="@style/Widget.MaterialComponents.Button.TextButton"/>
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="fitXY"
-            android:layout_marginRight="15dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/edit_logo"/>
     </RelativeLayout>
 
     <com.google.android.material.appbar.AppBarLayout

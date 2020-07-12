@@ -8,7 +8,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,18 +17,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/closeBtn"
                 android:text="Add"
                 android:textColor="#fff"
-                android:layout_marginStart="10dp"
-                android:textSize="28sp" />
+                android:layout_marginHorizontal="10dp"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
             <ImageView
                 android:id="@+id/closeBtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/close_logo"
-                android:layout_marginHorizontal="10dp"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/logo_back_arrow"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 

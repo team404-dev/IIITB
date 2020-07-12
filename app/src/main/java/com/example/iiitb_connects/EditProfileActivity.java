@@ -108,26 +108,30 @@ public class EditProfileActivity extends AppCompatActivity {
                     if(profilePhotoUri != null){
                         try {
                             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                            final StorageReference mRef = mStorageRef.child(mAuth.getCurrentUser().getUid()+".jpg");
+                            final StorageReference mRef = mStorageRef.child(mAuth.getCurrentUser().getUid());
                             Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), profilePhotoUri);
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
                             bmp.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+                            bmp.compress(Bitmap.CompressFormat.JPEG, 0, baos2);
                             byte[] data = baos.toByteArray();
+                            byte[] data2 = baos2.toByteArray();
                             //uploading
-                            final UploadTask uploadTask = mRef.putBytes(data);
+                            final UploadTask uploadTask = mRef.child("realImg.jpg").putBytes(data);
+                            final UploadTask uploadTask2 = mRef.child("templateImg.jpg").putBytes(data2);
                             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     Toast.makeText(EditProfileActivity.this, "Changes applied!", Toast.LENGTH_SHORT).show();
-                                    mRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    mRef.child("realImg.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            mDatabaseRef.child("profilePhoto").setValue(uri.toString());
+                                            mDatabaseRef.child("realProfilePhoto").setValue(uri.toString());
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            mDatabaseRef.child("profilePhoto").setValue(null);
+                                            mDatabaseRef.child("realProfilePhoto").setValue(null);
                                         }
                                     });
                                     progressBarLayout.setVisibility(View.GONE);
@@ -153,6 +157,22 @@ public class EditProfileActivity extends AppCompatActivity {
                                     darkLayout.setVisibility(View.VISIBLE);
                                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                                             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                }
+                            });
+                            uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    mRef.child("templateImg.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            mDatabaseRef.child("templateProfilePhoto").setValue(uri.toString());
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            mDatabaseRef.child("templateProfilePhoto").setValue(null);
+                                        }
+                                    });
                                 }
                             });
                         } catch (Exception e) {
@@ -245,8 +265,8 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.child("bio").getValue()!=null)
                     bio.setText(snapshot.child("bio").getValue().toString());
-                if(snapshot.child("profilePhoto").getValue()!=null)
-                    Picasso.with(EditProfileActivity.this).load(snapshot.child("profilePhoto").getValue().toString()).into(profilePhoto);
+                if(snapshot.child("realProfilePhoto").getValue()!=null)
+                    Picasso.with(EditProfileActivity.this).load(snapshot.child("realProfilePhoto").getValue().toString()).into(profilePhoto);
             }
 
             @Override

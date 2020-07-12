@@ -115,7 +115,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Login"
-                android:fontFamily="@font/antic_slab"
                 android:textColor="#fff"
                 style="@style/Widget.MaterialComponents.Button"/>
             <Button

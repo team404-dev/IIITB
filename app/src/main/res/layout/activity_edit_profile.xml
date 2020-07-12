@@ -38,7 +38,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:elevation="20dp">
         <RelativeLayout
@@ -47,21 +47,32 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/antic_slab"
+                android:layout_toEndOf="@id/closeButton"
                 android:text="Edit profile"
+                android:layout_marginHorizontal="10dp"
                 android:textColor="#fff"
-                android:textSize="28sp"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_centerVertical="true"/>
             <ImageButton
                 android:id="@+id/closeButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginHorizontal="10dp"
-                android:src="@drawable/close_logo"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/logo_back_arrow"
                 android:scaleType="fitXY"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:background="#00000000"/>
+                android:background="#00000000" />
+            <Button
+                android:id="@+id/apply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Apply"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -90,7 +101,7 @@
                 android:layout_below="@id/profilePhoto"
                 android:layout_centerHorizontal="true"
                 android:text="Change profile photo"
-                android:fontFamily="@font/antic_slab"
+                android:textAllCaps="false"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/colorPrimary"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
@@ -152,18 +163,5 @@
         </RelativeLayout>
 
     </ScrollView>
-
-    <Button
-        android:id="@+id/apply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Apply"
-        android:fontFamily="@font/antic_slab"
-        android:paddingHorizontal="20dp"
-        android:textColor="#fff"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        style="@style/Widget.MaterialComponents.Button"/>
 
 </RelativeLayout>

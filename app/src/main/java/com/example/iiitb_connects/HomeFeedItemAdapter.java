@@ -1,5 +1,7 @@
 package com.example.iiitb_connects;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -47,9 +49,11 @@ public class HomeFeedItemAdapter
     }
 
     private List<HomeFeedItems> homeFeedItems;
+    Context context;
 
-    public HomeFeedItemAdapter(List<HomeFeedItems> homeFeedItems) {
+    public HomeFeedItemAdapter(List<HomeFeedItems> homeFeedItems, Context context) {
         this.homeFeedItems = homeFeedItems;
+        this.context = context;
     }
 
     @NonNull
@@ -62,9 +66,20 @@ public class HomeFeedItemAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final HomeFeedItemAdapter.ViewHolder holder, int position) {
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull final HomeFeedItemAdapter.ViewHolder holder, final int position) {
         HomeFeedItems homeFeedItems = this.homeFeedItems.get(position);
 
+        final String postId = homeFeedItems.getPostId();
         //Setting up item views
         new ImgLoader(holder.userDP).execute(homeFeedItems.getUserDP());
         holder.clubName.setText(homeFeedItems.getClubName());
@@ -98,6 +113,9 @@ public class HomeFeedItemAdapter
             @Override
             public void onClick(View v) {
                 //takes to comment section
+                Intent intent = new Intent(context, CommentsActivity.class);
+                intent.putExtra("postId", postId);
+                context.startActivity(intent);
             }
         });
     }

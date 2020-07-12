@@ -37,9 +37,6 @@ public class SplashScreen extends AppCompatActivity {
         //Init views
         logo = (ImageView) findViewById(R.id.logo);
         title = (TextView) findViewById(R.id.title);
-
-        logo.animate().alpha(1).setDuration(750);
-        title.animate().alpha(1).setDuration(750);
     }
 
     @Override
@@ -50,9 +47,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(currentUser != null) {
-                    //update shared preferences
-
+                if (currentUser != null) {
                     //shows up main activity
                     Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                     startActivity(intent);
@@ -64,7 +59,6 @@ public class SplashScreen extends AppCompatActivity {
                     finish();
                 }
             }
-        }, 1000);
-
+        }, 500);
     }
 }

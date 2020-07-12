@@ -4,10 +4,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <RelativeLayout
+        android:id="@+id/loadScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:background="#DFDFDF"
+        android:visibility="gone">
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:elevation="20dp">
         <RelativeLayout
@@ -19,7 +32,8 @@
                 android:layout_height="wrap_content"
                 android:text="IIITB-Connects"
                 android:textColor="#fff"
-                android:textSize="28sp" />
+                android:textStyle="bold"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -46,8 +60,7 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#dadada">
+                android:layout_height="match_parent">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/homeFeedRCV"
                     android:layout_width="match_parent"
