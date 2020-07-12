@@ -62,6 +62,7 @@
             android:layout_width="145dp"
             android:layout_height="145dp"
             app:cardCornerRadius="250dp"
+            android:elevation="20dp"
             android:layout_gravity="center">
             <ProgressBar
                 android:id="@+id/PPProgressBar"
@@ -94,7 +95,7 @@
         android:layout_below="@id/toolbar"
         android:layout_toLeftOf="@id/profilePictureLayout"
         android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="10dp"
         android:background="@drawable/outline_box">
         <Button
             android:id="@+id/editProfileButton"
