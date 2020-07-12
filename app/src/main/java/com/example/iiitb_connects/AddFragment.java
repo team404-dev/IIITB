@@ -89,7 +89,7 @@ public class AddFragment extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View v = inflater.inflate(R.layout.master_key_finder, null);
 
-        //inti views
+        //init views
         final TextInputEditText masterKey = v.findViewById(R.id.masterKey);
         Button positiveButton = v.findViewById(R.id.positiveButton);
         Button negativeButton = v.findViewById(R.id.negativeButton);
