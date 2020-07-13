@@ -1,5 +1,6 @@
 package com.example.iiitb_connects;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.internal.$Gson$Preconditions;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
@@ -36,9 +38,11 @@ public class CommentItemAdapter
     }
 
     private List<CommentItems> commentItems;
+    private Context context;
 
-    public CommentItemAdapter(List<CommentItems> commentItems) {
+    public CommentItemAdapter(List<CommentItems> commentItems, Context context) {
         this.commentItems = commentItems;
+        this.context = context;
     }
 
     @Override
@@ -63,7 +67,8 @@ public class CommentItemAdapter
     @Override
     public void onBindViewHolder(@NonNull CommentItemAdapter.ViewHolder holder, int position) {
         CommentItems commentItems = this.commentItems.get(position);
-        new ImgLoader(holder.userDP).execute(commentItems.getUserDp());
+        Picasso.with(context).load(commentItems.getUserDp()).into(holder.userDP);
+        //new ImgLoader(holder.userDP).execute(commentItems.getUserDp());
         holder.username.setText(commentItems.getUsername());
         holder.comment.setText(commentItems.getComments());
     }

@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     private HomeFeedItemAdapter adapter;
 
     //Firebase
-    private DatabaseReference posts = FirebaseDatabase.getInstance().getReference("posts");
+    private DatabaseReference posts = FirebaseDatabase.getInstance().getReference("Posts");
 
     @Nullable
     @Override
@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
 
         //post feed lists
         if(savedInstanceState==null) {
+            refreshLayout.setEnabled(false);
             loadScreen.setVisibility(View.VISIBLE);
             loadData();
         }
@@ -85,13 +86,13 @@ public class HomeFragment extends Fragment {
     }
 
 
-    String userDP, username, Img, description;
+    String Uid, username, userDp, Img, description;
     private void loadData() {
         posts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {
-                    userDP=null;username=null;Img=null;description=null;
+                    Uid=null;Img=null;description=null;
                     if(ds.hasChild("postsInfo")) {
                         if(ds.child("postsInfo").hasChild("Img") && ds.child("postsInfo").child("Img").getValue()!=null)
                             Img = ds.child("postsInfo").child("Img").getValue().toString();
@@ -102,12 +103,13 @@ public class HomeFragment extends Fragment {
                         if(ds.child("userInfo").hasChild("username") && ds.child("userInfo").child("username").getValue()!=null)
                             username = ds.child("userInfo").child("username").getValue().toString();
                         if(ds.child("userInfo").hasChild("userDp") && ds.child("userInfo").child("userDp").getValue()!=null)
-                            userDP = ds.child("userInfo").child("userDp").getValue().toString();
+                            userDp = ds.child("userInfo").child("userDp").getValue().toString();
                     }
-                    homeFeedItemsList.add(new HomeFeedItems(userDP, username, Img, description, ds.getKey()));
+                    homeFeedItemsList.add(new HomeFeedItems(username, userDp, Img, description, ds.getKey()));
                     Collections.reverse(homeFeedItemsList);
                     adapter.notifyDataSetChanged();
                     loadScreen.setVisibility(View.GONE);
+                    refreshLayout.setEnabled(true);
                 }
             }
 

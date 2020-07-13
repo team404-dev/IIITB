@@ -15,11 +15,11 @@
         android:paddingLeft="10dp">
 
         <ImageView
-            android:layout_width="40sp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="start"
             android:src="@drawable/question_vector_asset"
-            android:id="@+id/questionLogoImageView"/>
+            android:id="@+id/questionLogoImageView" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="Answers : "
                 android:layout_below="@+id/questionTextView"
-                android:layout_marginLeft="120dp"
+                android:layout_toStartOf="@id/noOfAnswersTextView"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
@@ -52,12 +52,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:layout_below="@+id/questionTextView"
+                android:layout_below="@id/questionTextView"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                android:id="@+id/noOfAnswersTextView"
-                android:layout_toRightOf="@+id/answersTextView"/>
+                android:id="@+id/noOfAnswersTextView"/>
 
         </RelativeLayout>
 

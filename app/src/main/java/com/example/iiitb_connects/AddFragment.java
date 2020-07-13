@@ -68,8 +68,8 @@ public class AddFragment extends Fragment {
     private void setUpTabs() {
         tabs = new ArrayList<>();
         tabsTitle = new ArrayList<>();
-        tabs.add(new AddChallengeFragment());tabsTitle.add("Challenges");
         tabs.add(new AddPostsFragment());tabsTitle.add("Posts");
+        tabs.add(new AddChallengeFragment());tabsTitle.add("Challenges");
     }
 
     @Override

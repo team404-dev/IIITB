@@ -19,18 +19,19 @@
                 android:id="@+id/postTitles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent">
+                android:background="@drawable/gradient">
                 <androidx.cardview.widget.CardView
                     android:id="@+id/userDPLayout"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    app:cardCornerRadius="35dp"
+                    app:cardCornerRadius="18dp"
                     android:layout_margin="5dp"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    app:cardPreventCornerOverlap="true">
                     <ImageView
                         android:id="@+id/userDP"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentStart="true"
                         android:src="@drawable/default_img"
                         android:scaleType="centerCrop"
@@ -75,11 +76,20 @@
                     style="@style/Widget.AppCompat.ProgressBar"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/likesCounter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/IVLayout"
+                android:paddingHorizontal="20dp"
+                android:text="Liked by 0 people"
+                android:background="@color/LightBlueColor"/>
+
             <RelativeLayout
                 android:id="@+id/reactLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/IVLayout"
+                android:layout_below="@id/likesCounter"
                 android:paddingVertical="5dp"
                 android:background="@color/LightBlueColor">
                 <ImageView
@@ -99,7 +109,7 @@
                     android:id="@+id/commentButton"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_marginHorizontal="50dp"
+                    android:layout_marginLeft="50dp"
                     android:src="@drawable/comment_logo"/>
                 <ImageView
                     android:id="@+id/infoButton"
@@ -111,12 +121,13 @@
                     android:src="@drawable/info_logo"/>
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:id="@+id/descriptionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:background="@color/LightBlueColor"
+                android:visibility="gone"
                 android:layout_below="@id/reactLayout">
                 <TextView
                     android:id="@+id/description"

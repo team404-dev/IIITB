@@ -8,7 +8,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/gradient"
         app:menu="@menu/profile_menu"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light">
@@ -56,14 +56,17 @@
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="-75dp"
-        app:cardCornerRadius="250dp"
+        app:cardCornerRadius="75dp"
         app:cardBackgroundColor="@color/colorAccent"
-        android:elevation="20dp">
+        android:elevation="20dp"
+        app:cardPreventCornerOverlap="true">
         <androidx.cardview.widget.CardView
             android:layout_width="145dp"
             android:layout_height="145dp"
-            app:cardCornerRadius="250dp"
-            android:layout_gravity="center">
+            app:cardCornerRadius="73dp"
+            android:layout_gravity="center"
+            app:cardPreventCornerOverlap="true"
+            android:background="@drawable/gradient">
             <ProgressBar
                 android:id="@+id/PPProgressBar"
                 android:layout_width="50dp"
@@ -72,8 +75,8 @@
                 android:visibility="gone"/>
             <ImageView
                 android:id="@+id/profilePicture"
-                android:layout_width="145dp"
-                android:layout_height="145dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile_logo"/>
         </androidx.cardview.widget.CardView>
