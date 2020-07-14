@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,35 +41,47 @@ public class CommentsActivity extends AppCompatActivity {
     String username; //username
     String userDp; //username
 
+    String getUsername, getUserDp;
+
     //list of recycler view items
     private List<CommentItems> commentItemsList;
     private CommentItemAdapter adapter;
 
     //Firebase
-    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("posts");
-    DatabaseReference mDRef = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    DatabaseReference mRef;
+    DatabaseReference mDRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
+        //init firebase
+        mAuth = FirebaseAuth.getInstance();
+        mRef = FirebaseDatabase.getInstance().getReference("Comments");
+        String Uid = mAuth.getCurrentUser().getUid();
+        mDRef = FirebaseDatabase.getInstance().getReference("Users").child(Uid);
+
         //Init postId
         postId = getIntent().getStringExtra("postId");
-        mRef = mRef.child(postId).child("postsInfo");
+        mRef = mRef.child(postId);
 
-        username = MainActivity.sharedPreferences.getString("username", "Hacker404"); //init username
+        getUsername = MainActivity.sharedPreferences.getString("username", "Hacker404"); //init username
+
+        //init userDp
         mDRef.child("templateProfilePhoto").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userDp = snapshot.getValue().toString();
+                if(snapshot.getValue()!=null)
+                getUserDp = snapshot.getValue().toString();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }); //init userDp
+        });
 
         //Init comment
         closeBtn = findViewById(R.id.closeBtn);
@@ -85,7 +98,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         commentItemsList = new ArrayList<>();
 
-        adapter = new CommentItemAdapter(commentItemsList);
+        adapter = new CommentItemAdapter(commentItemsList, CommentsActivity.this);
         commentRCV.setAdapter(adapter);
 
         //refresh layout
@@ -106,7 +119,7 @@ public class CommentsActivity extends AppCompatActivity {
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
         addComment.setOnClickListener(new View.OnClickListener() {
@@ -116,21 +129,30 @@ public class CommentsActivity extends AppCompatActivity {
                     Toast.makeText(CommentsActivity.this, "Cannot add empty comment!", Toast.LENGTH_SHORT).show();
                 else {
                     //add a comment
-                    DatabaseReference mDatabaseRef = mRef.child("comments").push();
+                    DatabaseReference mDatabaseRef = mRef.push();
                     commentAdded = comment.getText().toString().trim();
                     comment.setText("");
-                    mDatabaseRef.child("username").setValue(username);
-                    mDatabaseRef.child("userDp").setValue(userDp);
-                    mDatabaseRef.child("comment").setValue(commentAdded);
+                    mDatabaseRef.setValue(new commentInfo(getUsername, getUserDp, commentAdded));
                     commentItemsList.clear();
-                    loadData();
                 }
             }
         });
     }
 
+    public class commentInfo {
+        public String username;
+        public String userDp;
+        public String comment;
+
+        public commentInfo(String username, String userDp, String comment) {
+            this.username = username;
+            this.userDp = userDp;
+            this.comment = comment;
+        }
+    }
+
     private void loadData() {
-        mRef.child("comments").addValueEventListener(new ValueEventListener() {
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {

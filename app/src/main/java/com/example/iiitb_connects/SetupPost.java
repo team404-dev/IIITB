@@ -47,14 +47,14 @@ public class SetupPost extends AppCompatActivity {
 
     Uri postImgUri;
     String mDescription;
+    String mUid;
     String mUsername;
     String mUserDp;
-    String mUid;
+    String postId;
 
     //firebase
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    DatabaseReference posts = FirebaseDatabase.getInstance().getReference("posts");
-    DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users");
+    DatabaseReference posts = FirebaseDatabase.getInstance().getReference("Posts");
     StorageReference mSRef = FirebaseStorage.getInstance().getReference("posts");
 
     @Override
@@ -100,11 +100,14 @@ public class SetupPost extends AppCompatActivity {
             mDescription = "";
 
         mUid = mAuth.getCurrentUser().getUid();
-        mDatabaseRef.child(mUid).addValueEventListener(new ValueEventListener() {
+        DatabaseReference mDRef = FirebaseDatabase.getInstance().getReference("Users").child(mUid);
+        mDRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mUsername = snapshot.child("username").getValue().toString();
-                mUserDp = snapshot.child("templateProfilePhoto").getValue().toString();
+                if(snapshot.hasChild("username") && snapshot.child("username").getValue()!=null)
+                    mUsername = snapshot.child("username").getValue().toString();
+                if(snapshot.hasChild("templateProfilePhoto") && snapshot.child("templateProfilePhoto").getValue()!=null)
+                    mUserDp = snapshot.child("templateProfilePhoto").getValue().toString();
             }
 
             @Override
@@ -112,27 +115,30 @@ public class SetupPost extends AppCompatActivity {
 
             }
         });
-
         try {
 
-            final String postId = String.valueOf(System.currentTimeMillis());
+            final String postIdStore = String.valueOf(System.currentTimeMillis());
             Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), postImgUri);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.JPEG, 20, baos);
             byte[] data = baos.toByteArray();
             //uploading
-            final UploadTask uploadTask = mSRef.child(postId).putBytes(data);
+            final UploadTask uploadTask = mSRef.child(postIdStore).putBytes(data);
             uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    mSRef.child(postId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    mSRef.child(postIdStore).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             DatabaseReference mDRef = posts.push();
+                            postId = mDRef.getKey();
                             mDRef.child("userInfo").child("username").setValue(mUsername);
                             mDRef.child("userInfo").child("userDp").setValue(mUserDp);
                             mDRef.child("postsInfo").child("Img").setValue(uri.toString());
                             mDRef.child("postsInfo").child("description").setValue(mDescription);
+
+                            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+                            mRef.child("Likes").child(postId).child("noOfLikes").setValue("0");
 
                             Intent intent = new Intent(SetupPost.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

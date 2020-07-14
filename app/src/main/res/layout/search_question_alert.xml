@@ -3,10 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
     android:elevation="10dp"
-    app:cardUseCompatPadding="true"
-    android:padding="15sp">
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/colorPrimary">
+            android:background="@drawable/gradient">
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
