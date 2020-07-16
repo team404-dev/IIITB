@@ -18,6 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -30,6 +34,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     private ArrayList<QuestionInfo> mQuestionList;
     private ArrayList<QuestionInfo> mQuestionListFull;
     private onItemClickListener listener;
+    String userUidForNoOfAns;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -78,8 +83,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QuestionAdapter.ViewHolder holder, int position) {
-        QuestionInfo currentItem = this.mQuestionList.get(position);
+    public void onBindViewHolder(@NonNull final QuestionAdapter.ViewHolder holder, int position) {
+        final QuestionInfo currentItem = this.mQuestionList.get(position);
 
         String qu = currentItem.getmQuestion();
         int questionSize = qu.length();
@@ -88,7 +93,28 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
 
         holder.mTextViewQuestion.setText(qu);
-        holder.mTextViewNoOfAnswers.setText(String.valueOf(currentItem.getmNoOfAnswers()));
+        final String questionUid = currentItem.getmUid();
+        final String[] noOfAnswers = new String[1];
+        DatabaseReference mRef;
+        mRef = FirebaseDatabase.getInstance().getReference("Questions Asked");
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    userUidForNoOfAns = ds.getKey();
+                    if (ds.hasChild(questionUid)){
+                        noOfAnswers[0] = ds.child(questionUid).child("mNoOfAnswers").getValue().toString();
+                    }
+                }
+                holder.mTextViewNoOfAnswers.setText(noOfAnswers[0]);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override
