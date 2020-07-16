@@ -14,4 +14,5 @@
     <color name="colorBackgroundWindow">?android:attr/windowBackground</color>
     <color name="colorLightestBlue">#e8f3f8</color>
     <color name="colorSkyBlue">#2196f3</color>
+
 </resources>
