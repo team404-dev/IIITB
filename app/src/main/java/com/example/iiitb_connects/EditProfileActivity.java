@@ -266,7 +266,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(snapshot.child("bio").getValue()!=null)
                     bio.setText(snapshot.child("bio").getValue().toString());
                 if(snapshot.child("realProfilePhoto").getValue()!=null)
-                    Picasso.with(EditProfileActivity.this).load(snapshot.child("realProfilePhoto").getValue().toString()).into(profilePhoto);
+                    Picasso.get().load(snapshot.child("realProfilePhoto").getValue().toString()).into(profilePhoto);
             }
 
             @Override
@@ -339,12 +339,12 @@ public class EditProfileActivity extends AppCompatActivity {
             if(requestCode == IMAGE_PICK_GALLERY_REQUEST_CODE) {
                 if(data != null && data.getData()!=null) {
                     profilePhotoUri = data.getData();
-                    Picasso.with(this).load(profilePhotoUri).into(profilePhoto);
+                    Picasso.get().load(profilePhotoUri).into(profilePhoto);
                 } else
                     Toast.makeText(this, "Unknown error occurred", Toast.LENGTH_SHORT).show();
             }
             if(requestCode == IMAGE_PICK_CAMERA_REQUEST_CODE) {
-                Picasso.with(this).load(profilePhotoUri).into(profilePhoto);
+                Picasso.get().load(profilePhotoUri).into(profilePhoto);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

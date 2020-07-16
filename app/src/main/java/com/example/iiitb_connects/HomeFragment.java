@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -40,12 +41,16 @@ public class HomeFragment extends Fragment {
     private HomeFeedItemAdapter adapter;
 
     //Firebase
-    private DatabaseReference posts = FirebaseDatabase.getInstance().getReference("Posts");
+    private DatabaseReference posts;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //Firebase
+        posts = FirebaseDatabase.getInstance().getReference("Posts");
+        posts.keepSynced(true);
 
         //Init views
         shoutoutButton = view.findViewById(R.id.shoutoutButton);
@@ -86,16 +91,20 @@ public class HomeFragment extends Fragment {
     }
 
 
-    String Uid, username, userDp, Img, description;
+    String Uid, username, userDp, Img, description, postId;
     private void loadData() {
-        posts.addValueEventListener(new ValueEventListener() {
+        homeFeedItemsList.clear();
+        Query recentPosts = posts.limitToLast(100);
+        recentPosts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {
-                    Uid=null;Img=null;description=null;
+                    postId=null;Uid=null;Img=null;description=null;
                     if(ds.hasChild("postsInfo")) {
-                        if(ds.child("postsInfo").hasChild("Img") && ds.child("postsInfo").child("Img").getValue()!=null)
+                        if(ds.child("postsInfo").hasChild("Img") && ds.child("postsInfo").child("Img").getValue()!=null) {
                             Img = ds.child("postsInfo").child("Img").getValue().toString();
+                            postId = ds.getKey();
+                        }
                         if(ds.child("postsInfo").hasChild("description") && ds.child("postsInfo").child("description").getValue()!=null)
                             description = ds.child("postsInfo").child("description").getValue().toString();
                     }
@@ -105,12 +114,12 @@ public class HomeFragment extends Fragment {
                         if(ds.child("userInfo").hasChild("userDp") && ds.child("userInfo").child("userDp").getValue()!=null)
                             userDp = ds.child("userInfo").child("userDp").getValue().toString();
                     }
-                    homeFeedItemsList.add(new HomeFeedItems(username, userDp, Img, description, ds.getKey()));
-                    Collections.reverse(homeFeedItemsList);
-                    adapter.notifyDataSetChanged();
-                    loadScreen.setVisibility(View.GONE);
-                    refreshLayout.setEnabled(true);
+                    homeFeedItemsList.add(new HomeFeedItems(username, userDp, Img, description, postId));
                 }
+                Collections.reverse(homeFeedItemsList);
+                adapter.notifyDataSetChanged();
+                loadScreen.setVisibility(View.GONE);
+                refreshLayout.setEnabled(true);
             }
 
             @Override

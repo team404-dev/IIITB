@@ -64,7 +64,7 @@ public class AddPostsFragment extends Fragment {
         if(resultCode==RESULT_OK && requestCode==PICK_IMAGE_REQUEST) {
             if(data!=null && data.getData()!=null) {
                 previewImgUri = data.getData();
-                Picasso.with(getActivity()).load(previewImgUri).into(previewImg);
+                Picasso.get().load(previewImgUri).into(previewImg);
                 acceptBtn.setVisibility(View.VISIBLE);
             }
         }
