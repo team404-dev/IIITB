@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/gradient">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -53,8 +53,8 @@
                 android:hint="Ask a Relevant Question..."
                 android:gravity="center_horizontal"
                 android:layout_gravity="start"
-                android:background="@drawable/view_shape"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:background="?android:attr/windowBackground"
                 android:textColorHint="@color/colorPrimary"
                 android:paddingTop="20sp"
                 android:paddingBottom="20sp"
