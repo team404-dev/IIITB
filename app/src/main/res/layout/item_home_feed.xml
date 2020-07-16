@@ -65,15 +65,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/default_img"
                     android:scaleType="fitCenter"/>
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    style="@style/Widget.AppCompat.ProgressBar"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -81,8 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/IVLayout"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="10dp"
                 android:text="Liked by 0 people"
+                android:textStyle="bold"
                 android:background="@color/LightBlueColor"/>
 
             <RelativeLayout

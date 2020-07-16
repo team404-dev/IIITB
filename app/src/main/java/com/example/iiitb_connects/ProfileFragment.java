@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
                 ImageView imagePopupIv = imgPopupView.findViewById(R.id.imagePopupIv);
                 TextView imgPopupBio = imgPopupView.findViewById(R.id.imgPopupBio);
                 if(profilePhotoUrl != null) {
-                    Picasso.with(getContext()).load(profilePhotoUrl).into(imagePopupIv);
+                    Picasso.get().load(profilePhotoUrl).into(imagePopupIv);
                 }
                 if(mBio!=null)
                     imgPopupBio.setText(mBio);
@@ -130,7 +130,7 @@ public class ProfileFragment extends Fragment {
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(username.getText()==null) {
+                if(username.getText()=="Some error occurred!!") {
                     username.setText(dataSnapshot.child("username").getValue().toString());
                     fullName.setText(dataSnapshot.child("fullName").getValue().toString());
                 }
