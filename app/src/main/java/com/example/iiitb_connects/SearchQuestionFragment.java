@@ -1,6 +1,9 @@
+
 package com.example.iiitb_connects;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,6 +78,7 @@ public class SearchQuestionFragment extends Fragment{
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                questionList.clear();
                 retrieveQuestions();
             }
         });
@@ -81,13 +86,13 @@ public class SearchQuestionFragment extends Fragment{
         searchView1.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-            //    adapter.getFilter().filter(query);
+                //    adapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-            //    adapter.getFilter().filter(newText);
+                //    adapter.getFilter().filter(newText);
                 search(newText);
                 return false;
             }
@@ -96,7 +101,14 @@ public class SearchQuestionFragment extends Fragment{
         adapter.setOnItemClickListener(new QuestionAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getContext(), "Extension Opened Successfully!", Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getContext(), "Extension Opened Successfully!", Toast.LENGTH_SHORT).show();
+                String Question = questionList.get(position).getmQuestion();
+                String QuestionUidPassed = questionList.get(position).getmUid();
+
+                Intent intent = new Intent(getContext(),ExtendedQuestionActivity.class);
+                intent.putExtra("Question Passed",Question);
+                intent.putExtra("Question Uid Passed",QuestionUidPassed);
+                startActivity(intent);
             }
         });
 
@@ -104,9 +116,9 @@ public class SearchQuestionFragment extends Fragment{
     }
 
     public void retrieveQuestions(){
-    //    Toast.makeText(getContext(), "Inside1", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(getContext(), "Inside1", Toast.LENGTH_SHORT).show();
         questionList.clear();
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String queschan,aansar;
@@ -115,14 +127,19 @@ public class SearchQuestionFragment extends Fragment{
                     Log.i("Anant","Raj");
                     for (DataSnapshot ds2 : ds.getChildren()){
                         queschan=null;aansar=null;
+                        String Uid = null;
+                        Uid = ds2.getKey().toString();
                         if (ds2.hasChild("mQuestion")){
-                        queschan = ds2.child("mQuestion").getValue().toString();
-                        //    aansar = ds.child(queschan).child("mNoOfAnswers").getValue().toString();
-                        //    aansarInt = Integer.parseInt(aansar);
-                        questionList.add(new QuestionInfo(queschan,0));
-                        adapter.notifyDataSetChanged();}
+                            queschan = ds2.child("mQuestion").getValue().toString();
+                            //    aansar = ds.child(queschan).child("mNoOfAnswers").getValue().toString();
+                            //    aansarInt = Integer.parseInt(aansar);
+                            questionList.add(new QuestionInfo(queschan,0,Uid));
+                        }
                     }
                 }
+                Collections.reverse(questionList);
+                adapter.notifyDataSetChanged();
+                refreshLayout.setEnabled(true);
             }
 
             @Override
@@ -143,5 +160,4 @@ public class SearchQuestionFragment extends Fragment{
         QuestionAdapter adapter = new QuestionAdapter(myList);
         recyclerView.setAdapter(adapter);
     }
-
 }
