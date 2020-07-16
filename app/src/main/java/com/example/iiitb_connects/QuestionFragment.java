@@ -82,11 +82,11 @@ public class QuestionFragment extends Fragment {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     queschan=null;aansar=null;
                     if (ds.hasChild("mQuestion")){
-                    queschan = ds.child("mQuestion").getValue().toString();
-                    //    aansar = ds.child(queschan).child("mNoOfAnswers").getValue().toString();
-                    //    aansarInt = Integer.parseInt(aansar);
-                    questionList.add(new QuestionInfo(queschan,0));
-                    adapter.notifyDataSetChanged();}
+                        queschan = ds.child("mQuestion").getValue().toString();
+                        //    aansar = ds.child(queschan).child("mNoOfAnswers").getValue().toString();
+                        //    aansarInt = Integer.parseInt(aansar);
+                        questionList.add(new QuestionInfo(queschan,0,ds.getKey().toString()));
+                        adapter.notifyDataSetChanged();}
                 }
             }
 
