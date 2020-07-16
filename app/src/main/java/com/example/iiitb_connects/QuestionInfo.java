@@ -6,6 +6,7 @@ public class QuestionInfo {
     //private int mImageRes;
     private String mQuestion;
     private int mNoOfAnswers;
+    private String mUid;
 
     //View
     TextView questionTextView;
@@ -13,9 +14,10 @@ public class QuestionInfo {
     public QuestionInfo() {
     }
 
-    public QuestionInfo(String mQuestion, int mNoOfAnswers) {
+    public QuestionInfo(String mQuestion, int mNoOfAnswers , String mUid) {
         this.mQuestion = mQuestion;
         this.mNoOfAnswers = mNoOfAnswers;
+        this.mUid = mUid;
     }
 
 
@@ -33,5 +35,13 @@ public class QuestionInfo {
 
     public void setmNoOfAnswers(int mNoOfAnswers) {
         this.mNoOfAnswers = mNoOfAnswers;
+    }
+
+    public String getmUid() {
+        return mUid;
+    }
+
+    public void setmUid(String mUid) {
+        this.mUid = mUid;
     }
 }
