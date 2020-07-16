@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="7dp"
+    android:layout_marginBottom="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp">
+
+        <ImageView
+
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/answer_vector_asset"
+            android:id="@+id/imageView1"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imageView1"
+            android:layout_marginLeft="7dp"
+            android:text="Question asc dfkgfad gfisdurd sdufheieysjas kartik sueurdhdudjankjs sfkjwefiwuehe fhwehrebewfkfweieyreefwegiwerwirwebf Question asc dfkgfad gfisdurd sdufheieysjas kartik sueurdhdudjankjs sfkjwefiwuehe fhwehrebewfkfweieyreefwegiwerwirwebf"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:id="@+id/answerTextView"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/answerTextView"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Answered By :- "
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic"
+                android:id="@+id/answerdByTextView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anant Raj"
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:id="@+id/answeredByTextView"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
