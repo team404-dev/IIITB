@@ -124,29 +124,12 @@
                     android:includeFontPadding="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fullNameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/usernameLayout"
-                android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="20dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fullName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Full name"
-                    android:textSize="18sp"
-                    android:inputType="textPersonName"
-                    android:includeFontPadding="false"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bioLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fullNameLayout"
+                android:layout_below="@id/usernameLayout"
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">

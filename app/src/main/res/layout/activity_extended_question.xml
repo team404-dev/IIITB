@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Extended Question"
             android:textColor="#fff"
-            android:textSize="22dp"/>
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
@@ -66,8 +66,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/marginline_at_bottom"
+        android:layout_height="1.5dp"
+        android:background="#dadada"
         android:layout_below="@+id/scrollView1"
         android:id="@+id/marginLine"
         android:layout_marginTop="5dp"
@@ -88,14 +88,14 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:id="@+id/refreshLayoutEx"
-        android:layout_below="@+id/answerSectionTextView">
+        android:layout_below="@+id/answerSectionTextView"
+        android:layout_above="@+id/answerButton">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="400dp"
-
         android:layout_margin="10dp"
         android:id="@+id/answersRecyclerView"/>
 
@@ -105,10 +105,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Answer"
-        android:layout_below="@+id/refreshLayoutEx"
         android:id="@+id/answerButton"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="15sp"/>
+        android:layout_marginTop="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"/>
 
 </RelativeLayout>

@@ -53,7 +53,7 @@ public class EditProfileActivity extends AppCompatActivity {
     ImageButton closeButton;
     Button changeProfilePhoto, apply;
     ImageView profilePhoto;
-    TextInputEditText username, fullName, bio;
+    TextInputEditText username, bio;
     LinearLayout progressBarLayout;
     RelativeLayout darkLayout;
 
@@ -86,7 +86,7 @@ public class EditProfileActivity extends AppCompatActivity {
         //Init views
         profilePhoto = findViewById(R.id.profilePhoto);
         username = findViewById(R.id.username);
-        fullName = findViewById(R.id.fullName);
+    //    fullName = findViewById(R.id.fullName);
         bio = findViewById(R.id.bio);
         apply = findViewById(R.id.apply);
         progressBarLayout = findViewById(R.id.progressBarLayout);
@@ -100,7 +100,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(validateInfo()) {
                     updateSharedPreferences();
                     mDatabaseRef.child("username").setValue(username.getText().toString());
-                    mDatabaseRef.child("fullName").setValue(fullName.getText().toString());
+                //    mDatabaseRef.child("fullName").setValue(fullName.getText().toString());
                     if(bio.getText()!=null && !bio.getText().toString().trim().equals("")) {
                         mDatabaseRef.child("bio").setValue(bio.getText().toString());
                     }
@@ -258,8 +258,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setInfo() {
         if(MainActivity.sharedPreferences.getString("username", null) != null)
             username.setText(MainActivity.sharedPreferences.getString("username", null));
-        if(MainActivity.sharedPreferences.getString("fullName", null) != null)
-            fullName.setText(MainActivity.sharedPreferences.getString("fullName", null));
+        /*if(MainActivity.sharedPreferences.getString("fullName", null) != null)
+            fullName.setText(MainActivity.sharedPreferences.getString("fullName", null));*/
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -277,12 +277,12 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private boolean validateInfo() {
-        if( username.getText().toString().trim().equals("") ||
+        /*if( username.getText().toString().trim().equals("") ||
                 fullName.getText().toString().trim().equals(""))
-            return false;
+            return false;*/
 
         mUsername = username.getText().toString().trim();
-        mFullName = fullName.getText().toString().trim();
+    //    mFullName = fullName.getText().toString().trim();
         if(bio.getText()!=null)
             mBio = bio.getText().toString().trim();
         return true;
@@ -354,8 +354,8 @@ public class EditProfileActivity extends AppCompatActivity {
         if(username.getText()!=null && !username.getText().toString().trim().equals(""))
             MainActivity.sharedPreferences.edit().putString("username", username.getText().toString().trim()).apply();
 
-        if(fullName.getText()!=null && !fullName.getText().toString().trim().equals(""))
-            MainActivity.sharedPreferences.edit().putString("fullName", fullName.getText().toString().trim()).apply();
+    /*    if(fullName.getText()!=null && !fullName.getText().toString().trim().equals(""))
+            MainActivity.sharedPreferences.edit().putString("fullName", fullName.getText().toString().trim()).apply();*/
 
         if(bio.getText()!=null && !bio.getText().toString().trim().equals(""))
             MainActivity.sharedPreferences.edit().putString("bio", bio.getText().toString().trim()).apply();

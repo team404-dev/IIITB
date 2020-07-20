@@ -5,4 +5,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="MasterKeyInfo">This feature requires master key authentication provided to authorized users, i.e. clubs and developers. We are working in making this a common feature.\nBear with us..</string>
     <string name="SearchAlertInfo">While looping through questions...search for the keywords of your query. Maybe someone had been as curious as you, earlier. You may find a match. Else, add your query. We\'ll approach it\'s answers ASAP!</string>
+    <string name="OTPVerificationInfo">For User-Verification purposes, we will send an OTP via text message to the phone number you\'ll just fill. Enter the phone number below to recieve a 6-digit verification code on.</string>
 </resources>

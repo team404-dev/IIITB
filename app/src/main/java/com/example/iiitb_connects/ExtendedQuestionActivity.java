@@ -57,6 +57,10 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
 
         final String question = getIntent().getStringExtra("Question Passed");
         final String QuestionUidPassed = getIntent().getStringExtra("Question Uid Passed");
+        final String from = getIntent().getStringExtra("from");
+        if (from.equals("ownQuestions")){
+            answerButton.setVisibility(View.GONE);
+        }
         questionTextView.setText(question);
         answerList = new ArrayList<AnsweredByInfo>();
 
@@ -113,9 +117,9 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
                     if (ds.hasChild("answersByUid")){
                         answererUidString = ds.child("answersByUid").getValue().toString();
                     }
-                    String a = findUserName();
-                    answerList.add(new AnsweredByInfo(answerString,answererUidString,answererNameString));
-                    ds.getRef().child("answeredByName").setValue(a);
+                //    String a = findUserName();
+                    answerList.add(new AnsweredByInfo(answerString,answererUidString,answererNameString,ds.getKey()));
+                //    ds.getRef().child("answeredByName").setValue(a);
                 }
             //    Collections.reverse(answerList);
                 adapter.notifyDataSetChanged();

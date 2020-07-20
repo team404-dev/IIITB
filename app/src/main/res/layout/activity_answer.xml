@@ -24,7 +24,7 @@
                 android:text="Answer It!"
                 android:textColor="#fff"
                 android:layout_marginStart="10dp"
-                android:textSize="22sp" />
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
             <ImageView
                 android:id="@+id/closeBtn"
                 android:layout_width="30dp"
@@ -36,19 +36,15 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:id="@+id/scrollView1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/quesLayout"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -58,13 +54,15 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="110dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="110dp"
+                    android:layout_height="wrap_content"
                     android:text="Question asc dfkgfad gfisdurd sdufheieysjas kartik sueurdhdudjankjs sfkjwefiwuehe fhwehrebewfkfweieyreefwegiwerwirwebf "
                     android:textSize="16dp"
+                    android:minHeight="50dp"
+                    android:maxHeight="110dp"
                     android:gravity="start"
                     android:paddingRight="5dp"
                     android:paddingLeft="5dp"
@@ -75,13 +73,12 @@
 
         </LinearLayout>
 
-    </ScrollView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@drawable/marginline_at_bottom"
-        android:layout_below="@+id/scrollView1"
+        android:layout_below="@+id/quesLayout"
         android:id="@+id/marginLine"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
@@ -89,19 +86,21 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/marginLine"
         android:layout_margin="10dp"
-        android:id="@+id/answerTextLayout">
+        android:id="@+id/answerTextLayout"
+        android:layout_above="@+id/confirmAnswerSubmision"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?android:attr/windowBackground"
+            android:background="#fafafa"
             android:textColor="@color/colorPrimary"
             android:hint="Type your answer here"
-            android:inputType="textMultiLine"
-            android:gravity="center"
+            android:inputType="textMultiLine|textCapSentences"
+            android:gravity="start"
             android:textColorHint="@color/colorPrimary"
             android:id="@+id/answerEditText"/>
 
@@ -111,11 +110,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm Answer submission"
-        android:layout_below="@+id/answerTextLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:id="@+id/confirmAnswerSubmision"
-        android:background="@drawable/gradient"/>
+        android:background="@drawable/gradient"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20sp"/>
 
 
 </RelativeLayout>

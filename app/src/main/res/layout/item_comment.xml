@@ -40,5 +40,11 @@
         android:layout_below="@id/username"
         android:textColor="#000"
         android:text="comment"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="#dadada"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/comment"/>
 
 </RelativeLayout>

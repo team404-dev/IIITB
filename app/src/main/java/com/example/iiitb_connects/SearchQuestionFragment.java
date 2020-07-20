@@ -108,6 +108,7 @@ public class SearchQuestionFragment extends Fragment{
                 Intent intent = new Intent(getContext(),ExtendedQuestionActivity.class);
                 intent.putExtra("Question Passed",Question);
                 intent.putExtra("Question Uid Passed",QuestionUidPassed);
+                intent.putExtra("from","allQuestions");
                 startActivity(intent);
             }
         });

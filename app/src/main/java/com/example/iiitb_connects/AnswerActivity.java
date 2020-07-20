@@ -94,10 +94,11 @@ public class AnswerActivity extends AppCompatActivity {
         DatabaseReference mDRef = mRef.child(questionUid).push();
 
         String a = findUserName();
-        AnsweredByInfo answerInfo = new AnsweredByInfo(answer,userUid,a);
+    //    Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
+        AnsweredByInfo answerInfo = new AnsweredByInfo(answer,userUid,a,mDRef.getKey());
 
         mDRef.setValue(answerInfo);
-        mDRef.child("answeredByName").setValue(a);
+    //    mDRef.child("answeredByName").setValue(a);
 
 
         mRefQues.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,7 +107,7 @@ public class AnswerActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     if (ds.hasChild(questionUid)){
                         userUidForNoOfAns = ds.getKey();
-                        Toast.makeText(AnswerActivity.this, userUidForNoOfAns, Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(AnswerActivity.this, userUidForNoOfAns, Toast.LENGTH_LONG).show();
                         numberString = ds.child(questionUid).child("mNoOfAnswers").getValue().toString();
                         numberInt = Integer.parseInt(numberString);
                         numberInt++ ;
@@ -118,7 +119,7 @@ public class AnswerActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getApplicationContext(), "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -126,6 +127,7 @@ public class AnswerActivity extends AppCompatActivity {
         Log.i("questionUid",questionUid);
         Log.i("numberString",numberString);
 
+        Toast.makeText(this, "Swipe Down to Refresh!", Toast.LENGTH_SHORT).show();
         onBackPressed();
     }
 
@@ -134,21 +136,7 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     public String findUserName (){
-        DatabaseReference mDrefName = mRefName.child(mAuth.getCurrentUser().getUid());
-        mDrefName.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild("fullName")){
-                        userName = snapshot.child("fullName").getValue().toString();
-                    }
-                    else {userName="";}
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        userName = MainActivity.sharedPreferences.getString("fullName","Could not find Username");
         return userName;
     }
 }

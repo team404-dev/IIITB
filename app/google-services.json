@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "121513828024-4kocdhn84165cavvhargp04ple01aduh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.iiitb_connects",
-            "certificate_hash": "5f6da01c4bf17eec92008260f5e2531bafc5df64"
-          }
-        },
-        {
           "client_id": "121513828024-ite9b05fb46rkp7kqdv18832o1i9lp51.apps.googleusercontent.com",
           "client_type": 3
         }

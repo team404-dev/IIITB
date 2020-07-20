@@ -27,6 +27,7 @@ import java.util.List;
 public class QuestionInProfileAdapter extends RecyclerView.Adapter<QuestionInProfileAdapter.ViewHolder1> implements Filterable {
     private ArrayList<QuestionInfo> mQuestionList;
     private ArrayList<QuestionInfo> mQuestionListFull;
+    private onItemClickListener listener;
 
     public class ViewHolder1 extends RecyclerView.ViewHolder{
 
@@ -40,7 +41,25 @@ public class QuestionInProfileAdapter extends RecyclerView.Adapter<QuestionInPro
             mImageView = itemView.findViewById(R.id.questionLogoImageView);
             mTextViewQuestion = itemView.findViewById(R.id.questionTextView);
             mTextViewNoOfAnswers = itemView.findViewById(R.id.noOfAnswersTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null){
+                        listener.onItemClick(position);
+                    }
+                }
+            });
         }
+    }
+
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener){
+        this.listener = listener;
     }
 
     public QuestionInProfileAdapter(ArrayList<QuestionInfo> questionList) {

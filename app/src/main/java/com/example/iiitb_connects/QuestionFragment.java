@@ -1,5 +1,6 @@
 package com.example.iiitb_connects;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class QuestionFragment extends Fragment {
 
@@ -64,6 +66,7 @@ public class QuestionFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                questionList.clear();
                 retrieveQuestions();
             }
         });
@@ -74,7 +77,7 @@ public class QuestionFragment extends Fragment {
     public void retrieveQuestions(){
         //    Toast.makeText(getContext(), "Inside1", Toast.LENGTH_SHORT).show();
         questionList.clear();
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String queschan,aansar;
@@ -86,13 +89,31 @@ public class QuestionFragment extends Fragment {
                         //    aansar = ds.child(queschan).child("mNoOfAnswers").getValue().toString();
                         //    aansarInt = Integer.parseInt(aansar);
                         questionList.add(new QuestionInfo(queschan,0,ds.getKey().toString()));
-                        adapter.notifyDataSetChanged();}
+                    }
                 }
+                Collections.reverse(questionList);
+                adapter.notifyDataSetChanged();
+                refreshLayout.setEnabled(true);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        adapter.setOnItemClickListener(new QuestionInProfileAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //    Toast.makeText(getContext(), "Extension Opened Successfully!", Toast.LENGTH_SHORT).show();
+                String Question = questionList.get(position).getmQuestion();
+                String QuestionUidPassed = questionList.get(position).getmUid();
+
+                Intent intent = new Intent(getContext(),ExtendedQuestionActivity.class);
+                intent.putExtra("Question Passed",Question);
+                intent.putExtra("Question Uid Passed",QuestionUidPassed);
+                intent.putExtra("from","ownQuestions");
+                startActivity(intent);
             }
         });
         refreshLayout.setRefreshing(false);

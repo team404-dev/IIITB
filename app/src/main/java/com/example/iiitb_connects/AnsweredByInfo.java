@@ -4,11 +4,13 @@ public class AnsweredByInfo {
     String answer;
     String answersByUid;
     String answeredByName;
+    String answerUid;
 
-    public AnsweredByInfo(String answer, String answersByUid , String answeredByName ) {
+    public AnsweredByInfo(String answer, String answersByUid , String answeredByName , String answerUid) {
         this.answer = answer;
         this.answersByUid = answersByUid;
         this.answeredByName = answeredByName;
+        this.answerUid = answerUid;
     }
 
     public String getAnswer() {
@@ -33,5 +35,13 @@ public class AnsweredByInfo {
 
     public void setAnsweredByName(String answeredByName) {
         this.answeredByName = answeredByName;
+    }
+
+    public String getAnswerUid() {
+        return answerUid;
+    }
+
+    public void setAnswerUid(String answerUid) {
+        this.answerUid = answerUid;
     }
 }

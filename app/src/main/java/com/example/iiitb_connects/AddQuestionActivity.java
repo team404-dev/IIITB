@@ -92,7 +92,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                 mDRef.setValue(ques);
                 progressBar.setVisibility(View.GONE);
                 waitTextView.setVisibility(View.GONE);
-                Toast toast1 = Toast.makeText(getApplicationContext(),"Question Uploaded Successfully!",Toast.LENGTH_SHORT);
+                Toast toast1 = Toast.makeText(getApplicationContext(),"Question Uploaded Successfully! /n Swipe Down to Refresh",Toast.LENGTH_SHORT);
                 toast1.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,0);
                 toast1.show();
                 onBackPressed();
