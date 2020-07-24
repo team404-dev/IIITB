@@ -3,12 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SearchProfileFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchViewProfile"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search"/>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/searchProfileRecyclerview"/>
+        android:layout_below="@+id/searchViewProfile"
+        android:id="@+id/refreshLayout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/searchViewProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/searchProfileRecyclerview" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

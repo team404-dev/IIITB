@@ -40,7 +40,7 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
     //Vars
     ArrayList<AnsweredByInfo> answerList;
     AnswerAdapter adapter;
-    String userName;
+    String userName,from,stalkingUid="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +57,12 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
 
         final String question = getIntent().getStringExtra("Question Passed");
         final String QuestionUidPassed = getIntent().getStringExtra("Question Uid Passed");
-        final String from = getIntent().getStringExtra("from");
+        from = getIntent().getStringExtra("from");
         if (from.equals("ownQuestions")){
             answerButton.setVisibility(View.GONE);
+        }
+        if (from.equals("Stalking Activity")){
+            stalkingUid = getIntent().getStringExtra("Stalking Uid");
         }
         questionTextView.setText(question);
         answerList = new ArrayList<AnsweredByInfo>();
@@ -108,18 +111,39 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String answerString = "null", answererNameString = "Loading...Please Wait" ,answererUidString = "null";
                 for (DataSnapshot ds : snapshot.getChildren()){
-                    if (ds.hasChild("answer")){
-                        answerString = ds.child("answer").getValue().toString();
+                    if (from.equals("Stalking Activity")){
+                        if (ds.hasChild("answersByUid")){
+                            if (ds.child("answersByUid").getValue().toString().equals(stalkingUid)){
+                                if (ds.hasChild("answer")){
+                                    answerString = ds.child("answer").getValue().toString();
+                                }
+                                if (ds.hasChild("answeredByName")){
+                                    answererNameString = ds.child("answeredByName").getValue().toString();
+                                }
+                                if (ds.hasChild("answersByUid")){
+                                    answererUidString = ds.child("answersByUid").getValue().toString();
+                                }
+                                //    String a = findUserName();
+                                answerList.add(new AnsweredByInfo(answerString,answererUidString,answererNameString,ds.getKey()));
+                                //    ds.getRef().child("answeredByName").setValue(a);
+                                continue;
+                            }
+                        }
                     }
-                    if (ds.hasChild("answeredByName")){
-                        answererNameString = ds.child("answeredByName").getValue().toString();
+                    else{
+                        if (ds.hasChild("answer")){
+                            answerString = ds.child("answer").getValue().toString();
+                        }
+                        if (ds.hasChild("answeredByName")){
+                            answererNameString = ds.child("answeredByName").getValue().toString();
+                        }
+                        if (ds.hasChild("answersByUid")){
+                            answererUidString = ds.child("answersByUid").getValue().toString();
+                        }
+                        //    String a = findUserName();
+                        answerList.add(new AnsweredByInfo(answerString,answererUidString,answererNameString,ds.getKey()));
+                        //    ds.getRef().child("answeredByName").setValue(a);
                     }
-                    if (ds.hasChild("answersByUid")){
-                        answererUidString = ds.child("answersByUid").getValue().toString();
-                    }
-                //    String a = findUserName();
-                    answerList.add(new AnsweredByInfo(answerString,answererUidString,answererNameString,ds.getKey()));
-                //    ds.getRef().child("answeredByName").setValue(a);
                 }
             //    Collections.reverse(answerList);
                 adapter.notifyDataSetChanged();

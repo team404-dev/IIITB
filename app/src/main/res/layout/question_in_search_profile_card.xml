@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:orientation="horizontal"
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
@@ -37,29 +37,6 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="17sp"
                 android:id="@+id/questionTextView"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Answers : "
-                android:layout_below="@+id/questionTextView"
-                android:layout_marginTop="10dp"
-                android:layout_toStartOf="@id/noOfAnswersTextView"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:id="@+id/answersTextView"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_below="@+id/questionTextView"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:id="@+id/noOfAnswersTextView"/>
 
         </RelativeLayout>
 
