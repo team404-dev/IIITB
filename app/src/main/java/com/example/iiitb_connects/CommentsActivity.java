@@ -30,7 +30,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     //Views
     ImageView closeBtn;
-    SwipeRefreshLayout refreshLayout;
+    //SwipeRefreshLayout refreshLayout;
     RecyclerView commentRCV;
     TextInputEditText comment;
     FloatingActionButton addComment;
@@ -89,7 +89,7 @@ public class CommentsActivity extends AppCompatActivity {
         comment = findViewById(R.id.comment);
         addComment = findViewById(R.id.addComment);
         commentRCV = findViewById(R.id.commentRCV);
-        refreshLayout = findViewById(R.id.refreshLayout);
+        //refreshLayout = findViewById(R.id.refreshLayout);
 
         //setting up layout managers
         LinearLayoutManager layoutManager = new LinearLayoutManager(CommentsActivity.this);
@@ -102,13 +102,13 @@ public class CommentsActivity extends AppCompatActivity {
         commentRCV.setAdapter(adapter);
 
         //refresh layout
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 commentItemsList.clear();
                 loadData();
             }
-        });
+        });*/
 
         //load comments
         if(savedInstanceState==null) {
@@ -152,6 +152,7 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        commentItemsList.clear();
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -176,6 +177,6 @@ public class CommentsActivity extends AppCompatActivity {
 
             }
         });
-        refreshLayout.setRefreshing(false);
+        //refreshLayout.setRefreshing(false);
     }
 }

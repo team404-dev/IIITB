@@ -55,7 +55,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference("Questions Asked").child(mAuth.getCurrentUser().getUid());
-    //    mRefAns = FirebaseDatabase.getInstance().getReference("Answers");
+        //    mRefAns = FirebaseDatabase.getInstance().getReference("Answers");
         closebutton();
         submitYourQuestion();
 
@@ -88,7 +88,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                 }
                 DatabaseReference mDRef = mRef.push();
                 QuestionInfo ques = new QuestionInfo(question,0,mDRef.getKey());
-        //        mRefAns.child(mDRef.getKey()).child("Number of Answers").setValue("0");
+                //        mRefAns.child(mDRef.getKey()).child("Number of Answers").setValue("0");
                 mDRef.setValue(ques);
                 progressBar.setVisibility(View.GONE);
                 waitTextView.setVisibility(View.GONE);

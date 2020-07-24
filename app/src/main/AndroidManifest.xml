@@ -14,8 +14,15 @@
         android:roundIcon="@drawable/iiit_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VerificationActivity"></activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ChallengeDetails"></activity>
+        <activity
+            android:name=".VerificationActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegisterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SetupPost"
             android:configChanges="orientation"

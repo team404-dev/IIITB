@@ -24,15 +24,15 @@
         android:elevation="20dp"
         android:background="#fff"
         android:visibility="gone">
-            <ProgressBar
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                style="@style/Widget.AppCompat.ProgressBar"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Updating..."
-                style="@style/TextAppearance.MaterialComponents.Body1"/>
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            style="@style/Widget.AppCompat.ProgressBar"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Updating..."
+            style="@style/TextAppearance.MaterialComponents.Body1"/>
     </LinearLayout>
 
     <androidx.appcompat.widget.Toolbar

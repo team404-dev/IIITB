@@ -47,16 +47,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="110dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:text="Question asc dfkgfad gfisdurd sdufheieysjas kartik sueurdhdudjankjs sfkjwefiwuehe fhwehrebewfkfweieyreefwegiwerwirwebf "
-                android:textSize="16dp"
-                android:gravity="start"
-                android:paddingRight="5dp"
-                android:paddingLeft="5dp"
-                android:textColor="@color/colorPrimary"
-                android:id="@+id/extendedLayoutQuestionTextView"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:text="Question asc dfkgfad gfisdurd sdufheieysjas kartik sueurdhdudjankjs sfkjwefiwuehe fhwehrebewfkfweieyreefwegiwerwirwebf "
+                    android:textSize="16dp"
+                    android:gravity="start"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/extendedLayoutQuestionTextView"/>
 
             </ScrollView>
 
@@ -93,11 +93,11 @@
         android:layout_below="@+id/answerSectionTextView"
         android:layout_above="@+id/answerButton">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_margin="10dp"
-        android:id="@+id/answersRecyclerView"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="10dp"
+            android:id="@+id/answersRecyclerView"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

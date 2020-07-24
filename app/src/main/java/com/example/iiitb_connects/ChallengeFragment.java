@@ -34,7 +34,7 @@ public class ChallengeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         challengeItemsList = new ArrayList<>();
-        challengeItemsList.add(new ChallengeItems(R.drawable.img1, "HackForWorld 1.0"));
+        /*challengeItemsList.add(new ChallengeItems(R.drawable.img1, "HackForWorld 1.0"));
         challengeItemsList.add(new ChallengeItems(R.drawable.img2, "TheTimeTeasers 1.0"));
         challengeItemsList.add(new ChallengeItems(R.drawable.img3, "BreakingBad 1.0"));
         challengeItemsList.add(new ChallengeItems(R.drawable.img1, "HackForWorld 1.0"));
@@ -42,9 +42,9 @@ public class ChallengeFragment extends Fragment {
         challengeItemsList.add(new ChallengeItems(R.drawable.img3, "BreakingBad 1.0"));
         challengeItemsList.add(new ChallengeItems(R.drawable.img1, "HackForWorld 1.0"));
         challengeItemsList.add(new ChallengeItems(R.drawable.img2, "TheTimeTeasers 1.0"));
-        challengeItemsList.add(new ChallengeItems(R.drawable.img3, "BreakingBad 1.0"));
+        challengeItemsList.add(new ChallengeItems(R.drawable.img3, "BreakingBad 1.0"));*/
 
-        ChallengeItemAdapter adapter = new ChallengeItemAdapter(challengeItemsList);
+        ChallengeItemAdapter adapter = new ChallengeItemAdapter(challengeItemsList, getActivity());
         recyclerView.setAdapter(adapter);
 
         if(challengeItemsList.size() == 0)

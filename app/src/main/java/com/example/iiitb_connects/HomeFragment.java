@@ -8,15 +8,20 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +36,6 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     //views
-    private Button shoutoutButton;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView homeFeedRCV;
     private RelativeLayout loadScreen;
@@ -43,6 +47,7 @@ public class HomeFragment extends Fragment {
     //Firebase
     private DatabaseReference posts;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,11 +58,9 @@ public class HomeFragment extends Fragment {
         posts.keepSynced(true);
 
         //Init views
-        shoutoutButton = view.findViewById(R.id.shoutoutButton);
         refreshLayout = view.findViewById(R.id.refreshLayout);
         homeFeedRCV = view.findViewById(R.id.homeFeedRCV);
         loadScreen = view.findViewById(R.id.loadScreen);
-
         homeFeedItemsList = new ArrayList<>();
 
         //onClick func of shoutout button only visible when shoutouts available

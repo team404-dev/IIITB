@@ -32,17 +32,12 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commentRCV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:layout_above="@id/commentLayout">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/commentRCV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_above="@id/commentLayout"/>
 
     <LinearLayout
         android:id="@+id/commentLayout"

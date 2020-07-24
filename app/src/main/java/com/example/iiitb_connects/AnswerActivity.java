@@ -94,11 +94,11 @@ public class AnswerActivity extends AppCompatActivity {
         DatabaseReference mDRef = mRef.child(questionUid).push();
 
         String a = findUserName();
-    //    Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
         AnsweredByInfo answerInfo = new AnsweredByInfo(answer,userUid,a,mDRef.getKey());
 
         mDRef.setValue(answerInfo);
-    //    mDRef.child("answeredByName").setValue(a);
+        //    mDRef.child("answeredByName").setValue(a);
 
 
         mRefQues.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -107,7 +107,7 @@ public class AnswerActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     if (ds.hasChild(questionUid)){
                         userUidForNoOfAns = ds.getKey();
-                    //    Toast.makeText(AnswerActivity.this, userUidForNoOfAns, Toast.LENGTH_LONG).show();
+                        //    Toast.makeText(AnswerActivity.this, userUidForNoOfAns, Toast.LENGTH_LONG).show();
                         numberString = ds.child(questionUid).child("mNoOfAnswers").getValue().toString();
                         numberInt = Integer.parseInt(numberString);
                         numberInt++ ;

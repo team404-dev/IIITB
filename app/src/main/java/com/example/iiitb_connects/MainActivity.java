@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,13 +25,29 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences sharedPreferences;
     public static boolean returnStatus;
 
+    /*private BottomSheetBehavior bottomSheetBehavior;
+    private LinearLayout shoutout_bottom_sheet;
+    private ImageView close;*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         sharedPreferences = getSharedPreferences("com.example.sampleproject", MODE_PRIVATE);
+
+        //Shoutout
+        /*shoutout_bottom_sheet = findViewById(R.id.shoutout_bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(shoutout_bottom_sheet);
+        bottomSheetBehavior.setFitToContents(false);
+        bottomSheetBehavior.setHalfExpandedRatio(0.4f);
+        close = findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+        });*/
 
         mBottomNavigation = findViewById(R.id.bottomNavigation);
         mBottomNavigation.setVisibility(View.VISIBLE);

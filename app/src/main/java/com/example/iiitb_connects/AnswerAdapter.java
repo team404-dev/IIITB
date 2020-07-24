@@ -50,7 +50,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
                 for (DataSnapshot ds: snapshot.getChildren()){
                     if (ds.hasChild(answerUid)){
                         answerer[0] = ds.child(answerUid).child("answeredByName").getValue().toString();
-                    //    Toast.makeText(context, "answerer = "+answerer[0], Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(context, "answerer = "+answerer[0], Toast.LENGTH_SHORT).show();
                         holder.answeredByTextView.setText(answerer[0]);
                     }
                 }
@@ -61,7 +61,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
             }
         });
-    //    holder.answeredByTextView.setText(answerer[0]);
+        //    holder.answeredByTextView.setText(answerer[0]);
     }
 
     @Override
