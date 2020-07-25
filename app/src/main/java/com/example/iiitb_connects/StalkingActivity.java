@@ -151,6 +151,9 @@ public class StalkingActivity extends AppCompatActivity {
                         if (ds.hasChild("bio")){
                             bioTV.setText(ds.child("bio").getValue().toString());
                         }
+                        if (!ds.hasChild("bio")||ds.child("bio").getValue().toString()==null||ds.child("bio").getValue().toString().isEmpty()||ds.child("bio").getValue().toString().trim().equals("")){
+                            bioTV.setText(" ");
+                        }
                         progressBar.setVisibility(View.GONE);
                         break;
                     }

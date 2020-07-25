@@ -1,5 +1,7 @@
 package com.example.iiitb_connects;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,12 +38,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     private ArrayList<QuestionInfo> mQuestionListFull;
     private onItemClickListener listener;
     String userUidForNoOfAns;
+    Activity context;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView mImageView;
         public TextView mTextViewQuestion;
         public TextView mTextViewNoOfAnswers;
+        RelativeLayout cardRelativeLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,6 +53,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             mImageView = itemView.findViewById(R.id.questionLogoImageView);
             mTextViewQuestion = itemView.findViewById(R.id.questionTextView);
             mTextViewNoOfAnswers = itemView.findViewById(R.id.noOfAnswersTextView);
+            cardRelativeLayout = itemView.findViewById(R.id.cardRelativeLayout);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,9 +75,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         this.listener = listener;
     }
 
-    public QuestionAdapter(ArrayList<QuestionInfo> questionList) {
+    public QuestionAdapter(ArrayList<QuestionInfo> questionList , Activity context) {
         mQuestionList = questionList;
         mQuestionListFull = new ArrayList<>(questionList);
+        this.context = context;
     }
 
     @NonNull
@@ -115,6 +122,19 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             }
         });
 
+        holder.cardRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Question = currentItem.getmQuestion();
+                String QuestionUidPassed = currentItem.getmUid();
+
+                Intent intent = new Intent(context,ExtendedQuestionActivity.class);
+                intent.putExtra("Question Passed",Question);
+                intent.putExtra("Question Uid Passed",QuestionUidPassed);
+                intent.putExtra("from","allQuestions");
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

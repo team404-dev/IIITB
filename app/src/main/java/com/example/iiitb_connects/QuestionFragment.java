@@ -126,7 +126,7 @@ public class QuestionFragment extends Fragment {
                 myList.add(q);
             }
         }
-        QuestionAdapter adapter = new QuestionAdapter(myList);
+        QuestionInProfileAdapter adapter = new QuestionInProfileAdapter(myList);
         recyclerView.setAdapter(adapter);
     }
 

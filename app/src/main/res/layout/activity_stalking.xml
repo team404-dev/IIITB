@@ -35,7 +35,8 @@
                 android:paddingHorizontal="10dp"
                 android:text="Some error occurred!!"
                 android:textColor="#fff"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:transitionName="nameTransition1"/>
 
             <TextView
                 android:id="@+id/username"
@@ -46,7 +47,8 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="10dp"
                 android:text="Cannot load!"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:transitionName="nameTransition"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -90,7 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile_logo" />
+                android:src="@drawable/profile_logo"
+                android:transitionName="imageTransition"/>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 

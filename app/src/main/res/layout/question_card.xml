@@ -4,7 +4,8 @@
     android:layout_height="155dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="7dp"
-    android:layout_marginBottom="2dp">
+    android:layout_marginBottom="2dp"
+    android:id="@+id/cardRelativeLayout">
 
 
     <LinearLayout
@@ -36,7 +37,8 @@
                 android:gravity="start"
                 android:textColor="@color/colorPrimary"
                 android:textSize="17sp"
-                android:id="@+id/questionTextView"/>
+                android:id="@+id/questionTextView"
+                android:autoLink="all"/>
 
             <TextView
                 android:layout_width="wrap_content"

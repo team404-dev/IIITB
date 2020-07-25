@@ -1,9 +1,12 @@
 package com.example.iiitb_connects;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +31,7 @@ public class ActivityFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<ChallengeItems> challengeItemsList;
     private ChallengeItemAdapter adapter;
+    ImageView infoIV;
 
     //Strings
     String clubName, challengeName, description, templateImg;
@@ -43,6 +47,7 @@ public class ActivityFragment extends Fragment {
         challenges.keepSynced(true);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        infoIV = view.findViewById(R.id.infoBtn);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -55,6 +60,13 @@ public class ActivityFragment extends Fragment {
         if(savedInstanceState==null){
             loadData();
         }
+
+        infoIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),InfoActivity.class));
+            }
+        });
 
         return view;
     }

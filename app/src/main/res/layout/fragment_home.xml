@@ -26,7 +26,7 @@
        android:elevation="20dp">
       <RelativeLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="wrap_content"
           android:gravity="center_vertical">
          <TextView
              android:layout_width="wrap_content"
@@ -35,7 +35,16 @@
              android:textColor="#fff"
              android:textStyle="bold"
              style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_info_outline_black_24dp"
+             android:layout_alignParentEnd="true"
+             android:layout_marginRight="20dp"
+             android:id="@+id/infoBtn"
+             android:layout_centerVertical="true"/>
       </RelativeLayout>
+
    </androidx.appcompat.widget.Toolbar>
 
    <RelativeLayout

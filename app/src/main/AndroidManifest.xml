@@ -14,6 +14,8 @@
         android:roundIcon="@drawable/iiit_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AboutUsActivity"></activity>
+        <activity android:name=".InfoActivity" />
         <activity android:name=".StalkingActivity" />
         <activity android:name=".VerificationActivity" />
         <activity android:name=".RegisterActivity" />

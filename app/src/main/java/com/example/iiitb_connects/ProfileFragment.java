@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     //Init views
     private TextView username;
     private TextView fullName;
-    private ImageView profilePhoto;
+    private ImageView profilePhoto,iIV;
     private Button editProfileButton;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -76,6 +76,7 @@ public class ProfileFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPagerProfile);
         toolbar = view.findViewById(R.id.toolbar);
         PPProgressBar = view.findViewById(R.id.PPProgressBar);
+        iIV = view.findViewById(R.id.iIV);
 
         //edit profile onClick method
         editProfileButton = view.findViewById(R.id.editProfileButton);
@@ -104,6 +105,13 @@ public class ProfileFragment extends Fragment {
                     imgPopupBio.setText(mBio);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setView(imgPopupView).create().show();
+            }
+        });
+
+        iIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),InfoActivity.class));
             }
         });
 

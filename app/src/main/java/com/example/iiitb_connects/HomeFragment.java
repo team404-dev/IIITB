@@ -1,6 +1,7 @@
 package com.example.iiitb_connects;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -39,6 +41,7 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView homeFeedRCV;
     private RelativeLayout loadScreen;
+    ImageView infoIV;
 
     //list of recycler view items
     private List<HomeFeedItems> homeFeedItemsList;
@@ -61,6 +64,7 @@ public class HomeFragment extends Fragment {
         refreshLayout = view.findViewById(R.id.refreshLayout);
         homeFeedRCV = view.findViewById(R.id.homeFeedRCV);
         loadScreen = view.findViewById(R.id.loadScreen);
+        infoIV = view.findViewById(R.id.infoBtn);
         homeFeedItemsList = new ArrayList<>();
 
         //onClick func of shoutout button only visible when shoutouts available
@@ -87,6 +91,13 @@ public class HomeFragment extends Fragment {
             public void onRefresh() {
                 homeFeedItemsList.clear();
                 loadData();
+            }
+        });
+
+        infoIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),InfoActivity.class));
             }
         });
 

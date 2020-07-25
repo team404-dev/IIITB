@@ -59,7 +59,8 @@
             android:text="This is answer Text View"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="7dp"
-            android:id="@+id/answerTextView"/>
+            android:id="@+id/answerTextView"
+            android:autoLink="all"/>
 
 
     </RelativeLayout>

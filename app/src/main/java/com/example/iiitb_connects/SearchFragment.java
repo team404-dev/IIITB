@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -33,6 +34,7 @@ public class SearchFragment extends Fragment {
     SearchView searchView;
     ViewPager viewPager;
     Toolbar toolbar;
+    ImageView infoIV;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,11 +44,17 @@ public class SearchFragment extends Fragment {
         appBarLayout = view.findViewById(R.id.appBar);
         viewPager = view.findViewById(R.id.viewPagerSearch);
         toolbar = view.findViewById(R.id.toolbarInSearch);
+        infoIV = view.findViewById(R.id.infoBtn);
 
         //Popping up of dialog box
         showAlert();
 
-        toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
+        infoIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),InfoActivity.class));
+            }
+        });
 
         return view;
     }
@@ -101,22 +109,4 @@ public class SearchFragment extends Fragment {
             }
         });
     }
-
-
-
-    androidx.appcompat.widget.Toolbar.OnMenuItemClickListener onMenuItemClickListener =
-            new androidx.appcompat.widget.Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch(item.getItemId()) {
-                        case R.id.addQuestionMenuItem:
-                            startActivity(new Intent(getActivity(), AddQuestionActivity.class));
-                            return true;
-                    }
-                    return false;
-                }
-            };
-
-
-
 }

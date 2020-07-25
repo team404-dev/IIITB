@@ -7,15 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowActivityTransitions">true</item>
-        <!-- Changing the 3-Dot Style -->
-        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
-    </style>
-
-    <!-- Changing the 3-Dot Style -->
-    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_add</item>
-        <item name="android:background">?android:attr/actionBarItemBackground</item>
-        <item name="android:contentDescription">"Add"</item>
     </style>
 
 </resources>

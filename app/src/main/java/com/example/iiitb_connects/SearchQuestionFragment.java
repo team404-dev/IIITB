@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +45,12 @@ public class SearchQuestionFragment extends Fragment{
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SwipeRefreshLayout refreshLayout;
+    ImageView plusIV;
 
     //Firebase
     DatabaseReference mRef;
     FirebaseAuth mAuth;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,9 +58,10 @@ public class SearchQuestionFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_search_question, container, false);
 
 
-        searchView1 = (SearchView) view.findViewById(R.id.searchViewAnant);
+        searchView1 = view.findViewById(R.id.searchViewAnant);
         refreshLayout = view.findViewById(R.id.refreshLayout1);
         questionList = new ArrayList<>();
+        plusIV = view.findViewById(R.id.plusIV);
 
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference("Questions Asked");
@@ -69,7 +73,7 @@ public class SearchQuestionFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
 
-        adapter = new QuestionAdapter(questionList);
+        adapter = new QuestionAdapter(questionList,getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -98,7 +102,7 @@ public class SearchQuestionFragment extends Fragment{
             }
         });
 
-        adapter.setOnItemClickListener(new QuestionAdapter.onItemClickListener() {
+        /*adapter.setOnItemClickListener(new QuestionAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 //    Toast.makeText(getContext(), "Extension Opened Successfully!", Toast.LENGTH_SHORT).show();
@@ -110,6 +114,13 @@ public class SearchQuestionFragment extends Fragment{
                 intent.putExtra("Question Uid Passed",QuestionUidPassed);
                 intent.putExtra("from","allQuestions");
                 startActivity(intent);
+            }
+        });*/
+
+        plusIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddQuestionActivity.class));
             }
         });
 
@@ -158,7 +169,7 @@ public class SearchQuestionFragment extends Fragment{
                 myList.add(q);
             }
         }
-        QuestionAdapter adapter = new QuestionAdapter(myList);
+        QuestionAdapter adapter = new QuestionAdapter(myList,getActivity());
         recyclerView.setAdapter(adapter);
     }
 }

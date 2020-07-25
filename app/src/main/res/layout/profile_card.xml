@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardRelativeLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,6 +23,7 @@
             app:cardPreventCornerOverlap="true">
             <ImageView
                 android:id="@+id/userDP"
+                android:transitionName="imageTransition"
                 android:elevation="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -46,7 +48,8 @@
                 android:textStyle="bold"
                 android:textColor="#000"
                 android:gravity="center_horizontal"
-                android:id="@+id/fullNameProfile"/>
+                android:id="@+id/fullNameProfile"
+                android:transitionName="nameTransition1"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,7 +57,8 @@
                 android:text="anant_raj"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_horizontal"
-                android:id="@+id/usernameProfile"/>
+                android:id="@+id/usernameProfile"
+                android:transitionName="nameTransition"/>
 
         </LinearLayout>
 
