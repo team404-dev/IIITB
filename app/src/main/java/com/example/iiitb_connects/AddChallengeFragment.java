@@ -76,7 +76,7 @@ public class AddChallengeFragment extends Fragment {
         templateImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+                Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, 100);
             }

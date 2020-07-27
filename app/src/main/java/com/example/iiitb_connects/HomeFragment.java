@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
         refreshLayout = view.findViewById(R.id.refreshLayout);
         homeFeedRCV = view.findViewById(R.id.homeFeedRCV);
         loadScreen = view.findViewById(R.id.loadScreen);
-        infoIV = view.findViewById(R.id.infoBtn);
+        //infoIV = view.findViewById(R.id.infoBtn);
         homeFeedItemsList = new ArrayList<>();
 
         //onClick func of shoutout button only visible when shoutouts available
@@ -94,12 +94,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        infoIV.setOnClickListener(new View.OnClickListener() {
+        /*infoIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(),InfoActivity.class));
             }
-        });
+        });*/
 
         return view;
     }
@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
     private void loadData() {
         homeFeedItemsList.clear();
         Query recentPosts = posts.limitToLast(100);
-        recentPosts.addValueEventListener(new ValueEventListener() {
+        recentPosts.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {

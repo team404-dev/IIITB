@@ -134,6 +134,7 @@ public class CommentsActivity extends AppCompatActivity {
                     comment.setText("");
                     mDatabaseRef.setValue(new commentInfo(getUsername, getUserDp, commentAdded));
                     commentItemsList.clear();
+                    loadData();
                 }
             }
         });
@@ -153,7 +154,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     private void loadData() {
         commentItemsList.clear();
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {
@@ -169,6 +170,7 @@ public class CommentsActivity extends AppCompatActivity {
                     }
                     commentItemsList.add(new CommentItems(username, userDp, commentAdded));
                     adapter.notifyDataSetChanged();
+                    commentRCV.scrollToPosition(commentItemsList.size()-1);
                 }
             }
 

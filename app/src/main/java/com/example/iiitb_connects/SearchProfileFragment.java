@@ -70,7 +70,7 @@ public class SearchProfileFragment extends Fragment {
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
-        adapter = new ProfileAdapter(profileList,getActivity());
+        adapter = new ProfileAdapter(profileList, getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -101,7 +101,7 @@ public class SearchProfileFragment extends Fragment {
             }
         });
 
-        /*adapter.setOnItemClickListener(new ProfileAdapter.onItemClickListener() {
+        adapter.setOnItemClickListener(new ProfileAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 String Uid = profileList.get(position).getUserUid();
@@ -109,7 +109,7 @@ public class SearchProfileFragment extends Fragment {
                 intent.putExtra("User Uid",Uid);
                 startActivity(intent);
             }
-        });*/
+        });
 
         return view;
     }
@@ -124,14 +124,9 @@ public class SearchProfileFragment extends Fragment {
                     for (DataSnapshot ds : snapshot.getChildren()){
                         String fullName = ds.child("fullName").getValue().toString();
                         String username = ds.child("username").getValue().toString();
-                        String userDP;
-                        if (!ds.hasChild("templateProfilePhoto") || ds.child("templateProfilePhoto").getValue().toString() == null
-                                || ds.child("templateProfilePhoto").getValue().toString().equals("")
-                                || ds.child("templateProfilePhoto").getValue().toString().isEmpty()){
-                            userDP = "";
-                        } else {
-                            userDP = ds.child("templateProfilePhoto").getValue().toString();
-                        }
+                        String userDP=null;
+                        if(ds.child("templateProfilePhoto").getValue()!=null)
+                        userDP = ds.child("templateProfilePhoto").getValue().toString();
                         String uid = ds.getKey();
                         profileList.add(new ProfileInfo(uid,username,fullName,userDP));
                         profileListFullName.add(fullName);
@@ -157,7 +152,7 @@ public class SearchProfileFragment extends Fragment {
                 myList.add(q);
             }
         }
-        ProfileAdapter adapter = new ProfileAdapter(myList,getActivity());
+        ProfileAdapter adapter = new ProfileAdapter(myList, getActivity());
         recyclerView.setAdapter(adapter);
 
     }

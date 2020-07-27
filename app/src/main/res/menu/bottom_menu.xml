@@ -13,9 +13,9 @@
         <item android:title="Add"
             android:id="@+id/add"
             android:icon="@drawable/add_media_logo"/>
-        <item android:title="Activity"
+        <item android:title="Club Activity"
             android:id="@+id/activity"
-            android:icon="@drawable/visits_logo"/>
+            android:icon="@drawable/club_activity_logo"/>
         <item android:title="Profile"
             android:id="@+id/profile"
             android:icon="@drawable/profile_logo"/>

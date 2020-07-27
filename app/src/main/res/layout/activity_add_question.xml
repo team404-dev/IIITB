@@ -37,41 +37,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="20sp"
         android:padding="20dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/AskAQuestionLayout"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:errorEnabled="true">
-
+            android:layout_height="match_parent"
+            android:layout_above="@id/submitQuestion"
+            android:hint="Ask a Relevant Question..."
+            app:errorEnabled="true"
+            android:layout_marginHorizontal="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/AskAQuestion"
-                android:hint="Ask a Relevant Question..."
-                android:gravity="center_horizontal"
+                android:gravity="top"
                 android:layout_gravity="start"
-                android:inputType="textMultiLine"
-                android:background="?android:attr/windowBackground"
+                android:inputType="textMultiLine|textCapSentences"
                 android:textColorHint="@color/colorPrimary"
-                android:paddingTop="20sp"
-                android:paddingBottom="20sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
-
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/submitQuestion"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/AskAQuestionLayout"
-            android:layout_marginTop="50dp"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
             android:text="Submit Your Question"
-            android:background="@drawable/my_button"/>
+            android:backgroundTint="@color/colorAccent"/>
 
 
     </RelativeLayout>

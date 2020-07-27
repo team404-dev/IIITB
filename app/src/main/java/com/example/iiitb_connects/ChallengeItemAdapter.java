@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -65,7 +67,17 @@ public class ChallengeItemAdapter
     @Override
     public void onBindViewHolder(@NonNull final ChallengeItemAdapter.ViewHolder holder, int position) {
         final ChallengeItems challengeItems = this.challengeItems.get(position);
-        Picasso.get().load(challengeItems.getTemplateImg()).into(holder.challengeIV);
+        Picasso.get().load(challengeItems.getTemplateImg()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.challengeIV, new Callback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Picasso.get().load(challengeItems.getTemplateImg()).into(holder.challengeIV);
+            }
+        });
         holder.challengeName.setText(challengeItems.getChallengeName());
 
         holder.challenge.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +92,7 @@ public class ChallengeItemAdapter
                 intent.putExtra("challengeName", challengeItems.getChallengeName());
                 intent.putExtra("clubName", challengeItems.getClubName());
                 intent.putExtra("description", challengeItems.getDescription());
+                intent.putExtra("challengeID", challengeItems.getChallengeID());
                 context.startActivity(intent, options.toBundle());
             }
         });

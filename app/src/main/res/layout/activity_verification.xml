@@ -26,7 +26,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/iiit_logo"
+        android:src="@drawable/iiit_logo1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:id="@+id/collegeLogo"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/OTPVerificationInfo"
-        android:layout_marginVertical="10dp"
+        android:layout_margin="10dp"
         android:id="@+id/linearLayout">
 
         <Spinner

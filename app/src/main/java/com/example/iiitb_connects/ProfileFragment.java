@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
@@ -137,7 +139,7 @@ public class ProfileFragment extends Fragment {
         //showing profile info
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 if(username.getText()=="Some error occurred!!") {
                     username.setText(dataSnapshot.child("username").getValue().toString());
                     fullName.setText(dataSnapshot.child("fullName").getValue().toString());
@@ -147,7 +149,17 @@ public class ProfileFragment extends Fragment {
                 }
                 if(dataSnapshot.hasChild("realProfilePhoto") && dataSnapshot.child("realProfilePhoto").getValue()!=null) {
                     profilePhotoUrl = dataSnapshot.child("realProfilePhoto").getValue().toString();
-                    new ImgLoader(profilePhoto, PPProgressBar).execute(dataSnapshot.child("realProfilePhoto").getValue().toString());
+                    Picasso.get().load(dataSnapshot.child("realProfilePhoto").getValue().toString()).networkPolicy(NetworkPolicy.OFFLINE).into(profilePhoto, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get().load(dataSnapshot.child("realProfilePhoto").getValue().toString()).into(profilePhoto);
+                        }
+                    });
                 }
             }
 
@@ -182,7 +194,7 @@ public class ProfileFragment extends Fragment {
                 }
             };
 
-    public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
+    /*public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
 
         ImageView iv;
         ProgressBar pb;
@@ -224,5 +236,5 @@ public class ProfileFragment extends Fragment {
                 pb.setVisibility(View.GONE);
             super.onPostExecute(bitmap);
         }
-    }
+    }*/
 }

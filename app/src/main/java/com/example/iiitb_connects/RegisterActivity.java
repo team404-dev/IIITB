@@ -91,8 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
         loginTextView.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                //startActivity(intent);
                 finish();
             }
         });

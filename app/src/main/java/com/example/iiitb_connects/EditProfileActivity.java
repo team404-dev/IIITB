@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -56,6 +58,8 @@ public class EditProfileActivity extends AppCompatActivity {
     TextInputEditText username, bio;
     LinearLayout progressBarLayout;
     RelativeLayout darkLayout;
+    ImageView instagram;
+    ImageView linkedIn;
 
     //User details
     String mUsername;
@@ -86,9 +90,11 @@ public class EditProfileActivity extends AppCompatActivity {
         //Init views
         profilePhoto = findViewById(R.id.profilePhoto);
         username = findViewById(R.id.username);
-    //    fullName = findViewById(R.id.fullName);
+        //fullName = findViewById(R.id.fullName);
         bio = findViewById(R.id.bio);
         apply = findViewById(R.id.apply);
+        instagram = findViewById(R.id.instagram);
+        linkedIn = findViewById(R.id.linkedin);
         progressBarLayout = findViewById(R.id.progressBarLayout);
         darkLayout = findViewById(R.id.darkLayout);
 
@@ -145,7 +151,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(EditProfileActivity.this, "Cannot upload image", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                                     progressBarLayout.setVisibility(View.GONE);
                                     darkLayout.setVisibility(View.GONE);
                                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -235,6 +241,20 @@ public class EditProfileActivity extends AppCompatActivity {
                 }).create().show();
             }
         });
+
+        instagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkAccountDialog("Instagram");
+            }
+        });
+
+        linkedIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkAccountDialog("LinkedIn");
+            }
+        });
     }
 
     private boolean checkStoragePermissions() {
@@ -262,7 +282,7 @@ public class EditProfileActivity extends AppCompatActivity {
             username.setText(MainActivity.sharedPreferences.getString("username", null));
         /*if(MainActivity.sharedPreferences.getString("fullName", null) != null)
             fullName.setText(MainActivity.sharedPreferences.getString("fullName", null));*/
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.child("bio").getValue()!=null)
@@ -363,5 +383,38 @@ public class EditProfileActivity extends AppCompatActivity {
             MainActivity.sharedPreferences.edit().putString("bio", bio.getText().toString().trim()).apply();
         else
             MainActivity.sharedPreferences.edit().putString("bio",null).apply();
+    }
+
+    AlertDialog alert;
+    private void linkAccountDialog(final String accountType) {
+        LayoutInflater inflater = LayoutInflater.from(EditProfileActivity.this);
+        View v = inflater.inflate(R.layout.link_accounts, null);
+
+        //init views
+        final TextInputEditText url = v.findViewById(R.id.url);
+        TextView message = v.findViewById(R.id.message);
+        Button positiveButton = v.findViewById(R.id.positiveButton);
+
+        String messageText = accountType+" account:";
+        message.setText(messageText);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
+        builder.setView(v);
+        alert = builder.create();
+        alert.show();
+
+        //onClick methods
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(url.getText()!=null && !url.getText().toString().equals("")) {
+                    mDatabaseRef.child(accountType).setValue(url.getText().toString());
+                    Toast.makeText(EditProfileActivity.this, "Account linked!", Toast.LENGTH_SHORT).show();
+                    alert.dismiss();
+                }
+                else
+                    Toast.makeText(EditProfileActivity.this, "Field empty!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

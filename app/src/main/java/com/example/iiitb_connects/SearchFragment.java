@@ -44,17 +44,17 @@ public class SearchFragment extends Fragment {
         appBarLayout = view.findViewById(R.id.appBar);
         viewPager = view.findViewById(R.id.viewPagerSearch);
         toolbar = view.findViewById(R.id.toolbarInSearch);
-        infoIV = view.findViewById(R.id.infoBtn);
+        //infoIV = view.findViewById(R.id.infoBtn);
 
         //Popping up of dialog box
         showAlert();
 
-        infoIV.setOnClickListener(new View.OnClickListener() {
+        /*infoIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(),InfoActivity.class));
             }
-        });
+        });*/
 
         return view;
     }

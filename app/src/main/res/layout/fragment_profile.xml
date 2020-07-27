@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile_logo"/>
+                android:src="@drawable/person"/>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 

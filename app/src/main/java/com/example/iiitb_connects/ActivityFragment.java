@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,7 @@ public class ActivityFragment extends Fragment {
 
     //Views
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private List<ChallengeItems> challengeItemsList;
     private ChallengeItemAdapter adapter;
     ImageView infoIV;
@@ -47,7 +49,8 @@ public class ActivityFragment extends Fragment {
         challenges.keepSynced(true);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        infoIV = view.findViewById(R.id.infoBtn);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        //infoIV = view.findViewById(R.id.infoBtn);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -61,10 +64,17 @@ public class ActivityFragment extends Fragment {
             loadData();
         }
 
-        infoIV.setOnClickListener(new View.OnClickListener() {
+        /*infoIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(),InfoActivity.class));
+            }
+        });*/
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
             }
         });
 
@@ -74,7 +84,7 @@ public class ActivityFragment extends Fragment {
     private void loadData() {
         challengeItemsList.clear();
         Query recentChallenges = challenges.limitToLast(20);
-        recentChallenges.addValueEventListener(new ValueEventListener() {
+        recentChallenges.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {
@@ -89,10 +99,11 @@ public class ActivityFragment extends Fragment {
                     if(ds.hasChild("description") && ds.child("description").getValue()!=null)
                         description = ds.child("description").getValue().toString();
 
-                    challengeItemsList.add(new ChallengeItems(clubName, templateImg, challengeName, description));
+                    challengeItemsList.add(new ChallengeItems(clubName, templateImg, challengeName, description, ds.getKey()));
                 }
                 Collections.reverse(challengeItemsList);
                 adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override

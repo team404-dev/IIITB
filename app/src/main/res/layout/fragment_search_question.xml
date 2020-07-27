@@ -13,36 +13,42 @@
         app:iconifiedByDefault="false"
         app:queryHint="Search"/>
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchViewAnant"
+        android:layout_below="@id/searchViewAnant"
+        android:layout_above="@id/plusIV"
         android:id="@+id/refreshLayout1">
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@id/searchViewAnant"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/searchQuestionRecyclerview" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ImageView
+    <!--<ImageView
+        android:id="@+id/plusIV"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:background="@drawable/circular_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:id="@+id/plusIV"/>
+        android:layout_margin="16dp"/>
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_add"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="23dp"/>
+        android:layout_margin="23dp"/>!-->
 
+    <Button
+        android:id="@+id/plusIV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Add a question"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorAccent"/>
 
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class QuestionFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     SwipeRefreshLayout refreshLayout;
+    RelativeLayout nothingToShow;
 
     //Firebase
     DatabaseReference mRef;
@@ -45,6 +47,7 @@ public class QuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
 
         refreshLayout = view.findViewById(R.id.refreshLayout2);
+        nothingToShow = view.findViewById(R.id.nothingToShow);
         questionList = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
@@ -93,6 +96,10 @@ public class QuestionFragment extends Fragment {
                 }
                 Collections.reverse(questionList);
                 adapter.notifyDataSetChanged();
+                if(questionList.size() == 0)
+                    nothingToShow.setVisibility(View.VISIBLE);
+                else
+                    nothingToShow.setVisibility(View.GONE);
                 refreshLayout.setEnabled(true);
             }
 
