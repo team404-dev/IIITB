@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
@@ -134,7 +136,7 @@ public class StalkingActivity extends AppCompatActivity {
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()){
+                for (final DataSnapshot ds : snapshot.getChildren()){
                     if (ds.getKey().equals(StalkingUid)){
                         if (ds.hasChild("username")){
                             usernameTV.setText(ds.child("username").getValue().toString());
@@ -146,7 +148,19 @@ public class StalkingActivity extends AppCompatActivity {
                             aboutTV1.setText(fullName);
                         }
                         if (ds.hasChild("realProfilePhoto")){
-                            new ImgLoader(userDPIV,progressBar).execute(ds.child("realProfilePhoto").getValue().toString());
+                        //    new ImgLoader(userDPIV,progressBar).execute(ds.child("realProfilePhoto").getValue().toString());
+                            Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).into(userDPIV);
+                            Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).networkPolicy(NetworkPolicy.OFFLINE).into(userDPIV, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).into(userDPIV);
+                                }
+                            });
                         }
                         if (ds.hasChild("bio")){
                             bioTV.setText(ds.child("bio").getValue().toString());

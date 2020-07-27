@@ -35,7 +35,8 @@
                 android:gravity="start"
                 android:textColor="@color/colorPrimary"
                 android:textSize="17sp"
-                android:id="@+id/questionTextView"/>
+                android:id="@+id/questionTextView"
+                android:autoLink="all"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         android:layout_below="@+id/collegeLogo"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:text="@string/OTPVerificationInfo"
         android:textColor="@color/colorPrimary"
         android:textSize="16dp"
@@ -46,22 +46,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_below="@+id/OTPVerificationInfo"
         android:layout_marginVertical="10dp"
         android:id="@+id/linearLayout">
 
         <Spinner
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/countrySpinner"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="15sp"
+            android:layout_marginHorizontal="50dp"
             android:background="?android:attr/windowBackground"
             app:errorEnabled="true"
             android:layout_below="@+id/OTPVerificationInfo">
@@ -72,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Phone No."
                 android:background="?android:attr/windowBackground"
-                android:inputType="number" />
+                android:inputType="number"
+                android:gravity="center_horizontal"/>
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -83,16 +84,49 @@
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         android:text="   Send OTP   "
-        android:id="@+id/btnSendOTP"/>
+        android:id="@+id/btnSendOTP"
+        android:layout_marginTop="-5dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/btnSendOTP"
+        android:id="@+id/linearLayout1"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Didn't received the code?  "
+            android:textColor="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="60"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:id="@+id/time"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" secs"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/secs"/>
+
+    </LinearLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="20sp"
         android:background="?android:attr/windowBackground"
         app:errorEnabled="true"
-        android:layout_below="@+id/btnSendOTP"
+        android:layout_below="@+id/linearLayout1"
         android:id="@+id/OTPInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -100,6 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter 6-digit Verification Code"
+            android:layout_marginTop="10dp"
             android:background="?android:attr/windowBackground"
             android:inputType="number"
             android:gravity="center_horizontal"/>
@@ -112,8 +147,15 @@
         android:layout_below="@+id/OTPInputLayout"
         android:layout_centerHorizontal="true"
         android:text="   Verify   "
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/btnVerifyOTP"/>
 
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="-55dp"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

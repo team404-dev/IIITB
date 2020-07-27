@@ -36,7 +36,7 @@ public class AboutUsActivity extends AppCompatActivity {
                     startActivity(likeIng);
                 } catch (ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://instagram.com/team_404_dev?igshid=t6fuc7u75a7y")));
+                            Uri.parse("http://instagram.com/team404dev?igshid=1425nzyoos6x5")));
                 }
             }
         });

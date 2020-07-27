@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -66,11 +70,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // On clicking on "forgot password"
-        // will be taken to 'ForgotPasswordActivity'
         mForgotCredentials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showAlert();
             }
         });
 
@@ -190,6 +193,54 @@ public class LoginActivity extends AppCompatActivity {
         if(mAuthListener != null){
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+
+    AlertDialog alert;
+    public void showAlert(){
+        LayoutInflater inflater = LoginActivity.this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.reset_password_dialog,null);
+        //Initialising Views
+        final TextInputEditText resetEmail = v.findViewById(R.id.resetEmail);
+        Button sendButton = v.findViewById(R.id.positiveButton);
+        Button cancelButton = v.findViewById(R.id.negativeButton);
+
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setView(v).setCancelable(false);
+        alert = builder.create();
+        alert.show();
+
+        //on Okay click
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //send reset link
+                final String email = resetEmail.getText().toString().trim();
+                if (email.isEmpty() || email.equals("") || email == null){
+                    Toast.makeText(LoginActivity.this, "Enter Valid email!", Toast.LENGTH_SHORT).show();
+                } else{
+                    mAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(LoginActivity.this, "Reset Link sent to " + email, Toast.LENGTH_SHORT).show();
+                            alert.dismiss();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
     }
 }
 

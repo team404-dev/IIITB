@@ -23,7 +23,7 @@
             app:cardPreventCornerOverlap="true">
             <ImageView
                 android:id="@+id/userDP"
-                android:transitionName="imageTransition"
+                android:transitionName="DPTransition"
                 android:elevation="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

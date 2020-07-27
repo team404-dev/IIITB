@@ -17,8 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
@@ -85,6 +89,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             holder.mImageView.setImageResource(R.drawable.person);
         } else {
             Picasso.get().load(currentItem.getUserDP()).into(holder.mImageView);
+            Picasso.get().load(currentItem.getUserDP()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.mImageView, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Picasso.get().load(currentItem.getUserDP()).into(holder.mImageView);
+                }
+            });
         }
         holder.mFullNameTV.setText(currentItem.getFullName());
         holder.mUsernameTV.setText(currentItem.getUsername());
@@ -93,12 +108,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 String Uid = currentItem.getUserUid();
-                Pair[] pair = new Pair[3];
-                pair[0] = new Pair<View, String>(holder.mImageView, "imageTransition");
-                pair[1] = new Pair<View, String>(holder.mFullNameTV, "nameTransition1");
-                pair[2] = new Pair<View, String>(holder.mFullNameTV, "nameTransition");
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(context, pair);
                 Intent intent = new Intent(context,StalkingActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,holder.mImageView, ViewCompat.getTransitionName(holder.mImageView));
                 intent.putExtra("User Uid",Uid);
                 context.startActivity(intent,options.toBundle());
             }

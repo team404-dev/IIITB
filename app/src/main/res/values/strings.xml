@@ -8,4 +8,5 @@
     <string name="OTPVerificationInfo">For user verification purposes, we will send an OTP via text message to the phone number you\'ll just fill. Enter the phone number below to receive a 6-digit verification code on.</string>
     <string name="TemplateDesc">Template image should relate to the challenge being added. Adding no image would result in us, adding your club logo as template image for your challenge.\n<b>Click image to change</b></string>
     <string name="AboutUs">team404dev is an aspring team of enterprising individuals with different values and goals but with a shared holy grail : a world better connected than what we now have.\n\nAspiring minds and hard working individuals are always welcome. We would be more than happy to join hands and work towards a better future.\n\nWe wish for a happier world. </string>
+    <string name="ResetPasswordInfo">Forgot your logging in password?  Relax!\nJust type in the email you entered while registering and a password-reset link will be sent to your email.</string>
 </resources>

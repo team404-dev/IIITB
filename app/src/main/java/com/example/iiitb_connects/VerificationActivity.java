@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.executor.TaskExecutor;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.data.model.User;
@@ -33,15 +38,25 @@ public class VerificationActivity extends AppCompatActivity {
     Spinner countrySpinner;
     TextInputEditText phoneNumberInput,OTPInput;
     Button btnSendOTP,btnVerifyOTP;
+    TextView time,secs;
+    ProgressBar progressBar;
 
-    String phoneNumber;
+    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallback;
 
-    FirebaseAuth mAuth;
+    String phoneNumber,otp;
+
     DatabaseReference mRef;
+    LinearLayout linearLayout1;
+
+    FirebaseAuth auth;
+    private String verificationCode;
+    long timeLeftInMillisecs = 60000;
+
+    CountDownTimer countDownTimer;
 
     UserInfo user;
 
-    private String verificationId;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,96 +69,130 @@ public class VerificationActivity extends AppCompatActivity {
         OTPInput = findViewById(R.id.OTPInput);
         btnSendOTP = findViewById(R.id.btnSendOTP);
         btnVerifyOTP = findViewById(R.id.btnVerifyOTP);
-        mAuth = FirebaseAuth.getInstance();
+        linearLayout1 = findViewById(R.id.linearLayout1);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+        time = findViewById(R.id.time);
+        secs = findViewById(R.id.secs);
+        linearLayout1.setVisibility(View.GONE);
         mRef = FirebaseDatabase.getInstance().getReference("Users");
 
         countrySpinner.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,CountryData.countryNames));
 
-        btnSendOTP.setOnClickListener(new View.OnClickListener() {
+        sharedPreferences = getSharedPreferences("com.example.sampleproject", MODE_PRIVATE);
+
+        StartFirebaseLogin();
+
+        time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String code = CountryData.countryAreaCodes[countrySpinner.getSelectedItemPosition()];
-                String number = phoneNumberInput.getText().toString().trim().replace(""," ");
-                if (number.isEmpty()){
-                    phoneNumberInput.setError("Enter Valid Phone No.");
-                    phoneNumberInput.requestFocus();
-                    return;
-                }
-                phoneNumber = "+"+code+number;
-                sendOTP(phoneNumber);
+                timeLeftInMillisecs = 60000;
+                countDownBegins();
+                String num = phoneNumberInput.getText().toString().trim().replace(" ","");
+                String countryCode = CountryData.countryAreaCodes[countrySpinner.getSelectedItemPosition()];
+
+                phoneNumber = "+"+countryCode+num;
+                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                        phoneNumber,                     // Phone number to verify
+                        60,                           // Timeout duration
+                        TimeUnit.SECONDS,                // Unit of timeout
+                        VerificationActivity.this,        // Activity (for callback binding)
+                        mCallback);                      // OnVerificationStateChangedCallbacks
             }
         });
 
         btnVerifyOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String code = OTPInput.getText().toString().trim().replace(" ","");
-                if (code.isEmpty() || code.length()!=6){
-                //    Toast.makeText(VerificationActivity.this, "OTP Verification failed!", Toast.LENGTH_SHORT).show();
-                    OTPInput.setError("Enter Valid Code!");
-                    OTPInput.requestFocus();
-                    return;
-                }
+                progressBar.setVisibility(View.VISIBLE);
+                otp=OTPInput.getText().toString().trim().replace(" ","");
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationCode, otp);
+                SigninWithPhone(credential);
+            }
+        });
 
-                verifyCode(code);
+        btnSendOTP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linearLayout1.setVisibility(View.VISIBLE);
+                countDownBegins();
+                String num = phoneNumberInput.getText().toString().trim().replace(" ","");
+                String countryCode = CountryData.countryAreaCodes[countrySpinner.getSelectedItemPosition()];
+
+                phoneNumber = "+"+countryCode+num;
+                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                        phoneNumber,                     // Phone number to verify
+                        60,                           // Timeout duration
+                        TimeUnit.SECONDS,                // Unit of timeout
+                        VerificationActivity.this,        // Activity (for callback binding)
+                        mCallback);                      // OnVerificationStateChangedCallbacks
             }
         });
     }
 
-    public void sendOTP(String number){
-        Log.i("Anant","Sending Otp");
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                number,
-                30,
-                TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
-                mCallBack
-        );
-    }
+    private void StartFirebaseLogin() {
 
-    public  PhoneAuthProvider.OnVerificationStateChangedCallbacks
-            mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        @Override
-        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-            super.onCodeSent(s, forceResendingToken);
-            verificationId = s;
-        }
+        auth = FirebaseAuth.getInstance();
+        mCallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-        @Override
-        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-            //Automatic Detection of Code
-            String code = phoneAuthCredential.getSmsCode();
-            if (code!=null){
-                OTPInput.setTag(code);
-                verifyCode(code);
+            @Override
+            public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+            //    Toast.makeText(VerificationActivity.this,"verification completed",Toast.LENGTH_SHORT).show();
             }
-        }
 
-        @Override
-        public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(VerificationActivity.this,"onVerificationFailed"+ e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    };
+            @Override
+            public void onVerificationFailed(FirebaseException e) {
+                Toast.makeText(VerificationActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
 
-    private  void verifyCode(String code){
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId,code);
-        signInWithCredentials(credential);
+            @Override
+            public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(s, forceResendingToken);
+                verificationCode = s;
+                Toast.makeText(VerificationActivity.this,"Code Sent",Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
-    private void signInWithCredentials(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
+    private void SigninWithPhone(PhoneAuthCredential credential) {
+        auth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            //Saara Kaam
+                        if (task.isSuccessful()) {
                             user.setPhoneNumber(phoneNumber);
-                            mRef.child(mAuth.getCurrentUser().getUid()).setValue(user);
+                            mRef.child(auth.getCurrentUser().getUid()).setValue(user);
+                            sharedPreferences.edit().putString("username", user.getUsername()).apply();
+                            sharedPreferences.edit().putString("fullName", user.getFullName()).apply();
+                            progressBar.setVisibility(View.GONE);
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
-                            Toast.makeText(VerificationActivity.this,"signInWithCredentials unsuccessful"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(VerificationActivity.this,"Incorrect OTP",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    public void countDownBegins(){
+        countDownTimer = new CountDownTimer(timeLeftInMillisecs,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillisecs = millisUntilFinished/1000;
+                secs.setVisibility(View.VISIBLE);
+                time.setText(String.valueOf(timeLeftInMillisecs));
+                time.setEnabled(false);
+            }
+
+            @Override
+            public void onFinish() {
+                time.setText("Resend Code");
+                secs.setVisibility(View.GONE);
+                time.setEnabled(true);
+            }
+        }.start();
     }
 
     @Override
