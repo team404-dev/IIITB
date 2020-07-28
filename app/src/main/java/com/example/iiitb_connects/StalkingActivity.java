@@ -10,12 +10,17 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +59,10 @@ public class StalkingActivity extends AppCompatActivity {
     SwipeRefreshLayout refreshLayout;
     QuestionInSearchProfileAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+    RelativeLayout nothingToShowAbout;
+    RelativeLayout nothingToShowAnswers;
+    ImageView instagram;
+    ImageView linkedIn;
 
     //firebase
     DatabaseReference mRef;
@@ -77,21 +86,25 @@ public class StalkingActivity extends AppCompatActivity {
         fullNameTV = findViewById(R.id.fullName);
         usernameTV = findViewById(R.id.username);
         userDPIV = findViewById(R.id.profilePicture);
-        progressBar = findViewById(R.id.PPProgressBar);
+        //progressBar = findViewById(R.id.PPProgressBar);
         aboutTV = findViewById(R.id.aboutTV);
-        aboutTV1 = findViewById(R.id.aboutTV1);
+        //aboutTV1 = findViewById(R.id.aboutTV1);
         bioTV = findViewById(R.id.bioTV);
         recyclerView = findViewById(R.id.recyclerView);
         refreshLayout = findViewById(R.id.refreshLayout1);
+        nothingToShowAbout = findViewById(R.id.nothingToShowAbout);
+        nothingToShowAnswers = findViewById(R.id.nothingToShowAnswers);
+        instagram = findViewById(R.id.instagram);
+        linkedIn = findViewById(R.id.linkedin);
 
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         adapter = new QuestionInSearchProfileAdapter(questionList);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
 
         backButton = findViewById(R.id.backButton);
 
@@ -133,45 +146,69 @@ public class StalkingActivity extends AppCompatActivity {
         });
     }
     public void showData(){
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child(StalkingUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (final DataSnapshot ds : snapshot.getChildren()){
-                    if (ds.getKey().equals(StalkingUid)){
-                        if (ds.hasChild("username")){
-                            usernameTV.setText(ds.child("username").getValue().toString());
-                        }
-                        if (ds.hasChild("fullName")){
-                            String fullName = ds.child("fullName").getValue().toString();
-                            fullNameTV.setText(fullName);
-                            aboutTV.setText(fullName);
-                            aboutTV1.setText(fullName);
-                        }
-                        if (ds.hasChild("realProfilePhoto")){
-                        //    new ImgLoader(userDPIV,progressBar).execute(ds.child("realProfilePhoto").getValue().toString());
-                            Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).into(userDPIV);
-                            Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).networkPolicy(NetworkPolicy.OFFLINE).into(userDPIV, new Callback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).into(userDPIV);
-                                }
-                            });
-                        }
-                        if (ds.hasChild("bio")){
-                            bioTV.setText(ds.child("bio").getValue().toString());
-                        }
-                        if (!ds.hasChild("bio")||ds.child("bio").getValue().toString()==null||ds.child("bio").getValue().toString().isEmpty()||ds.child("bio").getValue().toString().trim().equals("")){
-                            bioTV.setText(" ");
-                        }
-                        progressBar.setVisibility(View.GONE);
-                        break;
-                    }
+            public void onDataChange(@NonNull final DataSnapshot ds) {
+                if (ds.hasChild("username")){
+                    usernameTV.setText(ds.child("username").getValue().toString());
                 }
+                if (ds.hasChild("fullName")){
+                    String fullName = ds.child("fullName").getValue().toString();
+                    fullNameTV.setText(fullName);
+                    aboutTV.setText(fullName);
+                    //aboutTV1.setText(fullName);
+                }
+                if (ds.hasChild("realProfilePhoto")){
+                    //    new ImgLoader(userDPIV,progressBar).execute(ds.child("realProfilePhoto").getValue().toString());
+                    Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).into(userDPIV);
+                    Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).networkPolicy(NetworkPolicy.OFFLINE).into(userDPIV, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get().load(ds.child("realProfilePhoto").getValue().toString()).into(userDPIV);
+                        }
+                    });
+                }
+                if (ds.hasChild("bio") && ds.child("bio").getValue()!=null){
+                    bioTV.setText(ds.child("bio").getValue().toString());
+                    nothingToShowAbout.setVisibility(View.GONE);
+                }
+                else{
+                    nothingToShowAbout.setVisibility(View.VISIBLE);
+                }
+                instagram.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(ds.hasChild("Instagram") && ds.child("Instagram").getValue()!=null){
+                            try {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ds.child("Instagram").getValue().toString())));
+                            } catch(Exception e){
+                                Toast.makeText(StalkingActivity.this, "Cannot follow up the link!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(StalkingActivity.this, "User has not linked any account!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                linkedIn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(ds.hasChild("LinkedIn") && ds.child("LinkedIn").getValue()!=null){
+                            try {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ds.child("LinkedIn").getValue().toString())));
+                            } catch(Exception e){
+                                Toast.makeText(StalkingActivity.this, "Cannot follow up the link!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(StalkingActivity.this, "User has not linked any account!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                //progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -181,7 +218,7 @@ public class StalkingActivity extends AppCompatActivity {
         });
     }
 
-    public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
+    /*public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
 
         ImageView iv;
         ProgressBar pb;
@@ -220,7 +257,7 @@ public class StalkingActivity extends AppCompatActivity {
                 pb.setVisibility(View.GONE);
             super.onPostExecute(bitmap);
         }
-    }
+    }*/
     public void getQuestionUids(){
         questionUidList.clear();
         mRefAns.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -264,6 +301,14 @@ public class StalkingActivity extends AppCompatActivity {
                         //        Toast.makeText(getApplicationContext(), String.valueOf(questionList.size()), Toast.LENGTH_SHORT).show();
                         Collections.reverse(questionList);
                         adapter.notifyDataSetChanged();
+                        if(questionList.size()==0) {
+                            refreshLayout.setVisibility(View.GONE);
+                            nothingToShowAnswers.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            refreshLayout.setVisibility(View.VISIBLE);
+                            nothingToShowAnswers.setVisibility(View.GONE);
+                        }
                         refreshLayout.setEnabled(true);
                     }
 

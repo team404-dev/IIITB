@@ -32,6 +32,35 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <RelativeLayout
+        android:id="@+id/nothingToShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:id="@+id/IV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_comment"/>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/IV"
+            android:text="Comments"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:text="No comments yet\nAdd first comment!"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentRCV"
         android:layout_width="match_parent"

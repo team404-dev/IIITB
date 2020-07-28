@@ -8,19 +8,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="7dp"
+        android:layout_margin="5dp"
         android:orientation="horizontal"
         android:id="@+id/linearLayout">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/userDPLayout"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardCornerRadius="20dp"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="10dp"
-            app:cardPreventCornerOverlap="true">
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="5dp"
+            app:cardCornerRadius="25dp"
+            app:cardPreventCornerOverlap="true"
+            android:layout_gravity="center_vertical">
             <ImageView
                 android:id="@+id/userDP"
                 android:transitionName="DPTransition"
@@ -33,21 +32,19 @@
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:layout_marginVertical="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Anant Raj"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="10dp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="#000"
-                android:gravity="center_horizontal"
                 android:id="@+id/fullNameProfile"
                 android:transitionName="nameTransition1"/>
 
@@ -55,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="anant_raj"
-                android:layout_marginLeft="10dp"
                 android:gravity="center_horizontal"
                 android:id="@+id/usernameProfile"
                 android:transitionName="nameTransition"/>
@@ -68,7 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="0.75dp"
         android:layout_below="@+id/linearLayout"
-        android:background="#dadada"
-        android:layout_marginHorizontal="10dp"/>
+        android:background="#dadada"/>
 
 </RelativeLayout>

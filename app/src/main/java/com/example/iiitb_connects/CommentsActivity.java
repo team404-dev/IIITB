@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class CommentsActivity extends AppCompatActivity {
     RecyclerView commentRCV;
     TextInputEditText comment;
     FloatingActionButton addComment;
+    private RelativeLayout nothingToShow;
 
     //required strings
     String commentAdded; //comment
@@ -89,6 +91,7 @@ public class CommentsActivity extends AppCompatActivity {
         comment = findViewById(R.id.comment);
         addComment = findViewById(R.id.addComment);
         commentRCV = findViewById(R.id.commentRCV);
+        nothingToShow = findViewById(R.id.nothingToShow);
         //refreshLayout = findViewById(R.id.refreshLayout);
 
         //setting up layout managers
@@ -170,7 +173,12 @@ public class CommentsActivity extends AppCompatActivity {
                     }
                     commentItemsList.add(new CommentItems(username, userDp, commentAdded));
                     adapter.notifyDataSetChanged();
-                    commentRCV.scrollToPosition(commentItemsList.size()-1);
+                    if (commentItemsList.size()==0)
+                        nothingToShow.setVisibility(View.VISIBLE);
+                    else {
+                        nothingToShow.setVisibility(View.GONE);
+                        commentRCV.scrollToPosition(commentItemsList.size() - 1);
+                    }
                 }
             }
 

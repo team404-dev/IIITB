@@ -77,7 +77,7 @@ public class CommentItemAdapter
         return commentItems.size();
     }
 
-    public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
+    /*public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
 
         ImageView iv;
         ProgressBar pb;
@@ -117,5 +117,5 @@ public class CommentItemAdapter
                 pb.setVisibility(View.GONE);
             super.onPostExecute(bitmap);
         }
-    }
+    }*/
 }

@@ -157,23 +157,21 @@ public class AddChallengeFragment extends Fragment {
                             });
                             darkLayout.setVisibility(View.VISIBLE);
                             progressBarLayout.setVisibility(View.VISIBLE);
-                            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            addChallengeButton.setEnabled(false);
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             darkLayout.setVisibility(View.GONE);
                             progressBarLayout.setVisibility(View.GONE);
-                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            addChallengeButton.setEnabled(true);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getContext(), "uploadFailure", Toast.LENGTH_SHORT).show();
                             darkLayout.setVisibility(View.GONE);
-                            progressBarLayout.setVisibility(View.GONE);
-                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            addChallengeButton.setEnabled(true);
                         }
                     });
                 } catch (Exception e) {

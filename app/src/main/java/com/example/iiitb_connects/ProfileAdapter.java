@@ -109,9 +109,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             public void onClick(View v) {
                 String Uid = currentItem.getUserUid();
                 Intent intent = new Intent(context,StalkingActivity.class);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,holder.mImageView, ViewCompat.getTransitionName(holder.mImageView));
                 intent.putExtra("User Uid",Uid);
-                context.startActivity(intent,options.toBundle());
+
+                Pair[] pairs = new Pair[3];
+                pairs[0] = new Pair<View, String>(holder.mImageView, "DPTransition");
+                pairs[1] = new Pair<View, String>(holder.mFullNameTV, "nameTransition1");
+                pairs[2] = new Pair<View, String>(holder.mUsernameTV, "nameTransition");
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(context, pairs);
+                context.startActivity(intent, options.toBundle());
             }
         });
     }
