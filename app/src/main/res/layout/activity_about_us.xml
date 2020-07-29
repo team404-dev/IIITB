@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/iiit_logo" />
+            android:src="@drawable/team404dev_logo_circle" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,6 +51,12 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="27sp"
                 android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorPrimary"
+                android:text="No Error found"/>
 
             <TextView
                 android:layout_width="match_parent"

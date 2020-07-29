@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mPleaseWait,mForgotCredentials,mNoAccountYet;
     private Button loginButton;
 
+    String check = " ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         //mContext = getApplicationContext();
         mProgressbar.setVisibility(View.GONE);
         mPleaseWait.setVisibility(View.GONE);
+
+        check = getIntent().getStringExtra("check");
 
         setUpFirebaseAuth();
         init();
@@ -144,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         //Log.w(String.valueOf(getActivity()), "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.makeText(LoginActivity.this, task.getException().getMessage(),
                                                 Toast.LENGTH_SHORT).show();
                                         mProgressbar.setVisibility(View.GONE);
                                         mPleaseWait.setVisibility(View.GONE);
@@ -155,11 +158,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         // If the user is loggedIn
-        if (mAuth.getCurrentUser() != null ){
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+
+            if (mAuth.getCurrentUser() != null ){
+                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                 startActivity(intent);
+                 finish();
+            }
+
 
     }
 

@@ -101,7 +101,8 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"
-            android:id="@+id/passwordInput"/>
+            android:id="@+id/passwordInput"
+            android:longClickable="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

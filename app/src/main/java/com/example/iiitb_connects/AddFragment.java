@@ -17,6 +17,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +39,13 @@ public class AddFragment extends Fragment {
     ImageView closeBtn;
 
     //Master key
-    private final int MASTER_KEY = 10101;
+    String MASTER_KEY;
 
     //Init pager adapter
     private TabPagerAdapter pagerAdapter;
+
+    //firebase
+    DatabaseReference mRefMasterKey;
 
     @Nullable
     @Override
@@ -48,6 +56,22 @@ public class AddFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPagerProfile);
         closeBtn = view.findViewById(R.id.closeBtn);
+
+        mRefMasterKey = FirebaseDatabase.getInstance().getReference("Key Details");
+        mRefMasterKey.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild("Master Key")){
+                    MASTER_KEY = snapshot.child("Master Key").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         //onClick
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +127,7 @@ public class AddFragment extends Fragment {
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(masterKey.getText()!=null && masterKey.getText().toString().equals(String.valueOf(MASTER_KEY)))
+                if(masterKey.getText()!=null && masterKey.getText().toString().equals(MASTER_KEY))
                     alert.dismiss();
                 else
                     Toast.makeText(getActivity(), "Master key authentication failed!", Toast.LENGTH_SHORT).show();

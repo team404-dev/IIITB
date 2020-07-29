@@ -91,8 +91,10 @@ public class RegisterActivity extends AppCompatActivity {
         loginTextView.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                //startActivity(intent);
+                Intent intent1 = new Intent(getApplicationContext(),LoginActivity.class);
+            //    Toast.makeText(RegisterActivity.this, "Move to login activity", Toast.LENGTH_SHORT).show();
+            //    intent1.putExtra("check","ID has been deleted");
+                startActivity(intent1);
                 finish();
             }
         });
@@ -157,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 Toast.makeText(RegisterActivity.this, "Authentication successful!", Toast.LENGTH_SHORT).show();
                                 //    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();*/
-                                UserInfo user = new UserInfo(email,fullName,username,"",password,confirmPassword);
+                                UserInfo user = new UserInfo(email,fullName,username,"");
                                 progressBar.setVisibility(View.GONE);
                                 pleaseWaitTextView.setVisibility(View.GONE);
                                 //Take to the OTP Activity

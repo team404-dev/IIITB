@@ -99,6 +99,7 @@ public class ChallengeFragment extends Fragment {
                     else
                         nothingToShow.setVisibility(View.GONE);
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override

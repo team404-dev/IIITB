@@ -21,10 +21,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,6 +65,8 @@ public class StalkingActivity extends AppCompatActivity {
     RelativeLayout nothingToShowAnswers;
     ImageView instagram;
     ImageView linkedIn;
+    FloatingActionButton fabUp,fabDown;
+    ScrollView scroll;
 
     //firebase
     DatabaseReference mRef;
@@ -82,6 +86,7 @@ public class StalkingActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference("Users");
         mRefAns = FirebaseDatabase.getInstance().getReference("Answers");
         mRefQues = FirebaseDatabase.getInstance().getReference("Questions Asked");
+        scroll = findViewById(R.id.scrollView);
 
         fullNameTV = findViewById(R.id.fullName);
         usernameTV = findViewById(R.id.username);
@@ -96,6 +101,8 @@ public class StalkingActivity extends AppCompatActivity {
         nothingToShowAnswers = findViewById(R.id.nothingToShowAnswers);
         instagram = findViewById(R.id.instagram);
         linkedIn = findViewById(R.id.linkedin);
+        fabDown = findViewById(R.id.fabDown);
+        fabUp = findViewById(R.id.fabUp);
 
         //recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -142,6 +149,29 @@ public class StalkingActivity extends AppCompatActivity {
                 intent.putExtra("Stalking Uid",StalkingUid);
                 intent.putExtra("from","Stalking Activity");
                 startActivity(intent);
+            }
+        });
+
+        fabDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scroll.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        scroll.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
+            }
+        });
+        fabUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scroll.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        scroll.fullScroll(View.FOCUS_UP);
+                    }
+                });
             }
         });
     }

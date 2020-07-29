@@ -5,16 +5,13 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class UserInfo implements Serializable {
-    public String email,fullName,username,phoneNumber,password,confirmPassword;
+    public String email,fullName,username,phoneNumber;
 
-    public UserInfo(String email, String fullName, String username, String phoneNumber,
-                    String password, String confirmPassword) {
+    public UserInfo(String email, String fullName, String username, String phoneNumber) {
         this.email = email;
         this.fullName = fullName;
         this.username = username;
         this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
     }
 
     public UserInfo() {
@@ -22,8 +19,6 @@ public class UserInfo implements Serializable {
         this.fullName = fullName;
         this.username = username;
         this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
     }
     ////----------------------------------Getter and Setter---------------------------------------
     public String getEmail() {
@@ -56,22 +51,6 @@ public class UserInfo implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
 }

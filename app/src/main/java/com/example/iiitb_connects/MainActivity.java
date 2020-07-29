@@ -1,12 +1,18 @@
 package com.example.iiitb_connects;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.renderscript.Sampler;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +20,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static SharedPreferences sharedPreferences;
     public static boolean returnStatus;
+    private  boolean check;
+
+    FirebaseAuth mAuth;
+    DatabaseReference mRef;
+    String userUid;
 
     /*private BottomSheetBehavior bottomSheetBehavior;
     private LinearLayout shoutout_bottom_sheet;
@@ -35,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sharedPreferences = getSharedPreferences("com.example.sampleproject", MODE_PRIVATE);
+
+        mAuth = FirebaseAuth.getInstance();
+        mRef = FirebaseDatabase.getInstance().getReference("Users");
+        userUid = mAuth.getCurrentUser().getUid();
+
+        check = false;
 
         //Shoutout
         /*shoutout_bottom_sheet = findViewById(R.id.shoutout_bottom_sheet);
@@ -48,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });*/
+
+        /*OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();*/
 
         mBottomNavigation = findViewById(R.id.bottomNavigation);
         mBottomNavigation.setVisibility(View.VISIBLE);
@@ -66,6 +96,28 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, new HomeFragment(), "home").commit();
             lastFragmentTag = "home";
         }
+
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    if (ds.getKey().toString().equals(userUid)){
+                        check = false;
+                        return;
+                    } else {
+                        check = true;
+                    }
+                }
+                if (check == true){
+                    showAlert();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -129,4 +181,29 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    AlertDialog alert;
+    public void showAlert(){
+        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.user_id_has_been_deleted,null);
+        //Initialising Views
+        Button okayButton = v.findViewById(R.id.positiveButton);
+
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setView(v).setCancelable(false);
+        alert = builder.create();
+        alert.show();
+
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                MainActivity.sharedPreferences.edit().clear().apply();
+                Toast.makeText(getApplicationContext(), "Signed out!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
+    }
 }
