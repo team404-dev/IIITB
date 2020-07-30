@@ -6,18 +6,20 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable {
     public String email,fullName,username;
+    public boolean isVerified;
 
-    public UserInfo(String email, String fullName, String username) {
+    public UserInfo(String email, String fullName, String username ,boolean isVerified) {
         this.email = email;
         this.fullName = fullName;
         this.username = username;
-
+        this.isVerified = isVerified;
     }
 
     public UserInfo() {
         this.email = email;
         this.fullName = fullName;
         this.username = username;
+        this.isVerified = isVerified;
     }
     ////----------------------------------Getter and Setter---------------------------------------
     public String getEmail() {
@@ -44,6 +46,11 @@ public class UserInfo implements Serializable {
         this.username = username;
     }
 
+    public boolean isVerified() {
+        return isVerified;
+    }
 
-
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
 }

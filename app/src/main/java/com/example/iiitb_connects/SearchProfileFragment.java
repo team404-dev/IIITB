@@ -121,6 +121,9 @@ public class SearchProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()){
+                        if (!ds.child("isVerified").getValue().toString().equals("true")){
+                            continue;
+                        }
                         String fullName = ds.child("fullName").getValue().toString();
                         String username = ds.child("username").getValue().toString();
                         String userDP=null;

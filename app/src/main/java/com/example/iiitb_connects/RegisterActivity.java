@@ -170,7 +170,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                 //        Toast.makeText(RegisterActivity.this, "Verification Link Sent", Toast.LENGTH_SHORT).show();
-                                        UserInfo user = new UserInfo(email,fullName,username);
+                                        UserInfo user = new UserInfo(email,fullName,username,false);
                                         mRef.child(mAuth.getCurrentUser().getUid()).setValue(user);
                                         /*sharedPreferences.edit().putString("email",email).apply();
                                         sharedPreferences.edit().putString("password",password).apply();*/

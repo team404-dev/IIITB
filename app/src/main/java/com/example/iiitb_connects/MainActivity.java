@@ -243,6 +243,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         if (mAuth.getCurrentUser().isEmailVerified()){
+                            final String uid = mAuth.getCurrentUser().getUid();
+                            DatabaseReference mRefVerif = FirebaseDatabase.getInstance().getReference("Users");
+                            mRefVerif.child(uid).child("isVerified").setValue(true);
                             alert.dismiss();
                         } else{
                             Toast.makeText(MainActivity.this, "Click on the link sent to your mail to verify yourself!", Toast.LENGTH_SHORT).show();
