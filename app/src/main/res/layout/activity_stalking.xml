@@ -86,6 +86,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/LightBlueColor"
                 android:text="About"
+                android:textSize="18dp"
                 android:gravity="center"
                 style="@style/TextAppearance.MaterialComponents.Headline6"/>
             <TextView
@@ -186,6 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Questions answered by "
+                android:textSize="18dp"
                 style="@style/TextAppearance.MaterialComponents.Headline6"/>
             <TextView
                 android:id="@+id/aboutTV"
@@ -193,6 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/answers"
                 android:text="Anant Raj"
+                android:textSize="18dp"
                 style="@style/TextAppearance.MaterialComponents.Headline6"/>
         </RelativeLayout>
 

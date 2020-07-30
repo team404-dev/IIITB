@@ -108,7 +108,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     mDatabaseRef.child("username").setValue(username.getText().toString());
                 //    mDatabaseRef.child("fullName").setValue(fullName.getText().toString());
                     if(bio.getText()!=null && !bio.getText().toString().trim().equals("")) {
-                        mDatabaseRef.child("bio").setValue(bio.getText().toString());
+                        mDatabaseRef.child("bio").setValue(bio.getText().toString().trim());
                     }
                     MainActivity.returnStatus = true;
                     if(profilePhotoUri != null){

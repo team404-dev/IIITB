@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
         View v = inflater.inflate(R.layout.verification_check_popup,null);
         //Initialising Views
         Button doneButton = v.findViewById(R.id.positiveButton);
+        Button registerAgainBtn = v.findViewById(R.id.negativeButton);
 
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -246,6 +247,18 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        registerAgainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                MainActivity.sharedPreferences.edit().clear().apply();
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
     }

@@ -176,6 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         sharedPreferences.edit().putString("password",password).apply();*/
                                     //    Toast.makeText(RegisterActivity.this, "A Verification mail has been sent to the provided email address.\nClick on the given link and then hit LOGIN!", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         //intent.putExtra("from","Register");
                                         startActivity(intent);
                                     }

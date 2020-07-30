@@ -43,14 +43,35 @@
             android:text="@string/userVerificationCheck"
             android:autoLink="all"/>
 
-        <Button
-            android:id="@+id/positiveButton"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_below="@id/masterKeyInfo"
-            android:text="Done"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"/>
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/negativeButton"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/masterKeyInfo"
+                android:text="Register Again"
+                android:textSize="11dp"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/positiveButton"
+                android:layout_width="130dp"
+                android:layout_marginLeft="20dp"
+                android:layout_height="50dp"
+                android:textSize="11dp"
+                android:layout_below="@id/masterKeyInfo"
+                android:text="Done"
+                android:layout_marginTop="10dp"/>
+
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 
