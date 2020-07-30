@@ -61,12 +61,17 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/commentRCV"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:layout_above="@id/commentLayout"/>
+        android:layout_above="@id/commentLayout">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentRCV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/commentLayout"

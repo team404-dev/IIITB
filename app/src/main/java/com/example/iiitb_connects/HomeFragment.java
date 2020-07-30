@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {
-                    postId=null;Uid=null;Img=null;description=null;
+                    postId=null;Uid=null;Img=null;description=null;username=null;
                     if(ds.hasChild("postsInfo")) {
                         if(ds.child("postsInfo").hasChild("Img") && ds.child("postsInfo").child("Img").getValue()!=null) {
                             Img = ds.child("postsInfo").child("Img").getValue().toString();
@@ -125,12 +125,15 @@ public class HomeFragment extends Fragment {
                             description = ds.child("postsInfo").child("description").getValue().toString();
                     }
                     if(ds.hasChild("userInfo")) {
-                        if(ds.child("userInfo").hasChild("username") && ds.child("userInfo").child("username").getValue()!=null)
+                        /*if(ds.child("userInfo").hasChild("username") && ds.child("userInfo").child("username").getValue()!=null)
                             username = ds.child("userInfo").child("username").getValue().toString();
                         if(ds.child("userInfo").hasChild("userDp") && ds.child("userInfo").child("userDp").getValue()!=null)
-                            userDp = ds.child("userInfo").child("userDp").getValue().toString();
+                            userDp = ds.child("userInfo").child("userDp").getValue().toString();*/
+                        if(ds.child("userInfo").hasChild("uid") && ds.child("userInfo").child("uid").getValue()!=null)
+                            Uid = ds.child("userInfo").child("uid").getValue().toString();
                     }
-                    homeFeedItemsList.add(new HomeFeedItems(username, userDp, Img, description, postId));
+                    //homeFeedItemsList.add(new HomeFeedItems(username, userDp, Img, description, postId));
+                    homeFeedItemsList.add(new HomeFeedItems(Uid, Img, description, postId));
                 }
                 Collections.reverse(homeFeedItemsList);
                 adapter.notifyDataSetChanged();

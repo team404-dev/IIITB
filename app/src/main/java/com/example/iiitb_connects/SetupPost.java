@@ -132,8 +132,9 @@ public class SetupPost extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             DatabaseReference mDRef = posts.push();
                             postId = mDRef.getKey();
-                            mDRef.child("userInfo").child("username").setValue(mUsername);
-                            mDRef.child("userInfo").child("userDp").setValue(mUserDp);
+                            //mDRef.child("userInfo").child("username").setValue(mUsername);
+                            //mDRef.child("userInfo").child("userDp").setValue(mUserDp);
+                            mDRef.child("userInfo").child("uid").child(mUid);
                             mDRef.child("postsInfo").child("Img").setValue(uri.toString());
                             mDRef.child("postsInfo").child("description").setValue(mDescription);
 

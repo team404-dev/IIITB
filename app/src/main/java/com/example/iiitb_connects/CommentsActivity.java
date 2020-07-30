@@ -31,7 +31,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     //Views
     ImageView closeBtn;
-    //SwipeRefreshLayout refreshLayout;
+    SwipeRefreshLayout refreshLayout;
     RecyclerView commentRCV;
     TextInputEditText comment;
     FloatingActionButton addComment;
@@ -41,7 +41,8 @@ public class CommentsActivity extends AppCompatActivity {
     String commentAdded; //comment
     String postId; //postId
     String username; //username
-    String userDp; //username
+    String userDp; //userDp
+    String uid; //userId
 
     String getUsername, getUserDp;
 
@@ -62,7 +63,7 @@ public class CommentsActivity extends AppCompatActivity {
         //init firebase
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference("Comments");
-        String Uid = mAuth.getCurrentUser().getUid();
+        final String Uid = mAuth.getCurrentUser().getUid();
         mDRef = FirebaseDatabase.getInstance().getReference("Users").child(Uid);
 
         //Init postId
@@ -92,7 +93,7 @@ public class CommentsActivity extends AppCompatActivity {
         addComment = findViewById(R.id.addComment);
         commentRCV = findViewById(R.id.commentRCV);
         nothingToShow = findViewById(R.id.nothingToShow);
-        //refreshLayout = findViewById(R.id.refreshLayout);
+        refreshLayout = findViewById(R.id.refreshLayout);
 
         //setting up layout managers
         LinearLayoutManager layoutManager = new LinearLayoutManager(CommentsActivity.this);
@@ -105,13 +106,13 @@ public class CommentsActivity extends AppCompatActivity {
         commentRCV.setAdapter(adapter);
 
         //refresh layout
-        /*refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 commentItemsList.clear();
                 loadData();
             }
-        });*/
+        });
 
         //load comments
         if(savedInstanceState==null) {
@@ -135,7 +136,8 @@ public class CommentsActivity extends AppCompatActivity {
                     DatabaseReference mDatabaseRef = mRef.push();
                     commentAdded = comment.getText().toString().trim();
                     comment.setText("");
-                    mDatabaseRef.setValue(new commentInfo(getUsername, getUserDp, commentAdded));
+                    //mDatabaseRef.setValue(new commentInfo(getUsername, getUserDp, commentAdded));
+                    mDatabaseRef.setValue(new commentInfo(Uid, commentAdded));
                     commentItemsList.clear();
                     loadData();
                 }
@@ -144,13 +146,19 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
     public class commentInfo {
-        public String username;
-        public String userDp;
+        /*public String username;
+        public String userDp;*/
+        public String uid;
         public String comment;
 
-        public commentInfo(String username, String userDp, String comment) {
+        /*public commentInfo(String username, String userDp, String comment) {
             this.username = username;
             this.userDp = userDp;
+            this.comment = comment;
+        }*/
+
+        public commentInfo(String uid, String comment) {
+            this.uid = uid;
             this.comment = comment;
         }
     }
@@ -161,17 +169,21 @@ public class CommentsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()) {
-                    username=null; userDp=null; commentAdded=null;
-                    if(ds.hasChild("username")) {
+                    username=null; userDp=null; commentAdded=null; uid=null;
+                    /*if(ds.hasChild("username")) {
                         username = ds.child("username").getValue().toString();
                     }
                     if(ds.hasChild("userDp")) {
                         userDp = ds.child("userDp").getValue().toString();
+                    }*/
+                    if(ds.hasChild("uid")) {
+                        uid = ds.child("uid").getValue().toString();
                     }
                     if(ds.hasChild("comment")) {
                         commentAdded = ds.child("comment").getValue().toString();
                     }
-                    commentItemsList.add(new CommentItems(username, userDp, commentAdded));
+                    //commentItemsList.add(new CommentItems(username, userDp, commentAdded));
+                    commentItemsList.add(new CommentItems(uid, commentAdded));
                     adapter.notifyDataSetChanged();
                     if (commentItemsList.size()==0)
                         nothingToShow.setVisibility(View.VISIBLE);
@@ -187,6 +199,6 @@ public class CommentsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        //refreshLayout.setRefreshing(false);
+        refreshLayout.setRefreshing(false);
     }
 }

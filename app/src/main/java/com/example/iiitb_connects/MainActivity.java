@@ -1,6 +1,8 @@
 package com.example.iiitb_connects;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -261,5 +263,26 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mBottomNavigation.getSelectedItemId() == R.id.home){
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Exit?").setMessage("Do you want to exit?")
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            MainActivity.super.onBackPressed();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).create().show();
+        } else {
+            getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag("home"));
+            mBottomNavigation.setSelectedItemId(R.id.home);
+        }
     }
 }

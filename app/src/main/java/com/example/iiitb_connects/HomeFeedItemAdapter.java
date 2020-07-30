@@ -47,6 +47,7 @@ public class HomeFeedItemAdapter
         private TextView description;
         private ImageView likeButton, unlikedButton, commentButton, infoButton;
         private RelativeLayout descriptionLayout;
+        private RelativeLayout postTitles;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +61,7 @@ public class HomeFeedItemAdapter
             commentButton = itemView.findViewById(R.id.commentButton);
             infoButton = itemView.findViewById(R.id.infoButton);
             descriptionLayout = itemView.findViewById(R.id.descriptionLayout);
+            postTitles = itemView.findViewById(R.id.postTitles);
         }
     }
 
@@ -128,10 +130,11 @@ public class HomeFeedItemAdapter
             }
         });
         //Setting up item views
-        if (homeFeedItems.getUserDP() != null){
+        setUserInfo(homeFeedItems.getUid(), holder.userDP, holder.clubName);
+        /*if (homeFeedItems.getUserDP() != null){
             Picasso.get().load(homeFeedItems.getUserDP()).into(holder.userDP);
         }
-        holder.clubName.setText(homeFeedItems.getUsername());
+        holder.clubName.setText(homeFeedItems.getUsername());*/
         Picasso.get().load(homeFeedItems.getPostMedia()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.postMedia, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -143,7 +146,7 @@ public class HomeFeedItemAdapter
                         Picasso.get().load(homeFeedItems.getPostMedia()).into(holder.postMedia);
                     }
                 });
-                holder.description.setText(homeFeedItems.getDescription());
+        holder.description.setText(homeFeedItems.getDescription());
 
         //onClick for item buttons
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +185,46 @@ public class HomeFeedItemAdapter
                 context.startActivity(intent);
             }
         });
+        holder.postTitles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,StalkingActivity.class);
+                intent.putExtra("User Uid",homeFeedItems.getUid());
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    private void setUserInfo(String uid, final ImageView userDP, final TextView clubName) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        if(uid!=null) {
+            databaseReference.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull final DataSnapshot snapshot) {
+                    if (snapshot.hasChild("username")) {
+                        clubName.setText(snapshot.child("username").getValue().toString());
+                    }
+                    if (snapshot.hasChild("templateProfilePhoto") && snapshot.child("templateProfilePhoto").getValue() != null) {
+                        Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).networkPolicy(NetworkPolicy.OFFLINE).into(userDP, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).into(userDP);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     @Override

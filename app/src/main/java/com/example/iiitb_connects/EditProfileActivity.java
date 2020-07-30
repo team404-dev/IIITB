@@ -233,7 +233,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         }
                         else if(which == 2) {
                             //Remove photo
-                            profilePhoto.setImageResource(R.drawable.profile_logo);
+                            profilePhoto.setImageResource(R.drawable.person);
                             mDatabaseRef.child("realProfilePhoto").setValue(null);
                             mDatabaseRef.child("templateProfilePhoto").setValue(null);
                         }

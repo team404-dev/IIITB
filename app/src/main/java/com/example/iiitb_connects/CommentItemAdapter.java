@@ -14,7 +14,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.internal.$Gson$Preconditions;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
@@ -67,11 +74,44 @@ public class CommentItemAdapter
     @Override
     public void onBindViewHolder(@NonNull CommentItemAdapter.ViewHolder holder, int position) {
         CommentItems commentItems = this.commentItems.get(position);
-        if (commentItems.getUserDp() != null){
+        /*if (commentItems.getUserDp() != null){
             Picasso.get().load(commentItems.getUserDp()).into(holder.userDP);
         }
-        holder.username.setText(commentItems.getUsername());
+        holder.username.setText(commentItems.getUsername());*/
+        setUserInfo(commentItems.getUid(), holder.userDP, holder.username);
         holder.comment.setText(commentItems.getComments());
+    }
+
+    private void setUserInfo(String uid, final ImageView userDP, final TextView clubName) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        if(uid!=null) {
+            databaseReference.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull final DataSnapshot snapshot) {
+                    if (snapshot.hasChild("username")) {
+                        clubName.setText(snapshot.child("username").getValue().toString());
+                    }
+                    if (snapshot.hasChild("templateProfilePhoto") && snapshot.child("templateProfilePhoto").getValue() != null) {
+                        Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).networkPolicy(NetworkPolicy.OFFLINE).into(userDP, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).into(userDP);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     @Override

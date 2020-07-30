@@ -70,10 +70,14 @@ public class AddChallengeFragment extends Fragment {
     //String
     String mChallengeName, mDescription, templateImgURI, templateImgLogo;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_challenge, container, false);
+
+        //Init arrays of permissions
+        storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         //init views
         templateImg = view.findViewById(R.id.templateImg);
@@ -130,6 +134,40 @@ public class AddChallengeFragment extends Fragment {
             }
         });
     }
+
+    private boolean checkStoragePermissions() {
+        boolean result = (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) ==
+                (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+    private void requestStoragePermissions() {
+
+        ActivityCompat.requestPermissions(getActivity(), storagePermissions, STORAGE_REQUEST_CODE);
+    }
+
+    private void pickFromGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case STORAGE_REQUEST_CODE: {
+                if(grantResults.length>0) {
+                    boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if(writeStorageAccepted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(getActivity(), "Enable storage permissions", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -205,37 +243,5 @@ public class AddChallengeFragment extends Fragment {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
-    }
-
-    private boolean checkStoragePermissions() {
-        boolean result = (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) ==
-                (PackageManager.PERMISSION_GRANTED);
-        return result;
-    }
-    private void requestStoragePermissions() {
-        ActivityCompat.requestPermissions(getActivity(), storagePermissions, STORAGE_REQUEST_CODE);
-    }
-    private void pickFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-
-            case STORAGE_REQUEST_CODE: {
-                if(grantResults.length>0) {
-                    boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if(writeStorageAccepted) {
-                        pickFromGallery();
-                    } else {
-                        Toast.makeText(getActivity(), "Enable storage permissions", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
