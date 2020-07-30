@@ -67,7 +67,9 @@ public class CommentItemAdapter
     @Override
     public void onBindViewHolder(@NonNull CommentItemAdapter.ViewHolder holder, int position) {
         CommentItems commentItems = this.commentItems.get(position);
-        Picasso.get().load(commentItems.getUserDp()).into(holder.userDP);
+        if (commentItems.getUserDp() != null){
+            Picasso.get().load(commentItems.getUserDp()).into(holder.userDP);
+        }
         holder.username.setText(commentItems.getUsername());
         holder.comment.setText(commentItems.getComments());
     }

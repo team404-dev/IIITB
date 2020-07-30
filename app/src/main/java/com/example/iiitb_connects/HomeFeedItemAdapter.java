@@ -128,8 +128,9 @@ public class HomeFeedItemAdapter
             }
         });
         //Setting up item views
-
-        Picasso.get().load(homeFeedItems.getUserDP()).into(holder.userDP);
+        if (homeFeedItems.getUserDP() != null){
+            Picasso.get().load(homeFeedItems.getUserDP()).into(holder.userDP);
+        }
         holder.clubName.setText(homeFeedItems.getUsername());
         Picasso.get().load(homeFeedItems.getPostMedia()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.postMedia, new Callback() {
                     @Override

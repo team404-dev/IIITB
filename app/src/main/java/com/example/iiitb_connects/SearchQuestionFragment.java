@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class SearchQuestionFragment extends Fragment{
     RecyclerView.LayoutManager layoutManager;
     SwipeRefreshLayout refreshLayout;
     Button plusIV;
+    RelativeLayout nothingToShow;
 
     //Firebase
     DatabaseReference mRef;
@@ -63,6 +65,7 @@ public class SearchQuestionFragment extends Fragment{
         refreshLayout = view.findViewById(R.id.refreshLayout1);
         questionList = new ArrayList<>();
         plusIV = view.findViewById(R.id.plusIV);
+        nothingToShow = view.findViewById(R.id.nothingToShow);
 
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference("Questions Asked");
@@ -149,6 +152,11 @@ public class SearchQuestionFragment extends Fragment{
                 }
                 Collections.reverse(questionList);
                 adapter.notifyDataSetChanged();
+                if(questionList.size() == 0)
+                    nothingToShow.setVisibility(View.VISIBLE);
+                else
+                    nothingToShow.setVisibility(View.GONE);
+                refreshLayout.setEnabled(true);
                 refreshLayout.setEnabled(true);
             }
 

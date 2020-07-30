@@ -189,9 +189,9 @@ public class RegisterActivity extends AppCompatActivity {
                             else {
                                 Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
+                            progressBar.setVisibility(View.GONE);
                         }
                     });
-
                 }
                 else if (counter == 1){
                     Toast.makeText(RegisterActivity.this, "Something went wrong!",

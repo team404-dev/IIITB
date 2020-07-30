@@ -1,6 +1,8 @@
 package com.example.iiitb_connects;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
@@ -30,6 +35,12 @@ public class AddPostsFragment extends Fragment {
     //preview img
     Uri previewImgUri;
 
+    //Permission constants
+
+    private static final int STORAGE_REQUEST_CODE = 200;
+    //Array of permissions to be requested
+    String storagePermissions[];
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,13 +50,16 @@ public class AddPostsFragment extends Fragment {
         previewImg = view.findViewById(R.id.previewImg);
         choosePhoto = view.findViewById(R.id.choosePhoto);
 
+        storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
         //init onClick methods
         choosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
+                if(!checkStoragePermissions())
+                    requestStoragePermissions();
+                else
+                    pickFromGallery();
             }
         });
         acceptBtn.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +83,38 @@ public class AddPostsFragment extends Fragment {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private boolean checkStoragePermissions() {
+        boolean result = (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) ==
+                (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+    private void requestStoragePermissions() {
+        ActivityCompat.requestPermissions(getActivity(), storagePermissions, STORAGE_REQUEST_CODE);
+    }
+    private void pickFromGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+
+            case STORAGE_REQUEST_CODE: {
+                if(grantResults.length>0) {
+                    boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if(writeStorageAccepted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(getActivity(), "Enable storage permissions", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 }
