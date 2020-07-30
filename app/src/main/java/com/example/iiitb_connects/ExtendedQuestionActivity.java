@@ -151,7 +151,7 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Oops...Something went wrong!\n"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         refreshLayout.setRefreshing(false);
@@ -171,7 +171,7 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Oops...Something went wrong!\n"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         return userName;

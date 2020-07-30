@@ -111,7 +111,7 @@ public class AddChallengeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -175,7 +175,7 @@ public class AddChallengeFragment extends Fragment {
                         }
                     });
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), "UriNotFound", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
             else{

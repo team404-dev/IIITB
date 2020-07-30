@@ -39,7 +39,6 @@ public class InfoActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),AboutUsActivity.class));
             }
         });
-
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

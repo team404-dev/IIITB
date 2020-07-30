@@ -5,20 +5,19 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class UserInfo implements Serializable {
-    public String email,fullName,username,phoneNumber;
+    public String email,fullName,username;
 
-    public UserInfo(String email, String fullName, String username, String phoneNumber) {
+    public UserInfo(String email, String fullName, String username) {
         this.email = email;
         this.fullName = fullName;
         this.username = username;
-        this.phoneNumber = phoneNumber;
+
     }
 
     public UserInfo() {
         this.email = email;
         this.fullName = fullName;
         this.username = username;
-        this.phoneNumber = phoneNumber;
     }
     ////----------------------------------Getter and Setter---------------------------------------
     public String getEmail() {
@@ -45,12 +44,6 @@ public class UserInfo implements Serializable {
         this.username = username;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
 }

@@ -58,7 +58,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         //    holder.answeredByTextView.setText(answerer[0]);

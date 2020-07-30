@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     //private Context mContext;
     private ProgressBar mProgressbar;
     private TextInputEditText mEmailEditText,mPasswordEditText;
-    private TextView mPleaseWait,mForgotCredentials,mNoAccountYet;
+    private TextView mForgotCredentials,mNoAccountYet;
     private Button loginButton;
 
     String check = " ";
@@ -45,18 +45,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-    //    getSupportActionBar().setTitle("Dive Right In");
+        //    getSupportActionBar().setTitle("Dive Right In");
 
         mProgressbar = findViewById(R.id.progressBar);
         mEmailEditText = findViewById(R.id.emailInput);
         mPasswordEditText = findViewById(R.id.passwordInput);
         mNoAccountYet = findViewById(R.id.noAccountYetTextView);
-        mPleaseWait = findViewById(R.id.pleaseWaitTextView);
+        //mPleaseWait = findViewById(R.id.pleaseWaitTextView);
         mForgotCredentials = findViewById(R.id.forgotPasswordTextView);
         loginButton = findViewById(R.id.loginButton);
         //mContext = getApplicationContext();
         mProgressbar.setVisibility(View.GONE);
-        mPleaseWait.setVisibility(View.GONE);
+        //mPleaseWait.setVisibility(View.GONE);
 
         check = getIntent().getStringExtra("check");
 
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (counter == 0){
                     mProgressbar.setVisibility(View.VISIBLE);
-                    mPleaseWait.setVisibility(View.VISIBLE);
+                //    mPleaseWait.setVisibility(View.VISIBLE);
 
                     mAuth.signInWithEmailAndPassword(email , password)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                                         //Log.d(String.valueOf(getActivity()), "createUserWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         mProgressbar.setVisibility(View.GONE);
-                                        mPleaseWait.setVisibility(View.GONE);
+                                        //mPleaseWait.setVisibility(View.GONE);
                                         Toast.makeText(getApplicationContext(),"Authentication Successful",Toast.LENGTH_SHORT).show();
                                         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users");
                                         mRef.addValueEventListener(new ValueEventListener() {
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, task.getException().getMessage(),
                                                 Toast.LENGTH_SHORT).show();
                                         mProgressbar.setVisibility(View.GONE);
-                                        mPleaseWait.setVisibility(View.GONE);
+                                        //mPleaseWait.setVisibility(View.GONE);
                                     }
                                 }
                             });
@@ -159,11 +159,11 @@ public class LoginActivity extends AppCompatActivity {
         });
         // If the user is loggedIn
 
-            if (mAuth.getCurrentUser() != null ){
-                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                 startActivity(intent);
-                 finish();
-            }
+        if (mAuth.getCurrentUser() != null ){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
 
     }
@@ -248,22 +248,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*--------------------------------------To-do's------------------------------------
-
-forgot credentials
-
- */

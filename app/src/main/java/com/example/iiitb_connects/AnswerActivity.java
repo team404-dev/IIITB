@@ -119,13 +119,9 @@ public class AnswerActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
-            }
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();            }
         });
 
-        Log.i("userUidForNoOfAns",userUidForNoOfAns);
-        Log.i("questionUid",questionUid);
-        Log.i("numberString",numberString);
 
         Toast.makeText(this, "Swipe Down to Refresh!", Toast.LENGTH_SHORT).show();
         onBackPressed();

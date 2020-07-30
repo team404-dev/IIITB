@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView homeFeedRCV;
     private RelativeLayout loadScreen;
     ImageView infoIV;
+    RelativeLayout nothingToShow;
 
     //list of recycler view items
     private List<HomeFeedItems> homeFeedItemsList;
@@ -64,6 +65,7 @@ public class HomeFragment extends Fragment {
         refreshLayout = view.findViewById(R.id.refreshLayout);
         homeFeedRCV = view.findViewById(R.id.homeFeedRCV);
         loadScreen = view.findViewById(R.id.loadScreen);
+        nothingToShow = view.findViewById(R.id.nothingToShow);
         //infoIV = view.findViewById(R.id.infoBtn);
         homeFeedItemsList = new ArrayList<>();
 
@@ -133,12 +135,17 @@ public class HomeFragment extends Fragment {
                 Collections.reverse(homeFeedItemsList);
                 adapter.notifyDataSetChanged();
                 loadScreen.setVisibility(View.GONE);
+                if (homeFeedItemsList.size() == 0){
+                    nothingToShow.setVisibility(View.VISIBLE);
+                } else {
+                    nothingToShow.setVisibility(View.GONE);
+                }
                 refreshLayout.setEnabled(true);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         refreshLayout.setRefreshing(false);

@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         userUid = mAuth.getCurrentUser().getUid();
 
         check = false;
+        if (!mAuth.getCurrentUser().isEmailVerified()){
+            showVerificationAlert();
+        }
 
         //Shoutout
         /*shoutout_bottom_sheet = findViewById(R.id.shoutout_bottom_sheet);
@@ -203,6 +206,46 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Signed out!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
+            }
+        });
+    }
+
+    public void showVerificationAlert(){
+        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.verification_check_popup,null);
+        //Initialising Views
+        Button doneButton = v.findViewById(R.id.positiveButton);
+
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setView(v).setCancelable(false);
+        alert = builder.create();
+        alert.show();
+
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                    @Override
+                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                        if (mAuth.getCurrentUser().isEmailVerified()){
+                            alert.dismiss();
+                        } else{
+                            Toast.makeText(MainActivity.this, "Click on the link sent to your mail to verify yourself!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });*/
+
+                mAuth.getCurrentUser().reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        if (mAuth.getCurrentUser().isEmailVerified()){
+                            alert.dismiss();
+                        } else{
+                            Toast.makeText(MainActivity.this, "Click on the link sent to your mail to verify yourself!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
     }

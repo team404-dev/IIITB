@@ -416,5 +416,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     Toast.makeText(EditProfileActivity.this, "Field empty!", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

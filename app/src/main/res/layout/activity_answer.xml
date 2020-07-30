@@ -76,8 +76,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/marginline_at_bottom"
+        android:layout_height="0.75dp"
+        android:background="@color/colorPrimary"
         android:layout_below="@+id/quesLayout"
         android:id="@+id/marginLine"
         android:layout_marginTop="5dp"

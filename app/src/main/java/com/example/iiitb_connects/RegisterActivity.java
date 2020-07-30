@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseException;
@@ -77,10 +79,10 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPasswordEditText = (TextInputEditText) findViewById(R.id.confirmPasswordInput);
         btnContinue = (Button) findViewById(R.id.btnContinue);
         loginTextView = (TextView) findViewById(R.id.loginTextView);
-        pleaseWaitTextView = (TextView) findViewById(R.id.pleaseWaitTextView1);
+        //pleaseWaitTextView = (TextView) findViewById(R.id.pleaseWaitTextView1);
         progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.GONE);
-        pleaseWaitTextView.setVisibility(View.GONE);
+        //pleaseWaitTextView.setVisibility(View.GONE);
 
         mRef = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -140,6 +142,12 @@ public class RegisterActivity extends AppCompatActivity {
                     confirmPasswordEditText.setError("*Passwords don't match!");
                     counter =1;
                 }
+                if (password.length() < 6){
+                    passwordEditText.setError("Password length should be >= 6");
+                }
+                if (confirmPassword.length() < 6){
+                    confirmPasswordEditText.setError("Password length should be >= 6");
+                }
                 /*if (phoneNumber.length() != 10){
                     phoneNumberEditText.setError("*Enter Valid Phone Number!");
                     counter =1;
@@ -151,29 +159,38 @@ public class RegisterActivity extends AppCompatActivity {
                 if (counter == 0) {
                     //Continue registration
                     progressBar.setVisibility(View.VISIBLE);
-                    pleaseWaitTextView.setVisibility(View.VISIBLE);
-                /*    mAuth.createUserWithEmailAndPassword(email,
+                //    pleaseWaitTextView.setVisibility(View.VISIBLE);
+                    mAuth.createUserWithEmailAndPassword(email,
                             password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "Authentication successful!", Toast.LENGTH_SHORT).show();
-                                //    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();*/
-                                UserInfo user = new UserInfo(email,fullName,username,"");
-                                progressBar.setVisibility(View.GONE);
-                                pleaseWaitTextView.setVisibility(View.GONE);
-                                //Take to the OTP Activity
-                                Intent intent = new Intent(getApplicationContext(),VerificationActivity.class);
-                                intent.putExtra("userInfo",user);
-                                Log.i("Anant","Passing intent to verification Activity");
-                                startActivity(intent);
-                    //        }
-                        /*    else {
-                                Toast.makeText(RegisterActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
-                                Log.i("AuthFailureReason", String.valueOf(task.getException()));
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                //        Toast.makeText(RegisterActivity.this, "Verification Link Sent", Toast.LENGTH_SHORT).show();
+                                        UserInfo user = new UserInfo(email,fullName,username);
+                                        mRef.child(mAuth.getCurrentUser().getUid()).setValue(user);
+                                        /*sharedPreferences.edit().putString("email",email).apply();
+                                        sharedPreferences.edit().putString("password",password).apply();*/
+                                    //    Toast.makeText(RegisterActivity.this, "A Verification mail has been sent to the provided email address.\nClick on the given link and then hit LOGIN!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                        //intent.putExtra("from","Register");
+                                        startActivity(intent);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else {
+                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });*/
+                    });
 
                 }
                 else if (counter == 1){

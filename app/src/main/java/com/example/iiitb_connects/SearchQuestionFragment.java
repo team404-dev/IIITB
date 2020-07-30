@@ -67,9 +67,6 @@ public class SearchQuestionFragment extends Fragment{
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference("Questions Asked");
 
-    /*    questionList.add(new QuestionInfo("Why is Kartik such a madarchod?",0));
-        questionList.add(new QuestionInfo("Why is Kartik such a Randi?",0));
-        questionList.add(new QuestionInfo("Why is Anant such a good boy?",0));  */
         recyclerView = view.findViewById(R.id.searchQuestionRecyclerview);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
@@ -157,7 +154,7 @@ public class SearchQuestionFragment extends Fragment{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Oops...Something went wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Oops...Something went wrong!\n"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         refreshLayout.setRefreshing(false);

@@ -89,7 +89,6 @@ public class SearchProfileFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //    adapter.getFilter().filter(query);
                 return false;
             }
 

@@ -111,7 +111,6 @@ public class StalkingActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        //progressBar.setVisibility(View.VISIBLE);
 
         backButton = findViewById(R.id.backButton);
 

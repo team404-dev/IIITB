@@ -172,7 +172,7 @@ public class SetupPost extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(this, "UriNotFound", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

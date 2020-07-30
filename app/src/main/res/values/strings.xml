@@ -9,5 +9,6 @@
     <string name="TemplateDesc">Template image should relate to the challenge being added. Adding no image would result in us, adding your club logo as template image for your challenge.\n<b>Click image to change</b></string>
     <string name="AboutUs">team404dev is an aspiring team of enterprising individuals with different values and goals but with a shared holy grail : a world better connected than what we now have.\n\nAspiring minds and hard working individuals are always welcome. We would be more than happy to join hands and work towards a better future.\n\nWe wish for a happier world. </string>
     <string name="ResetPasswordInfo">Forgot your logging in password?  Relax!\nJust type in the email you entered while registering and a password-reset link will be sent to your email.</string>
-    <string name="user_id_deleted_info">Your IIITB-Connects ID has been disabled. Please contact the support team for further information.\nMail us at team404dev@gmail.com</string>
+    <string name="user_id_deleted_info">You were not registered properly or your IIITB-Connects ID has been disabled. Please contact the support team for further information.\nMail us at team404dev@gmail.com</string>
+    <string name="userVerificationCheck">For connecting a smooth bridge between you and us, you need to verify the email you just filled.\nClick on the link mentioned there and we are all set!\nIf you are facing any problem, contact us at team404dev@gmail.com</string>
 </resources>

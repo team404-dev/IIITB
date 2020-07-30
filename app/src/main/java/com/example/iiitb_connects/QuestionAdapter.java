@@ -179,23 +179,4 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         }
     };
 
-    /*public static CharSequence highlightText(String search, String originalText) {
-        if (search != null && !search.equalsIgnoreCase("")) {
-            String normalizedText = Normalizer.normalize(originalText, Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").toLowerCase();
-            int start = normalizedText.indexOf(search);
-            if (start < 0) {
-                return originalText;
-            } else {
-                Spannable highlighted = new SpannableString(originalText);
-                while (start >= 0) {
-                    int spanStart = Math.min(start, originalText.length());
-                    int spanEnd = Math.min(start + search.length(), originalText.length());
-                    highlighted.setSpan(new ForegroundColorSpan(Color.BLUE), spanStart, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    start = normalizedText.indexOf(search, spanEnd);
-                }
-                return highlighted;
-            }
-        }
-        return originalText;
-    }  */
 }

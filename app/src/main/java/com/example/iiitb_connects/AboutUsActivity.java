@@ -27,7 +27,7 @@ public class AboutUsActivity extends AppCompatActivity {
         instagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("http://instagram.com/team404dev?igshid=1425nzyoos6x5");
+                Uri uri = Uri.parse("http://instagram.com/team404dev?igshid=1425nzyoos6x5" );
                 Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 
                 likeIng.setPackage("com.instagram.android");
