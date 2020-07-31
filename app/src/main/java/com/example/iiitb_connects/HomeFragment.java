@@ -2,6 +2,7 @@ package com.example.iiitb_connects;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +54,11 @@ public class HomeFragment extends Fragment {
     //Firebase
     private DatabaseReference posts;
 
+    //Picasso
+    public static Picasso postLoader;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +67,9 @@ public class HomeFragment extends Fragment {
         //Firebase
         posts = FirebaseDatabase.getInstance().getReference("Posts");
         posts.keepSynced(true);
+
+        //Picasso
+        postLoader = Picasso.get();
 
         //Init views
         refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -86,6 +96,23 @@ public class HomeFragment extends Fragment {
             loadScreen.setVisibility(View.VISIBLE);
             loadData();
         }
+
+        homeFeedRCV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if(recyclerView.getScrollState()==RecyclerView.SCROLL_STATE_IDLE){
+                    postLoader.resumeTag("postMedia");
+                } else {
+                    postLoader.pauseTag("postMedia");
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
 
         //refresh layout
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

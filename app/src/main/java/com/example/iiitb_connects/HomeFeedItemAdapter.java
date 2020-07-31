@@ -135,7 +135,7 @@ public class HomeFeedItemAdapter
             Picasso.get().load(homeFeedItems.getUserDP()).into(holder.userDP);
         }
         holder.clubName.setText(homeFeedItems.getUsername());*/
-        Picasso.get().load(homeFeedItems.getPostMedia()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.postMedia, new Callback() {
+        HomeFragment.postLoader.load(homeFeedItems.getPostMedia()).networkPolicy(NetworkPolicy.OFFLINE).noFade().tag("postMedia").into(holder.postMedia, new Callback() {
                     @Override
                     public void onSuccess() {
 
@@ -143,7 +143,7 @@ public class HomeFeedItemAdapter
 
                     @Override
                     public void onError(Exception e) {
-                        Picasso.get().load(homeFeedItems.getPostMedia()).into(holder.postMedia);
+                        Picasso.get().load(homeFeedItems.getPostMedia()).noFade().into(holder.postMedia);
                     }
                 });
         holder.description.setText(homeFeedItems.getDescription());
@@ -205,7 +205,7 @@ public class HomeFeedItemAdapter
                         clubName.setText(snapshot.child("username").getValue().toString());
                     }
                     if (snapshot.hasChild("templateProfilePhoto") && snapshot.child("templateProfilePhoto").getValue() != null) {
-                        Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).networkPolicy(NetworkPolicy.OFFLINE).into(userDP, new Callback() {
+                        Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).noFade().networkPolicy(NetworkPolicy.OFFLINE).into(userDP, new Callback() {
                             @Override
                             public void onSuccess() {
 
@@ -213,7 +213,7 @@ public class HomeFeedItemAdapter
 
                             @Override
                             public void onError(Exception e) {
-                                Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).into(userDP);
+                                Picasso.get().load(snapshot.child("templateProfilePhoto").getValue().toString()).noFade().into(userDP);
                             }
                         });
                     }

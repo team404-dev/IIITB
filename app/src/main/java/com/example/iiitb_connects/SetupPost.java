@@ -3,6 +3,7 @@ package com.example.iiitb_connects;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -116,7 +117,6 @@ public class SetupPost extends AppCompatActivity {
             }
         });
         try {
-
             final String postIdStore = String.valueOf(System.currentTimeMillis());
             Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), postImgUri);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -134,7 +134,7 @@ public class SetupPost extends AppCompatActivity {
                             postId = mDRef.getKey();
                             //mDRef.child("userInfo").child("username").setValue(mUsername);
                             //mDRef.child("userInfo").child("userDp").setValue(mUserDp);
-                            mDRef.child("userInfo").child("uid").child(mUid);
+                            mDRef.child("userInfo").child("uid").setValue(mUid);
                             mDRef.child("postsInfo").child("Img").setValue(uri.toString());
                             mDRef.child("postsInfo").child("description").setValue(mDescription);
 
