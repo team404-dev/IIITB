@@ -50,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout shoutout_bottom_sheet;
     private ImageView close;*/
 
+    private Intent startActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startActivity = getIntent();
 
         sharedPreferences = getSharedPreferences("com.example.sampleproject", MODE_PRIVATE);
 
@@ -284,8 +288,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }).create().show();
         } else {
-            getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag("home"));
-            mBottomNavigation.setSelectedItemId(R.id.home);
+            if(mBottomNavigation.getSelectedItemId()==R.id.add){
+                startActivity(startActivity);
+            }
+            else {
+                getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag("home"));
+                mBottomNavigation.setSelectedItemId(R.id.home);
+            }
         }
     }
 }
