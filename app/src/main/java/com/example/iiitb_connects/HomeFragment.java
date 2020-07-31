@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -78,6 +79,12 @@ public class HomeFragment extends Fragment {
         nothingToShow = view.findViewById(R.id.nothingToShow);
         //infoIV = view.findViewById(R.id.infoBtn);
         homeFeedItemsList = new ArrayList<>();
+
+        //new things added to make ui less laggy
+        homeFeedRCV.setHasFixedSize(true);
+        homeFeedRCV.setItemViewCacheSize(20);
+        homeFeedRCV.setDrawingCacheEnabled(true);
+        homeFeedRCV.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         //onClick func of shoutout button only visible when shoutouts available
         //show shoutouts as alert dialog

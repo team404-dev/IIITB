@@ -97,6 +97,8 @@ public class HomeFeedItemAdapter
         final HomeFeedItems homeFeedItems = this.homeFeedItems.get(position);
         final long[] likesCount = new long[1];
 
+        HomeFragment.postLoader.cancelRequest(holder.postMedia);
+
         mRef.child(homeFeedItems.getPostId()).child("noOfLikes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -131,11 +133,7 @@ public class HomeFeedItemAdapter
         });
         //Setting up item views
         setUserInfo(homeFeedItems.getUid(), holder.userDP, holder.clubName);
-        /*if (homeFeedItems.getUserDP() != null){
-            Picasso.get().load(homeFeedItems.getUserDP()).into(holder.userDP);
-        }
-        holder.clubName.setText(homeFeedItems.getUsername());*/
-        HomeFragment.postLoader.load(homeFeedItems.getPostMedia()).networkPolicy(NetworkPolicy.OFFLINE).noFade().tag("postMedia").into(holder.postMedia, new Callback() {
+        /*HomeFragment.postLoader.load(homeFeedItems.getPostMedia()).networkPolicy(NetworkPolicy.OFFLINE).resize(500, 500).noFade().tag("postMedia").into(holder.postMedia, new Callback() {
                     @Override
                     public void onSuccess() {
 
@@ -143,9 +141,10 @@ public class HomeFeedItemAdapter
 
                     @Override
                     public void onError(Exception e) {
-                        Picasso.get().load(homeFeedItems.getPostMedia()).noFade().into(holder.postMedia);
+                        Picasso.get().load(homeFeedItems.getPostMedia()).resize(holder.postMedia.getWidth(), holder.postMedia.getHeight()).noFade().into(holder.postMedia);
                     }
-                });
+                });*/
+        new ImgLoader(holder.postMedia).execute(homeFeedItems.getPostMedia());
         holder.description.setText(homeFeedItems.getDescription());
 
         //onClick for item buttons
@@ -230,6 +229,52 @@ public class HomeFeedItemAdapter
     @Override
     public int getItemCount() {
         return homeFeedItems.size();
+    }
+
+    public class ImgLoader extends AsyncTask<String, Void, Bitmap> {
+
+        ImageView iv;
+        ProgressBar pb;
+        Bitmap bmp;
+
+        public ImgLoader(ImageView iv) {
+            this.iv = iv;
+        }
+        public ImgLoader(ImageView iv, ProgressBar pb) {
+            this.iv = iv;
+            this.pb = pb;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if(pb != null) {
+                pb.setVisibility(View.VISIBLE);
+                iv.setImageBitmap(null);
+            }
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... ImgUrl) {
+            try {
+                URL url = new URL(ImgUrl[0]);
+                InputStream is = (InputStream)url.getContent();
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                bmp = BitmapFactory.decodeStream(is, null, options);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            iv.setImageBitmap(bitmap);
+            if(pb !=null)
+                pb.setVisibility(View.GONE);
+            super.onPostExecute(bitmap);
+        }
     }
 
 }
