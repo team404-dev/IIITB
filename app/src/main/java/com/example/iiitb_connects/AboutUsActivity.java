@@ -43,7 +43,17 @@ public class AboutUsActivity extends AppCompatActivity {
         linkedin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Uri uri = Uri.parse("http://linkedin.com/company/team404dev" );
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 
+                likeIng.setPackage("com.linkedin.android");
+
+                try {
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://linkedin.com/company/team404dev")));
+                }
             }
         });
 
