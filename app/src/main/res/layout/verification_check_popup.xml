@@ -57,7 +57,9 @@
                 android:layout_below="@id/masterKeyInfo"
                 android:text="Register Again"
                 android:textSize="11dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"/>
 
             <Button
                 android:id="@+id/positiveButton"

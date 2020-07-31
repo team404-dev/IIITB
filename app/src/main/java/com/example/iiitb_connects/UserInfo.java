@@ -46,11 +46,11 @@ public class UserInfo implements Serializable {
         this.username = username;
     }
 
-    public boolean isVerified() {
+    public boolean getIsVerified() {
         return isVerified;
     }
 
-    public void setVerified(boolean verified) {
-        isVerified = verified;
+    public void setIsVerified(boolean isVerified) {
+        this.isVerified = isVerified;
     }
 }
