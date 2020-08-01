@@ -1,132 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="2dp">
+    android:layout_marginVertical="5dp"
+    android:elevation="30dp"
+    app:cardCornerRadius="5dp"
+    android:layout_marginHorizontal="5dp"
+    app:cardUseCompatPadding="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="2dp">
-
+        android:minHeight="100dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="5dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/linearLayout">
-
-            <ImageView
-                android:layout_width="25dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:src="@drawable/answer_vector_asset"
-                android:id="@+id/imageView1"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/answer_vector_asset"
+                    android:id="@+id/imageView1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contributed By :- "
+                    android:layout_marginLeft="7dp"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="italic"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Anant Raj"
+                    android:layout_marginLeft="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    android:id="@+id/answeredByTextView" />
+            </LinearLayout>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contributed By :- "
-                android:layout_marginLeft="7dp"
-                android:layout_gravity="center_vertical"
-                android:textStyle="italic"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Anant Raj"
-                android:layout_marginLeft="0dp"
-                android:layout_gravity="center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
+                android:layout_marginVertical="10dp"
                 android:textSize="15sp"
-                android:id="@+id/answeredByTextView" />
-
-
+                android:textColor="@color/colorPrimary"
+                android:text="This is answer Text View"
+                android:layout_marginStart="15dp"
+                android:id="@+id/answerTextView"
+                android:gravity="center_vertical"
+                android:autoLink="all"/>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
-            android:layout_marginTop="5dp"
-            android:textSize="15dp"
-            android:textColor="@color/colorPrimary"
-            android:text="This is answer Text View"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="7dp"
-            android:id="@+id/answerTextView"
-            android:autoLink="all"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0.75dp"
-            android:background="#dadada"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_below="@+id/answerTextView" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/upvote_answer_unclicked"
-                android:id="@+id/upvoteUnclicked"/>
-
+            android:orientation="vertical"
+            android:layout_marginHorizontal="5dp"
+            android:layout_gravity="center_vertical">
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/upvote_answer_unclicked"
+                    android:id="@+id/upvoteUnclicked"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/upvote_answer_clicked"
+                    android:id="@+id/upvoteClicked"
+                    android:visibility="gone"/>
+            </RelativeLayout>
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_centerHorizontal="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:text="100"
                 android:id="@+id/voteNumTV"
-                android:layout_centerVertical="true"/>
+                android:gravity="center"
+                android:textSize="15dp"/>
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/upvote_answer_unclicked"
+                    android:rotation="180"
+                    android:id="@+id/downvoteUnclicked"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/upvote_answer_clicked"
+                    android:rotation="180"
+                    android:id="@+id/downvoteClicked"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/upvote_answer_unclicked"
-                android:rotation="180"
-                android:id="@+id/downvoteUnclicked"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="40dp"/>
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/upvote_answer_clicked"
-                android:id="@+id/upvoteClicked"
-                android:visibility="gone"/>
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/upvote_answer_clicked"
-                android:rotation="180"
-                android:id="@+id/downvoteClicked"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="40dp"
-                android:visibility="gone"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp">
-
-
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

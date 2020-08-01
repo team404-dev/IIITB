@@ -288,12 +288,24 @@ public class MainActivity extends AppCompatActivity {
                 }
             }).create().show();
         } else {
+            mBottomNavigation.setSelectedItemId(R.id.home);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment lastFragment = fragmentManager.findFragmentByTag(lastFragmentTag);
+            if(lastFragment!=null)
+                fragmentTransaction.hide(lastFragment).commit();
+            Fragment newFragment;
             if(mBottomNavigation.getSelectedItemId()==R.id.add){
                 startActivity(startActivity);
             }
             else {
-                getSupportFragmentManager().beginTransaction().show(getSupportFragmentManager().findFragmentByTag("home"));
-                mBottomNavigation.setSelectedItemId(R.id.home);
+                newFragment = fragmentManager.findFragmentByTag("home");
+                lastFragmentTag = "home";
+                if(newFragment==null) {
+                    newFragment = new HomeFragment();
+                    fragmentTransaction.add(R.id.frameLayout, newFragment, lastFragmentTag);
+                }
+                fragmentTransaction.show(newFragment);
             }
         }
     }
