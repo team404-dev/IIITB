@@ -55,20 +55,21 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Template image"
                     android:textColor="#fff"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textSize="16dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/TemplateDesc"
-                    android:textColor="#fff" />
+                    android:textColor="#fff"
+                    android:textSize="15dp"/>
             </LinearLayout>
 
             <ImageView
@@ -94,14 +95,15 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:helperText="*20 characters long">
+            app:helperText="*Maximum 20 characters long">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/challengeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:maxLength="20" />
+                android:maxLength="20"
+                android:textSize="16dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +126,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:maxHeight="300dp" />
+                android:maxHeight="300dp"
+                android:textSize="16dp"/>
         </com.google.android.material.textfield.TextInputLayout>
     </RelativeLayout>
 
@@ -137,6 +140,6 @@
         android:text="Add challenge"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
-        android:textSize="18sp" />
+        android:textSize="18dp" />
 
 </RelativeLayout>

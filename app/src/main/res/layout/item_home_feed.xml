@@ -45,7 +45,8 @@
                     android:layout_centerVertical="true"
                     android:text="clubName"
                     android:textStyle="bold"
-                    android:textColor="#fff"/>
+                    android:textColor="#fff"
+                    android:textSize="15dp"/>
             </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,6 +76,7 @@
                 android:paddingHorizontal="10dp"
                 android:text="Liked by 0 people"
                 android:textStyle="bold"
+                android:textSize="15dp"
                 android:background="@color/LightBlueColor"/>
 
             <RelativeLayout
@@ -128,7 +130,8 @@
                     android:paddingHorizontal="5dp"
                     android:paddingVertical="5dp"
                     android:autoLink="all"
-                    android:textColor="#000"/>
+                    android:textColor="#000"
+                    android:textSize="17dp"/>
             </RelativeLayout>
 
         </RelativeLayout>

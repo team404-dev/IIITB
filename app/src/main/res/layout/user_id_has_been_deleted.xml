@@ -28,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Alert"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textSize="20dp"
                     android:textColor="#fff" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -41,7 +41,8 @@
             android:layout_marginTop="10dp"
             android:padding="5dp"
             android:text="@string/user_id_deleted_info"
-            android:autoLink="all"/>
+            android:autoLink="all"
+            android:textSize="15dp"/>
 
         <Button
             android:id="@+id/positiveButton"
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/masterKeyInfo"
             android:text="OK"
+            android:textSize="15dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"/>
 

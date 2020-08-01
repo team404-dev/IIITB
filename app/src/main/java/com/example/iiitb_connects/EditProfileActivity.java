@@ -290,9 +290,9 @@ public class EditProfileActivity extends AppCompatActivity {
         mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child("bio").getValue()!=null)
+                if(snapshot.hasChild("bio") && snapshot.child("bio").getValue()!=null)
                     bio.setText(snapshot.child("bio").getValue().toString());
-                if(snapshot.child("realProfilePhoto").getValue()!=null)
+                if(snapshot.hasChild("realProfilePhoto") && snapshot.child("realProfilePhoto").getValue()!=null)
                     Picasso.get().load(snapshot.child("realProfilePhoto").getValue().toString()).into(profilePhoto);
             }
 
@@ -304,9 +304,8 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private boolean validateInfo() {
-        /*if( username.getText().toString().trim().equals("") ||
-                fullName.getText().toString().trim().equals(""))
-            return false;*/
+        if( username.getText().toString().trim().equals(""))
+            return false;
 
         mUsername = username.getText().toString().trim();
     //    mFullName = fullName.getText().toString().trim();

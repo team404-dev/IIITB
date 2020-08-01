@@ -45,11 +45,12 @@
             android:layout_height="wrap_content"
             android:text="Ongoing activities"
             android:textColor="@color/colorPrimary"
-            style="@style/TextAppearance.MaterialComponents.Headline6"/>
+            android:textSize="20dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(Click to get details)"/>
+            android:text="(Click to get details)"
+            android:textSize="15dp"/>
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

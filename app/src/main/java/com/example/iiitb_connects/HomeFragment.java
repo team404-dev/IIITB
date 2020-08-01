@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
 
     //list of recycler view items
     private List<HomeFeedItems> homeFeedItemsList;
+    List<HomeFeedItems> oldHomeFeedItems;
     private HomeFeedItemAdapter adapter;
 
     //Firebase
@@ -79,6 +80,7 @@ public class HomeFragment extends Fragment {
         nothingToShow = view.findViewById(R.id.nothingToShow);
         //infoIV = view.findViewById(R.id.infoBtn);
         homeFeedItemsList = new ArrayList<>();
+        oldHomeFeedItems = new ArrayList<>();
 
         //new things added to make ui less laggy
         homeFeedRCV.setHasFixedSize(true);
@@ -101,6 +103,8 @@ public class HomeFragment extends Fragment {
         if(savedInstanceState==null) {
             refreshLayout.setEnabled(false);
             loadScreen.setVisibility(View.VISIBLE);
+            homeFeedItemsList.clear();
+            oldHomeFeedItems.clear();
             loadData();
         }
 
@@ -126,6 +130,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 homeFeedItemsList.clear();
+                oldHomeFeedItems.clear();
                 loadData();
             }
         });
@@ -142,7 +147,6 @@ public class HomeFragment extends Fragment {
 
 
     String Uid, username, userDp, Img, description, postId;
-    List<HomeFeedItems> oldHomeFeedItems;
     private void loadData() {
         oldHomeFeedItems = homeFeedItemsList;
         homeFeedItemsList.clear();
