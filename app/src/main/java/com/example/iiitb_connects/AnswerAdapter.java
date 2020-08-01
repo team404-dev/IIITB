@@ -1,6 +1,7 @@
 package com.example.iiitb_connects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,16 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.answeredByTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uid = currentItem.answersByUid;
+                Intent intent = new Intent(context,StalkingActivity.class);
+                intent.putExtra("User Uid",uid);
+                context.startActivity(intent);
             }
         });
 
