@@ -33,6 +33,7 @@ public class SearchProfileFragment extends Fragment {
 
     ProfileAdapter adapter;
     ArrayList<ProfileInfo> profileList;
+    ArrayList<ProfileInfo> oldProfileList;
     ArrayList<String> profileListFullName;
 
     //Views
@@ -62,17 +63,25 @@ public class SearchProfileFragment extends Fragment {
 
         //Init Firebase
         mRef = FirebaseDatabase.getInstance().getReference("Users");
+        mRef.keepSynced(true);
         mAuth = FirebaseAuth.getInstance();
 
         //Init Vars
         profileList = new ArrayList<ProfileInfo>();
         profileListFullName = new ArrayList<String>();
+        oldProfileList = new ArrayList<ProfileInfo>();
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         adapter = new ProfileAdapter(profileList, getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        //new things added to make ui less laggy
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
 
         retrieveProfiles();
@@ -82,6 +91,7 @@ public class SearchProfileFragment extends Fragment {
             public void onRefresh() {
                 profileList.clear();
                 profileListFullName.clear();
+                oldProfileList.clear();
                 retrieveProfiles();
             }
         });
@@ -114,6 +124,7 @@ public class SearchProfileFragment extends Fragment {
     }
 
     public void retrieveProfiles() {
+        oldProfileList = profileList;
         profileList.clear();
         profileListFullName.clear();
 
@@ -134,6 +145,11 @@ public class SearchProfileFragment extends Fragment {
                         profileListFullName.add(fullName);
                     }
                 Collections.reverse(profileList);
+                if(profileList.size()>=oldProfileList.size())
+                    adapter.notifyItemRangeInserted(0, profileList.size()-oldProfileList.size());
+                else {
+                    adapter.notifyDataSetChanged();
+                }
                 adapter.notifyDataSetChanged();
                 refreshLayout.setEnabled(true);
             }

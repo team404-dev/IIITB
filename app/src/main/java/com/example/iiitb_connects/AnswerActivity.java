@@ -121,6 +121,10 @@ public class AnswerActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();            }
         });
+        DatabaseReference mRefVotes;
+        mRefVotes = FirebaseDatabase.getInstance().getReference("Answer Votes");
+        mRefVotes.child("Upvotes").child(mDRef.getKey()).child("noOfUpvotes").setValue("0");
+        mRefVotes.child("Downvotes").child(mDRef.getKey()).child("noOfDownvotes").setValue("0");
 
 
         Toast.makeText(this, "Swipe Down to Refresh!", Toast.LENGTH_SHORT).show();

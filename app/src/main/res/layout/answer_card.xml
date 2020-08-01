@@ -69,6 +69,63 @@
             android:layout_marginHorizontal="20dp"
             android:layout_below="@+id/answerTextView" />
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/upvote_answer_unclicked"
+                android:id="@+id/upvoteUnclicked"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/voteNumTV"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/upvote_answer_unclicked"
+                android:rotation="180"
+                android:id="@+id/downvoteUnclicked"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="40dp"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/upvote_answer_clicked"
+                android:id="@+id/upvoteClicked"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/upvote_answer_clicked"
+                android:rotation="180"
+                android:id="@+id/downvoteClicked"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="40dp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp">
+
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

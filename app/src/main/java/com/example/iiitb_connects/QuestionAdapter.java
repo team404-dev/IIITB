@@ -40,7 +40,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     private onItemClickListener listener;
     String userUidForNoOfAns;
     Activity context;
-    DatabaseReference mRefQuestionVotes,mRefAnswerVotes;
+    DatabaseReference mRefQuestionVotes;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 

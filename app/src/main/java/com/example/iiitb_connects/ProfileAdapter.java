@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -88,8 +90,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         if (currentItem.getUserDP() == null || currentItem.getUserDP().isEmpty() || currentItem.getUserDP().equals("")){
             holder.mImageView.setImageResource(R.drawable.person);
         } else {
-            Picasso.get().load(currentItem.getUserDP()).into(holder.mImageView);
-            Picasso.get().load(currentItem.getUserDP()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.mImageView, new Callback() {
+            Glide.with(context).load(Uri.parse(currentItem.getUserDP())).placeholder(R.drawable.person).into(holder.mImageView);
+            /*Picasso.get().load(currentItem.getUserDP()).networkPolicy(NetworkPolicy.OFFLINE).into(holder.mImageView, new Callback() {
                 @Override
                 public void onSuccess() {
 
@@ -99,7 +101,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void onError(Exception e) {
                     Picasso.get().load(currentItem.getUserDP()).into(holder.mImageView);
                 }
-            });
+            });*/
         }
         holder.mFullNameTV.setText(currentItem.getFullName());
         holder.mUsernameTV.setText(currentItem.getUsername());
@@ -124,6 +126,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @Override
     public int getItemCount() {
         return mProfileList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     //Ptaa nii kyu kia h...bss kia h!
