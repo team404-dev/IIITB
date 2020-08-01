@@ -225,6 +225,26 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                         .child(mAuth.getCurrentUser().getUid()).setValue("1");
                 mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
                         .child("noOfUpvotes").setValue(upvoteCount[0]+1);
+                mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.hasChild(mAuth.getCurrentUser().getUid())
+                                        && snapshot.child(mAuth.getCurrentUser().getUid()).getValue().toString().equals("1")){
+                                    holder.downvoteUnclicked.setVisibility(View.VISIBLE);
+                                    holder.downvoteClicked.setVisibility(View.GONE);
+                                    mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                                            .child(mAuth.getCurrentUser().getUid()).setValue("0");
+                                    mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                                            .child("noOfDownvotes").setValue(downvoteCount[0]-1);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
             }
         });
         holder.upvoteClicked.setOnClickListener(new View.OnClickListener() {
@@ -247,6 +267,26 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                         .child(mAuth.getCurrentUser().getUid()).setValue("1");
                 mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
                         .child("noOfDownvotes").setValue(downvoteCount[0]+1);
+                mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.hasChild(mAuth.getCurrentUser().getUid())
+                                        && snapshot.child(mAuth.getCurrentUser().getUid()).getValue().toString().equals("1")){
+                                    holder.upvoteUnclicked.setVisibility(View.VISIBLE);
+                                    holder.upvoteClicked.setVisibility(View.GONE);
+                                    mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                                            .child(mAuth.getCurrentUser().getUid()).setValue("0");
+                                    mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                                            .child("noOfUpvotes").setValue(upvoteCount[0]-1);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
             }
         });
         holder.downvoteClicked.setOnClickListener(new View.OnClickListener() {

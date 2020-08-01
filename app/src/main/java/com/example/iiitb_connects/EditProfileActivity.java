@@ -104,6 +104,11 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validateInfo()) {
+                    if (username.getText().toString().trim().equals("") || username.getText().toString().trim().isEmpty()){
+                        Toast.makeText(EditProfileActivity.this, "Username field can't be empty!", Toast.LENGTH_SHORT).show();
+                        username.setError("Field can't be empty!");
+                        return;
+                    }
                     updateSharedPreferences();
                     mDatabaseRef.child("username").setValue(username.getText().toString());
                 //    mDatabaseRef.child("fullName").setValue(fullName.getText().toString());
