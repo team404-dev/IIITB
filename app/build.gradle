@@ -47,4 +47,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     //Country Cide Picker
     implementation 'com.hbb20:ccp:2.4.0'
+    //Glide library
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }

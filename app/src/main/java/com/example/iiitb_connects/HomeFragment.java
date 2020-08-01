@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
             loadData();
         }
 
-        homeFeedRCV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        /*homeFeedRCV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 if(recyclerView.getScrollState()==RecyclerView.SCROLL_STATE_IDLE){
@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
             }
-        });
+        });*/
 
         //refresh layout
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -142,7 +142,9 @@ public class HomeFragment extends Fragment {
 
 
     String Uid, username, userDp, Img, description, postId;
+    List<HomeFeedItems> oldHomeFeedItems;
     private void loadData() {
+        oldHomeFeedItems = homeFeedItemsList;
         homeFeedItemsList.clear();
         Query recentPosts = posts.limitToLast(100);
         recentPosts.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -170,7 +172,12 @@ public class HomeFragment extends Fragment {
                     homeFeedItemsList.add(new HomeFeedItems(Uid, Img, description, postId));
                 }
                 Collections.reverse(homeFeedItemsList);
-                adapter.notifyDataSetChanged();
+                if(homeFeedItemsList.size()>=oldHomeFeedItems.size())
+                    adapter.notifyItemRangeInserted(0, homeFeedItemsList.size()-oldHomeFeedItems.size());
+                else {
+                    adapter.notifyDataSetChanged();
+                }
+                //adapter.notifyDataSetChanged();
                 loadScreen.setVisibility(View.GONE);
                 if (homeFeedItemsList.size() == 0){
                     nothingToShow.setVisibility(View.VISIBLE);

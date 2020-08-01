@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -97,7 +99,7 @@ public class HomeFeedItemAdapter
         final HomeFeedItems homeFeedItems = this.homeFeedItems.get(position);
         final long[] likesCount = new long[1];
 
-        HomeFragment.postLoader.cancelRequest(holder.postMedia);
+        //HomeFragment.postLoader.cancelRequest(holder.postMedia);
 
         mRef.child(homeFeedItems.getPostId()).child("noOfLikes").addValueEventListener(new ValueEventListener() {
             @Override
@@ -144,7 +146,8 @@ public class HomeFeedItemAdapter
                         Picasso.get().load(homeFeedItems.getPostMedia()).resize(holder.postMedia.getWidth(), holder.postMedia.getHeight()).noFade().into(holder.postMedia);
                     }
                 });*/
-        new ImgLoader(holder.postMedia).execute(homeFeedItems.getPostMedia());
+        //new ImgLoader(holder.postMedia).execute(homeFeedItems.getPostMedia());
+        Glide.with(context).load(Uri.parse(homeFeedItems.getPostMedia())).placeholder(R.drawable.default_img).into(holder.postMedia);
         holder.description.setText(homeFeedItems.getDescription());
 
         //onClick for item buttons
