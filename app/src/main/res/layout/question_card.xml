@@ -65,6 +65,68 @@
                 android:textStyle="bold"
                 android:id="@+id/noOfAnswersTextView"/>
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/upvote_unclicked"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/upvoteUnclicked"
+                android:layout_marginLeft="5dp"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/upvote_clicked"
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/upvoteClicked"
+                android:layout_marginLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/upvoteNumTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginStart="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="6dp"
+                android:text="0" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/downvote_unclicked"
+                android:id="@+id/downvoteUnclicked"
+                android:layout_toRightOf="@+id/upvoteNumTV"
+                android:layout_marginLeft="25dp"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/downvote_clicked"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/downvoteClicked"
+                android:layout_toRightOf="@+id/upvoteNumTV"
+                android:layout_marginLeft="25dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/downvoteNumTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginHorizontal="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="99dp"
+                android:layout_toRightOf="@id/downvoteUnclicked"
+                android:text="0" />
+
+
         </RelativeLayout>
 
     </LinearLayout>
@@ -74,6 +136,6 @@
         android:layout_height="0.75dp"
         android:background="#dadada"
         android:layout_marginHorizontal="20dp"
-        android:layout_below="@+id/linearLayout" />
+        android:layout_marginTop="119dp"/>
 
 </RelativeLayout>

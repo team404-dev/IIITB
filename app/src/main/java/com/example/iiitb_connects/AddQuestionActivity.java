@@ -89,6 +89,10 @@ public class AddQuestionActivity extends AppCompatActivity {
                 DatabaseReference mDRef = mRef.push();
                 QuestionInfo ques = new QuestionInfo(question,0,mDRef.getKey());
                 mDRef.setValue(ques);
+                DatabaseReference mRefVotes;
+                mRefVotes = FirebaseDatabase.getInstance().getReference("Question Votes");
+                mRefVotes.child("Upvotes").child(mDRef.getKey()).child("noOfUpvotes").setValue("0");
+                mRefVotes.child("Downvotes").child(mDRef.getKey()).child("noOfDownvotes").setValue("0");
                 progressBar.setVisibility(View.GONE);
                 waitTextView.setVisibility(View.GONE);
                 Toast toast1 = Toast.makeText(getApplicationContext(),"Question Uploaded Successfully! \n Swipe Down to Refresh!",Toast.LENGTH_SHORT);

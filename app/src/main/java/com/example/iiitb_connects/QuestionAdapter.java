@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,12 +40,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     private onItemClickListener listener;
     String userUidForNoOfAns;
     Activity context;
+    DatabaseReference mRefQuestionVotes,mRefAnswerVotes;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView mImageView;
         public TextView mTextViewQuestion;
         public TextView mTextViewNoOfAnswers;
+        public TextView upvoteNumTV,downvoteNumTV;
+        public ImageView upvoteClicked,upvoteUnclicked,downvoteClicked,downvoteUnclicked;
         RelativeLayout cardRelativeLayout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -54,6 +58,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             mTextViewQuestion = itemView.findViewById(R.id.questionTextView);
             mTextViewNoOfAnswers = itemView.findViewById(R.id.noOfAnswersTextView);
             cardRelativeLayout = itemView.findViewById(R.id.cardRelativeLayout);
+            upvoteClicked = itemView.findViewById(R.id.upvoteClicked);
+            upvoteUnclicked = itemView.findViewById(R.id.upvoteUnclicked);
+            downvoteClicked = itemView.findViewById(R.id.downvoteClicked);
+            downvoteUnclicked = itemView.findViewById(R.id.downvoteUnclicked);
+            upvoteNumTV = itemView.findViewById(R.id.upvoteNumTV);
+            downvoteNumTV = itemView.findViewById(R.id.downvoteNumTV);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,7 +132,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             }
         });
 
-        holder.cardRelativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mTextViewQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Question = currentItem.getmQuestion();
@@ -133,6 +143,121 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 intent.putExtra("Question Uid Passed",QuestionUidPassed);
                 intent.putExtra("from","allQuestions");
                 context.startActivity(intent);
+            }
+        });
+        mRefQuestionVotes = FirebaseDatabase.getInstance().getReference("Question Votes");
+
+        final long[] upvoteCount = new long[1];
+        final long[] downvoteCount = new long[1];
+
+        //Votes Counter
+        mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid()).child("noOfUpvotes")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            upvoteCount[0] = Long.parseLong(snapshot.getValue().toString());
+                            holder.upvoteNumTV.setText(String.valueOf(upvoteCount[0]));
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+        mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid()).child("noOfDownvotes")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            downvoteCount[0] = Long.parseLong(snapshot.getValue().toString());
+                            holder.downvoteNumTV.setText(String.valueOf(downvoteCount[0]));
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+
+        //Checking which button-type to show
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChild(mAuth.getCurrentUser().getUid())
+                                && snapshot.child(mAuth.getCurrentUser().getUid()).getValue().toString().equals("1")){
+                            holder.upvoteClicked.setVisibility(View.VISIBLE);
+                            holder.upvoteUnclicked.setVisibility(View.GONE);
+                        } else{
+                            holder.upvoteClicked.setVisibility(View.GONE);
+                            holder.upvoteUnclicked.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+        mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChild(mAuth.getCurrentUser().getUid())
+                                && snapshot.child(mAuth.getCurrentUser().getUid()).getValue().toString().equals("1")){
+                            holder.downvoteClicked.setVisibility(View.VISIBLE);
+                            holder.downvoteUnclicked.setVisibility(View.GONE);
+                        } else{
+                            holder.downvoteClicked.setVisibility(View.GONE);
+                            holder.downvoteUnclicked.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+
+        //Handling onClick on Voting-Icons
+        holder.upvoteUnclicked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.upvoteUnclicked.setVisibility(View.GONE);
+                holder.upvoteClicked.setVisibility(View.VISIBLE);
+                mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                        .child(mAuth.getCurrentUser().getUid()).setValue("1");
+                mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                        .child("noOfUpvotes").setValue(upvoteCount[0]+1);
+            }
+        });
+        holder.upvoteClicked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.upvoteUnclicked.setVisibility(View.VISIBLE);
+                holder.upvoteClicked.setVisibility(View.GONE);
+                mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                        .child(mAuth.getCurrentUser().getUid()).setValue("0");
+                mRefQuestionVotes.child("Upvotes").child(currentItem.getmUid())
+                        .child("noOfUpvotes").setValue(upvoteCount[0]-1);
+            }
+        });
+        holder.downvoteUnclicked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.downvoteUnclicked.setVisibility(View.GONE);
+                holder.downvoteClicked.setVisibility(View.VISIBLE);
+                mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                        .child(mAuth.getCurrentUser().getUid()).setValue("1");
+                mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                        .child("noOfDownvotes").setValue(downvoteCount[0]+1);
+            }
+        });
+        holder.downvoteClicked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.downvoteUnclicked.setVisibility(View.VISIBLE);
+                holder.downvoteClicked.setVisibility(View.GONE);
+                mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                        .child(mAuth.getCurrentUser().getUid()).setValue("0");
+                mRefQuestionVotes.child("Downvotes").child(currentItem.getmUid())
+                        .child("noOfDownvotes").setValue(downvoteCount[0]-1);
             }
         });
     }
