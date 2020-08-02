@@ -274,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        mBottomNavigation.setVisibility(View.VISIBLE);
         if(mBottomNavigation.getSelectedItemId() == R.id.home){
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Exit?").setMessage("Do you want to exit?")
@@ -293,9 +294,10 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment lastFragment = fragmentManager.findFragmentByTag(lastFragmentTag);
             if(lastFragment!=null)
-                fragmentTransaction.hide(lastFragment).commit();
+                fragmentTransaction.hide(lastFragment);
             Fragment newFragment;
             if(mBottomNavigation.getSelectedItemId()==R.id.add){
+                fragmentTransaction.remove(fragmentManager.findFragmentByTag("add"));
                 startActivity(startActivity);
             }
             else {
