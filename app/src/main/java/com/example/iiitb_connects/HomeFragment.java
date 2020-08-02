@@ -84,9 +84,9 @@ public class HomeFragment extends Fragment {
 
         //new things added to make ui less laggy
         homeFeedRCV.setHasFixedSize(true);
-        homeFeedRCV.setItemViewCacheSize(20);
+        /*homeFeedRCV.setItemViewCacheSize(20);
         homeFeedRCV.setDrawingCacheEnabled(true);
-        homeFeedRCV.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        homeFeedRCV.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);*/
 
         //onClick func of shoutout button only visible when shoutouts available
         //show shoutouts as alert dialog
@@ -176,12 +176,12 @@ public class HomeFragment extends Fragment {
                     homeFeedItemsList.add(new HomeFeedItems(Uid, Img, description, postId));
                 }
                 Collections.reverse(homeFeedItemsList);
-                if(homeFeedItemsList.size()>=oldHomeFeedItems.size())
+                /*if(homeFeedItemsList.size()>=oldHomeFeedItems.size())
                     adapter.notifyItemRangeInserted(0, homeFeedItemsList.size()-oldHomeFeedItems.size());
                 else {
                     adapter.notifyDataSetChanged();
-                }
-                //adapter.notifyDataSetChanged();
+                }*/
+                adapter.notifyDataSetChanged();
                 loadScreen.setVisibility(View.GONE);
                 if (homeFeedItemsList.size() == 0){
                     nothingToShow.setVisibility(View.VISIBLE);

@@ -72,7 +72,7 @@ public class ExtendedQuestionActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         answersRecyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new AnswerAdapter(getApplicationContext(),answerList);
+        adapter = new AnswerAdapter(this,answerList);
         answersRecyclerView.setAdapter(adapter);
 
 
