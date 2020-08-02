@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DecimalFormat;
 
 public class InfoActivity extends AppCompatActivity {
     RelativeLayout feedback,aboutUs,rateUs;
@@ -77,19 +80,10 @@ public class InfoActivity extends AppCompatActivity {
         Button submitButton = v.findViewById(R.id.positiveButton);
         Button cancelBtn = v.findViewById(R.id.negativeButton);
         final TextView avgRating = v.findViewById(R.id.avgRatingTV);
+        RatingBar ratingBar;
+        ratingBar = v.findViewById(R.id.stars);
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Ratings");
-        final ImageView star1,star2,star3,star4,star5,star10,star20,star30,star40,star50;
-        star1 = v.findViewById(R.id.star1);
-        star2 = v.findViewById(R.id.star2);
-        star3 = v.findViewById(R.id.star3);
-        star4 = v.findViewById(R.id.star4);
-        star5 = v.findViewById(R.id.star5);
-        star10 = v.findViewById(R.id.star10);
-        star20 = v.findViewById(R.id.star20);
-        star30 = v.findViewById(R.id.star30);
-        star40 = v.findViewById(R.id.star40);
-        star50 = v.findViewById(R.id.star50);
-        final int[] count = {0};
+        final float[] count = {0};
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(InfoActivity.this);
         builder.setView(v).setCancelable(false);
@@ -99,16 +93,17 @@ public class InfoActivity extends AppCompatActivity {
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int sum = 0;
-                int num = 0;
+                float sum = 0;
+                float num = 0;
                 float avg = 0;
                 if (snapshot.hasChildren()){
                 for (DataSnapshot ds : snapshot.getChildren()){
-                    sum = sum + Integer.parseInt(ds.getValue().toString());
+                    sum = sum + Float.parseFloat(ds.getValue().toString());
                     num = num + 1;
                 }
                 avg = sum/num;
-                avgRating.setText(String.valueOf(avg));}
+                DecimalFormat df = new DecimalFormat("#.#");
+                avgRating.setText(String.valueOf(df.format(avg)));}
                 else{
                     avgRating.setText("0");
                 }
@@ -120,203 +115,29 @@ public class InfoActivity extends AppCompatActivity {
             }
         });
 
-        star1.setOnClickListener(new View.OnClickListener() {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.VISIBLE);
-                star3.setVisibility(View.VISIBLE);
-                star4.setVisibility(View.VISIBLE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =1;
-            }
-        });
-        star2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.VISIBLE);
-                star4.setVisibility(View.VISIBLE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =2;
-            }
-        });
-        star3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star30.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                star4.setVisibility(View.VISIBLE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =3;
-
-            }
-        });
-        star4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star30.setVisibility(View.VISIBLE);
-                star40.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                star4.setVisibility(View.GONE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =4;
-
-            }
-        });
-        star5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star30.setVisibility(View.VISIBLE);
-                star40.setVisibility(View.VISIBLE);
-                star50.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                star4.setVisibility(View.GONE);
-                star5.setVisibility(View.GONE);
-                count[0] =5;
-
-            }
-        });
-        star10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.VISIBLE);
-                star3.setVisibility(View.VISIBLE);
-                star4.setVisibility(View.VISIBLE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =1;
-
-
-            }
-        });
-        star20.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.VISIBLE);
-                star4.setVisibility(View.VISIBLE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =2;
-
-
-            }
-        });star30.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star30.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                star4.setVisibility(View.VISIBLE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =3;
-
-            }
-        });
-        star40.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star30.setVisibility(View.VISIBLE);
-                star40.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                star4.setVisibility(View.GONE);
-                star5.setVisibility(View.VISIBLE);
-                count[0] =4;
-
-            }
-        });
-        star50.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star10.setVisibility(View.GONE);
-                star20.setVisibility(View.GONE);
-                star30.setVisibility(View.GONE);
-                star40.setVisibility(View.GONE);
-                star50.setVisibility(View.GONE);
-                star10.setVisibility(View.VISIBLE);
-                star20.setVisibility(View.VISIBLE);
-                star30.setVisibility(View.VISIBLE);
-                star40.setVisibility(View.VISIBLE);
-                star50.setVisibility(View.VISIBLE);
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                star4.setVisibility(View.GONE);
-                star5.setVisibility(View.GONE);
-                count[0] =5;
-
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                String message = null;
+                switch ((int) rating){
+                    case 1:
+                        message = "Sorry to hear that :(";
+                        break;
+                    case 2:
+                        message = "Your suggestions are always welcome";
+                        break;
+                    case 3:
+                        message = "Seems as we are doing good enough!";
+                        break;
+                    case 4:
+                        message = "Great! Thank You";
+                        break;
+                    case 5:
+                        message = "Thanks for showing this much support!";
+                        break;
+                }
+                Toast.makeText(InfoActivity.this, message, Toast.LENGTH_SHORT).show();
+                count[0] = ratingBar.getRating();
             }
         });
 
