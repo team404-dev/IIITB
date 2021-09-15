@@ -16,8 +16,10 @@ With this app we basically try to reach the sole goal of growth, collectively. E
 * **Club activities** - Who contributes the most to the college... administration? Nope.. its you.. Contribute to your college through club activities, write notice/reports for the events, make posters, write articles for magazine, provide technical assistance, and what not. College clubs count on you! Contribute!
 
 ## App Screens
-<div style="text-align:center;margin:4px 8px;"><img src="screenshots/homepage.jpeg" height="400" /><br><strong>Home Feeds</strong></div>
-<div style="text-align:center;margin:4px 8px;"><img src="screenshots/profilespage.jpeg" height="400" /><br><strong>Search Friends</strong></div>
-<div style="text-align:center;margin:4px 8px;"><img src="screenshots/searchpage.jpeg" height="400" /><br><strong>Question/Answer</strong></div>
-<div style="text-align:center;margin:4px 8px;"><img src="screenshots/activitiespage.jpeg" height="400" /><br><strong>Ongoing Activities</strong></div>
-<div style="text-align:center;margin:4px 8px;"><img src="screenshots/settingspage.jpeg" height="400" /><br><strong>User Profile</strong></div>
+| Screen | Images |
+| :----: | ------ |
+| Home Screen | <img src="screenshots/homepage.jpeg" height="400"/> |
+| Search Friends | <img src="screenshots/profilespage.jpeg" height="400"/> |
+| Question/Answer | <img src="screenshots/searchpage.jpeg" height="400"/> |
+| Ongoing Activities | <img src="screenshots/activitiespage.jpeg" height="400"/> |
+|User Profile|<img src="screenshots/settingspage.jpeg" height="400"/>|
